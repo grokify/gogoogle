@@ -4,8 +4,9 @@ import (
 	"google.golang.org/api/slides/v1"
 )
 
+// ExampleRequests provides Go code for JSON examples provided by Google
+// at https://developers.google.com/slides/samples/tables
 func ExampleRequests() []*slides.Request {
-	// https://developers.google.com/slides/samples/tables
 
 	tableId := "tableId"
 	pageId := "pageId"
@@ -54,7 +55,7 @@ func ExampleRequests() []*slides.Request {
 		},
 		{
 			InsertText: &slides.InsertTextRequest{
-				ObjectId: "tableId",
+				ObjectId: tableId,
 				CellLocation: &slides.TableCellLocation{
 					ColumnIndex: 4,
 					RowIndex:    2,
