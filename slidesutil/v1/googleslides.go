@@ -11,7 +11,7 @@ var (
 	GoogleSlideUnitPoint = "PT"
 )
 
-func RgbColorParseHex(hexColor string) (*slides.RgbColor, error) {
+func ParseRgbColorHex(hexColor string) (*slides.RgbColor, error) {
 	c, err := colorful.Hex(hexColor)
 	if err != nil {
 		return nil, err
@@ -19,12 +19,12 @@ func RgbColorParseHex(hexColor string) (*slides.RgbColor, error) {
 	return &slides.RgbColor{Red: c.R, Green: c.G, Blue: c.B}, nil
 }
 
-func RgbColorMustParseHex(hexColor string) *slides.RgbColor {
-	c, err := colorful.Hex(hexColor)
+func MustParseRgbColorHex(hexColor string) *slides.RgbColor {
+	c, err := ParseRgbColorHex(hexColor)
 	if err != nil {
 		panic(`colorful: Hex(` + quote(hexColor) + `): ` + err.Error())
 	}
-	return &slides.RgbColor{Red: c.R, Green: c.G, Blue: c.B}
+	return c
 }
 
 func quote(s string) string {
