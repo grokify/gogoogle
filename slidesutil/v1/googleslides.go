@@ -1,6 +1,8 @@
 package slidesutil
 
 import (
+	"strconv"
+
 	"github.com/lucasb-eyer/go-colorful"
 	"google.golang.org/api/slides/v1"
 )
@@ -9,12 +11,27 @@ var (
 	GoogleSlideUnitPoint = "PT"
 )
 
-func GoogleSlidesRgbColorParseHex(hexColor string) (*slides.RgbColor, error) {
+func RgbColorParseHex(hexColor string) (*slides.RgbColor, error) {
 	c, err := colorful.Hex(hexColor)
 	if err != nil {
 		return nil, err
 	}
 	return &slides.RgbColor{Red: c.R, Green: c.G, Blue: c.B}, nil
+}
+
+func RgbColorMustParseHex(hexColor string) *slides.RgbColor {
+	c, err := colorful.Hex(hexColor)
+	if err != nil {
+		panic(`colorful: Hex(` + quote(hexColor) + `): ` + err.Error())
+	}
+	return &slides.RgbColor{Red: c.R, Green: c.G, Blue: c.B}
+}
+
+func quote(s string) string {
+	if strconv.CanBackquote(s) {
+		return "`" + s + "`"
+	}
+	return strconv.Quote(s)
 }
 
 func TextBoxRequestsSimple(pageId, elementId, text string, fgColor, bgColor *slides.RgbColor, width, height, locX, locY float64) []*slides.Request {
