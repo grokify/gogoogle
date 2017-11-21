@@ -7,4 +7,4 @@ This package provides a set of helper functions and sample code to use with the 
 The Google Slides API samples here have been converted go GO code:
 
 * JSON examples: https://developers.google.com/slides/samples/tables
-* Go code: examples/googleslidesexamples.go
+* Go code: [examples/googleslidesexamples.go](examples/googleslidesexamples.go)
