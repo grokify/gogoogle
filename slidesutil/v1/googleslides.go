@@ -1,6 +1,7 @@
 package slidesutil
 
 import (
+	"regexp"
 	"strconv"
 
 	"github.com/lucasb-eyer/go-colorful"
@@ -9,7 +10,16 @@ import (
 
 var (
 	GoogleSlideUnitPoint = "PT"
+	ObjectIdFormat       = `^[a-zA-Z0-9_][a-zA-Z0-9_\-:]*$`
 )
+
+/*
+panic: googleapi: Error 400: Invalid requests[0].createShape: The object ID (TAGLABELBG-rmp-Glip Growth) should start with a word character [a-zA-Z0-9_] and then followed by any number of the following characters [a-zA-Z0-9_-:]., badRequest
+*/
+
+func FormatObjectIdSimple(s string) string {
+	return regexp.MustCompile(`[^a-zA-Z0-9_\-:]`).ReplaceAllString(s, "_")
+}
 
 func ParseRgbColorHex(hexColor string) (*slides.RgbColor, error) {
 	c, err := colorful.Hex(hexColor)
@@ -34,35 +44,20 @@ func quote(s string) string {
 	return strconv.Quote(s)
 }
 
-func TextBoxRequestsSimple(pageId, elementId, text string, fgColor, bgColor *slides.RgbColor, width, height, locX, locY float64) []*slides.Request {
-	return []*slides.Request{
-		{
-			CreateShape: &slides.CreateShapeRequest{
-				ObjectId:  elementId,
-				ShapeType: "TEXT_BOX",
-				ElementProperties: &slides.PageElementProperties{
-					PageObjectId: pageId,
-					Size: &slides.Size{
-						Width:  &slides.Dimension{Magnitude: width, Unit: GoogleSlideUnitPoint},
-						Height: &slides.Dimension{Magnitude: height, Unit: GoogleSlideUnitPoint},
-					},
-					Transform: &slides.AffineTransform{
-						ScaleX:     1.0,
-						ScaleY:     1.0,
-						TranslateX: locX,
-						TranslateY: locY,
-						Unit:       GoogleSlideUnitPoint,
-					},
-				},
-			},
-		},
-		{
-			InsertText: &slides.InsertTextRequest{
-				ObjectId:       elementId,
-				InsertionIndex: 0,
-				Text:           text,
-			},
-		},
+type TextBoxInfoSimple struct {
+	PageId     string
+	ElementId  string
+	Text       string
+	FgColorHex string
+	BgColorHex string
+	Width      float64
+	Height     float64
+	LocationX  float64
+	LocationY  float64
+}
+
+func AddFgColor(elementId string, fgColor *slides.RgbColor) []*slides.Request {
+	reqs := []*slides.Request{
 		{
 			UpdateTextStyle: &slides.UpdateTextStyleRequest{
 				ObjectId: elementId,
@@ -80,20 +75,6 @@ func TextBoxRequestsSimple(pageId, elementId, text string, fgColor, bgColor *sli
 				},
 			},
 		},
-		{
-			UpdateShapeProperties: &slides.UpdateShapePropertiesRequest{
-				ObjectId: elementId,
-				Fields:   "shapeBackgroundFill.solidFill.color",
-				ShapeProperties: &slides.ShapeProperties{
-					ShapeBackgroundFill: &slides.ShapeBackgroundFill{
-						SolidFill: &slides.SolidFill{
-							Color: &slides.OpaqueColor{
-								RgbColor: bgColor,
-							},
-						},
-					},
-				},
-			},
-		},
 	}
+	return reqs
 }

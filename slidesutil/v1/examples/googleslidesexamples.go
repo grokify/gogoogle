@@ -2,11 +2,60 @@ package slidesutilexamples
 
 import (
 	"google.golang.org/api/slides/v1"
+
+	su "github.com/grokify/googleutil/slidesutil/v1"
 )
+
+func LineExampleRequests(pageId string) []*slides.Request {
+	lineId := "lineId"
+
+	return []*slides.Request{
+		{
+			CreateLine: &slides.CreateLineRequest{
+				ObjectId:     lineId,
+				LineCategory: "STRAIGHT",
+				ElementProperties: &slides.PageElementProperties{
+					PageObjectId: pageId,
+					Size: &slides.Size{
+						Height: &slides.Dimension{Magnitude: 500.0, Unit: "PT"},
+						Width:  &slides.Dimension{Magnitude: 1.0, Unit: "PT"},
+					},
+					Transform: &slides.AffineTransform{
+						ScaleX:     1.0,
+						ScaleY:     1.0,
+						TranslateX: 350.0,
+						TranslateY: 100.0,
+						Unit:       "PT",
+					},
+				},
+			},
+		},
+		{
+			UpdateLineProperties: &slides.UpdateLinePropertiesRequest{
+				ObjectId: lineId,
+				Fields:   "*",
+				LineProperties: &slides.LineProperties{
+					DashStyle: "DASH",
+					LineFill: &slides.LineFill{
+						SolidFill: &slides.SolidFill{
+							Color: &slides.OpaqueColor{
+								RgbColor: su.MustParseRgbColorHex("#ff8800"),
+							},
+						},
+					},
+					Weight: &slides.Dimension{
+						Magnitude: 1.0,
+						Unit:      "PT",
+					},
+				},
+			},
+		},
+	}
+}
 
 // ExampleRequests provides Go code for JSON examples provided by Google
 // at https://developers.google.com/slides/samples/tables
-func ExampleRequests() []*slides.Request {
+func TableExampleRequests() []*slides.Request {
 
 	tableId := "tableId"
 	pageId := "pageId"
@@ -23,8 +72,8 @@ func ExampleRequests() []*slides.Request {
 				Columns: 5,
 			},
 		},
+		// Delete table rows or columns
 		{
-			// Delete table rows or columns
 			DeleteTableRow: &slides.DeleteTableRowRequest{
 				TableObjectId: tableId,
 				CellLocation: &slides.TableCellLocation{
@@ -40,8 +89,8 @@ func ExampleRequests() []*slides.Request {
 				},
 			},
 		},
+		// Edit table data
 		{
-			// Edit table data
 			DeleteText: &slides.DeleteTextRequest{
 				ObjectId: tableId,
 				CellLocation: &slides.TableCellLocation{
@@ -64,8 +113,8 @@ func ExampleRequests() []*slides.Request {
 				InsertionIndex: 0,
 			},
 		},
+		// Format a table header row
 		{
-			// Format a table header row
 			UpdateTableCellProperties: &slides.UpdateTableCellPropertiesRequest{
 				ObjectId: tableId,
 				TableRange: &slides.TableRange{
@@ -122,8 +171,8 @@ func ExampleRequests() []*slides.Request {
 				Fields: "foregroundColor,bold,fontFamily,fontSize",
 			},
 		},
+		// Insert table rows or columns
 		{
-			// Insert table rows or columns
 			InsertTableRows: &slides.InsertTableRowsRequest{
 				TableObjectId: tableId,
 				CellLocation: &slides.TableCellLocation{
