@@ -1,6 +1,8 @@
 package slidesutil
 
 import (
+	"strings"
+
 	"google.golang.org/api/slides/v1"
 )
 
@@ -13,7 +15,9 @@ type CreateShapeTextBoxRequestInfo struct {
 	LocationX          float64
 	LocationY          float64
 	LocationUnit       string
+	URL                string
 	Text               string
+	TextURL            string // not implemented yet
 	FontBold           bool
 	FontItalic         bool
 	FontSize           float64
@@ -23,6 +27,19 @@ type CreateShapeTextBoxRequestInfo struct {
 	BackgroundColorRgb *slides.RgbColor
 	ForegroundColorHex string
 	BackgroundColorHex string
+}
+
+func (info *CreateShapeTextBoxRequestInfo) NeedsUpdateTextStyle() bool {
+	return info.ForegroundColorRgb != nil ||
+		len(info.ForegroundColorHex) > 0 ||
+		info.FontSize > 0.0 ||
+		info.FontBold ||
+		info.FontItalic
+}
+
+func (info *CreateShapeTextBoxRequestInfo) NeedsUpdateShapeProperties() bool {
+	return info.BackgroundColorRgb != nil ||
+		len(info.BackgroundColorHex) > 0 || len(info.URL) > 0
 }
 
 func (info *CreateShapeTextBoxRequestInfo) Requests() ([]*slides.Request, error) {
@@ -115,18 +132,37 @@ func (info *CreateShapeTextBoxRequestInfo) Requests() ([]*slides.Request, error)
 		requests = append(requests, req)
 	}
 
-	if info.BackgroundColorRgb != nil {
-		requests = append(requests,
-			ShapePropertiesBackgroundFillSimple(info.ObjectId, info.BackgroundColorRgb))
-	} else if len(info.BackgroundColorHex) > 0 {
-		c, err := ParseRgbColorHex(info.BackgroundColorHex)
-		if err != nil {
-			return requests, err
+	if info.NeedsUpdateShapeProperties() {
+		shapeUtil := NewUpdateShapePropertiesRequestUtil(info.ObjectId)
+
+		if info.BackgroundColorRgb != nil {
+			shapeUtil.AddBackgroundSolidFill(info.BackgroundColorRgb)
+		} else if len(info.BackgroundColorHex) > 0 {
+			c, err := ParseRgbColorHex(info.BackgroundColorHex)
+			if err != nil {
+				return requests, err
+			}
+			shapeUtil.AddBackgroundSolidFill(c)
 		}
-		requests = append(requests,
-			ShapePropertiesBackgroundFillSimple(info.ObjectId, c))
+		if len(info.URL) > 0 {
+			shapeUtil.AddLink(&slides.Link{Url: info.URL})
+		}
+		requests = append(requests, shapeUtil.Request())
 	}
 
+	if 1 == 0 {
+		if info.BackgroundColorRgb != nil {
+			requests = append(requests,
+				ShapePropertiesBackgroundFillSimple(info.ObjectId, info.BackgroundColorRgb))
+		} else if len(info.BackgroundColorHex) > 0 {
+			c, err := ParseRgbColorHex(info.BackgroundColorHex)
+			if err != nil {
+				return requests, err
+			}
+			requests = append(requests,
+				ShapePropertiesBackgroundFillSimple(info.ObjectId, c))
+		}
+	}
 	/*
 		{
 		UpdateTextStyle: &slides.UpdateTextStyleRequest{
@@ -149,6 +185,53 @@ func (info *CreateShapeTextBoxRequestInfo) Requests() ([]*slides.Request, error)
 	return requests, nil
 }
 
+type UpdateShapePropertiesRequestUtil struct {
+	Fields                       []string
+	UpdateShapePropertiesRequest *slides.UpdateShapePropertiesRequest
+}
+
+func NewUpdateShapePropertiesRequestUtil(objectId string) UpdateShapePropertiesRequestUtil {
+	return UpdateShapePropertiesRequestUtil{
+		Fields: []string{},
+		UpdateShapePropertiesRequest: &slides.UpdateShapePropertiesRequest{
+			ObjectId: objectId,
+		},
+	}
+}
+
+func (util *UpdateShapePropertiesRequestUtil) AddBackgroundSolidFill(rgbColor *slides.RgbColor) {
+	if util.UpdateShapePropertiesRequest.ShapeProperties == nil {
+		util.UpdateShapePropertiesRequest.ShapeProperties = &slides.ShapeProperties{}
+	}
+	util.UpdateShapePropertiesRequest.ShapeProperties.ShapeBackgroundFill = &slides.ShapeBackgroundFill{
+		SolidFill: &slides.SolidFill{
+			Color: &slides.OpaqueColor{
+				RgbColor: rgbColor,
+			},
+		},
+	}
+	util.Fields = append(util.Fields, "shapeBackgroundFill.solidFill.color")
+}
+
+func (util *UpdateShapePropertiesRequestUtil) AddLink(link *slides.Link) {
+	if util.UpdateShapePropertiesRequest.ShapeProperties == nil {
+		util.UpdateShapePropertiesRequest.ShapeProperties = &slides.ShapeProperties{}
+	}
+	util.UpdateShapePropertiesRequest.ShapeProperties.Link = link
+	util.Fields = append(util.Fields, "link")
+}
+
+func (util *UpdateShapePropertiesRequestUtil) Request() *slides.Request {
+	if len(util.Fields) > 0 {
+		util.UpdateShapePropertiesRequest.Fields = strings.Join(util.Fields, ",")
+	}
+	return &slides.Request{
+		UpdateShapeProperties: util.UpdateShapePropertiesRequest,
+	}
+}
+
+// ShapePropertiesBackgroundFillSimple is a simple shape properties request
+// creator. For more complex uses, use UpdateShapePropertiesRequestUtil
 func ShapePropertiesBackgroundFillSimple(objectId string, rgbColor *slides.RgbColor) *slides.Request {
 	return &slides.Request{
 		UpdateShapeProperties: &slides.UpdateShapePropertiesRequest{
