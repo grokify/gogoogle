@@ -142,13 +142,13 @@ func (col *Column) ValueToCanonical(val string) (string, error) {
 }
 
 func (sm *SheetsMap) FullRead() error {
-	fmt.Sprintf("FR0")
+	fmt.Println("FR0")
 	err := sm.ReadColumns()
 	if err != nil {
-		fmt.Sprintf("FR1")
+		fmt.Println("FR1")
 		return err
 	}
-	fmt.Sprintf("FR2")
+	fmt.Println("FR2")
 	return sm.ReadItems()
 }
 
