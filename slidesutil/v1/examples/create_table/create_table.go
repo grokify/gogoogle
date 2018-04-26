@@ -336,7 +336,7 @@ func main() {
 
 	if 1 == 0 {
 		//lineReqs := CreateLineRequest(pageId)
-		lineReqs := suex.LineExampleRequests()
+		lineReqs := suex.LineExampleRequests(pageId)
 		requests = append(requests, lineReqs...)
 	}
 
