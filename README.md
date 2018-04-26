@@ -18,8 +18,6 @@ GoogleUtil is a set of generic, higher-level libraries for interacting with the 
 
 ## Author
 
-It is written by [Grokify](https://github.com/grokify).
-
 Additional Google helper libraries and demo apps include:
 
 * OAuth 2.0 utilities via [`oauth2more/google`](https://github.com/grokify/oauth2more/tree/master/google)
