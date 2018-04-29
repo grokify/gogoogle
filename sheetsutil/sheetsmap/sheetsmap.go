@@ -4,10 +4,16 @@ import (
 	"fmt"
 	"net/http"
 	"regexp"
+	"sort"
 	"strings"
 
 	"github.com/Iwark/spreadsheet"
 	"github.com/grokify/gotilla/strings/stringsutil"
+)
+
+const (
+	ErrorColumnNotFound = "ErrorColumnNotFound"
+	ErrorEnumNotMatched = "ErrorEnumNotMatched"
 )
 
 type SheetsMap struct {
@@ -31,10 +37,21 @@ func (sm *SheetsMap) ColumnsKeys() []string {
 	return keys
 }
 
-func NewSheetsMap(client *http.Client, spreadsheetId string, sheetIndex uint) (SheetsMap, error) {
+func (sm *SheetsMap) DataColumnsKeys() []string {
+	keys := []string{}
+	for i, col := range sm.Columns {
+		if i < 2 {
+			continue
+		}
+		keys = append(keys, col.Value)
+	}
+	return keys
+}
+
+func NewSheetsMap(googleClient *http.Client, spreadsheetId string, sheetIndex uint) (SheetsMap, error) {
 	sm := SheetsMap{
-		GoogleClient:   client,
-		Service:        spreadsheet.NewServiceWithClient(client),
+		GoogleClient:   googleClient,
+		Service:        spreadsheet.NewServiceWithClient(googleClient),
 		sheetsId:       spreadsheetId,
 		sheetIndex:     sheetIndex,
 		Columns:        []Column{},
@@ -58,9 +75,10 @@ func NewSheetsMap(client *http.Client, spreadsheetId string, sheetIndex uint) (S
 }
 
 type Item struct {
-	Key  string
-	Row  uint
-	Data map[string]string
+	Key     string
+	Display string
+	Row     uint
+	Data    map[string]string
 }
 
 type Column struct {
@@ -142,13 +160,10 @@ func (col *Column) ValueToCanonical(val string) (string, error) {
 }
 
 func (sm *SheetsMap) FullRead() error {
-	fmt.Println("FR0")
 	err := sm.ReadColumns()
 	if err != nil {
-		fmt.Println("FR1")
 		return err
 	}
-	fmt.Println("FR2")
 	return sm.ReadItems()
 }
 
@@ -203,6 +218,8 @@ func (sm *SheetsMap) ReadItems() error {
 			val := cell.Value
 			if j == 0 {
 				item.Key = val
+			} else if j == 1 {
+				item.Display = val
 			}
 			col := sm.Columns[j]
 			item.Data[col.Value] = val
@@ -278,6 +295,7 @@ func (sm *SheetsMap) SynchronizeItem(item Item) error {
 			sm.Sheet.Update(int(rowIdx), colIdx, "")
 		}
 	}
+	sm.Sheet.Update(int(rowIdx), 1, item.Display)
 	return sm.Sheet.Synchronize()
 }
 
@@ -291,12 +309,14 @@ func (sm *SheetsMap) SetItemKeyColValue(itemKey, colKeyRaw, colValRaw string) (I
 	colKeyLc := strings.ToLower(colKeyRaw)
 	col, ok := sm.ColumnMapKeyLc[colKeyLc]
 	if !ok {
-		return item, fmt.Errorf("Column not found [%v]", colKey)
+		return item, fmt.Errorf("%s [%s]", ErrorColumnNotFound, colKey)
 	}
 
 	colVal, err := col.ValueToCanonical(colValRaw)
 	if err != nil {
+		//enumsCanonical := []string{}
 		return item, err
+		//fmt.Errorf("%s [%s] [%s]", ErrorEnumNotMatched, colValRaw, strings.Join(col.EnumsCanonical(), ", "))
 	}
 
 	item.Data[colKey] = colVal
@@ -313,36 +333,128 @@ func TrimSpaceToLower(s string) string {
 	return strings.ToLower(strings.TrimSpace(s))
 }
 
+type Stat struct {
+	Name  string
+	Names []string
+	Count int64
+}
+
+func (sm *SheetsMap) CombinedStatsCol0Enum() ([]Stat, error) {
+	fmt.Println("BUILDING_STATS")
+	permutationsMap := map[string]map[string]int64{}
+	col0 := Column{}
+	for _, item := range sm.ItemMap {
+		vals := []string{}
+		for i, col := range sm.Columns {
+			if i < 2 {
+				continue
+			}
+			if i == 2 {
+				col0 = col
+			}
+			if colVal, ok := item.Data[col.Value]; ok {
+				colVal = strings.TrimSpace(colVal)
+				if len(colVal) > 0 {
+					vals = append(vals, colVal)
+				} else {
+					vals = append(vals, "?")
+				}
+			} else {
+				vals = append(vals, "?")
+			}
+		}
+		if len(vals) > 0 {
+			val0 := vals[0]
+			valsStr := strings.Join(vals, ", ")
+			if _, ok := permutationsMap[val0]; !ok {
+				permutationsMap[val0] = map[string]int64{}
+			}
+			if _, ok := permutationsMap[val0][valsStr]; !ok {
+				permutationsMap[val0][valsStr] = 1
+			} else {
+				permutationsMap[val0][valsStr] += 1
+			}
+		}
+
+	}
+
+	stats := []Stat{}
+
+	for _, enum := range col0.Enums {
+		if mss, ok := permutationsMap[enum.Canonical]; ok {
+			valsStrs := []string{}
+			for valsStr, _ := range mss {
+				valsStrs = append(valsStrs, valsStr)
+			}
+			sort.Strings(valsStrs)
+			for _, valsStr := range valsStrs {
+				keyCount := mss[valsStr]
+				stats = append(stats, Stat{
+					Name:  valsStr,
+					Count: int64(keyCount),
+				})
+			}
+		}
+	}
+	enumCanonicalUnknown := "?"
+	if mss, ok := permutationsMap[enumCanonicalUnknown]; ok {
+		valsStrs := []string{}
+		for valsStr, _ := range mss {
+			valsStrs = append(valsStrs, valsStr)
+		}
+		sort.Strings(valsStrs)
+		for _, valsStr := range valsStrs {
+			keyCount := mss[valsStr]
+			stats = append(stats, Stat{
+				Name:  valsStr,
+				Count: int64(keyCount),
+			})
+		}
+	}
+	return stats, nil
+}
+
+func (sm *SheetsMap) SetItemKeyDisplay(itemKey, itemDisplay string) error {
+	item, err := sm.GetOrCreateItem(itemKey)
+	if err != nil {
+		return err
+	}
+	itemDisplay = strings.TrimSpace(itemDisplay)
+	if item.Display != itemDisplay {
+		item.Display = itemDisplay
+		return sm.SynchronizeItem(item)
+	}
+	return nil
+}
+
 func (sm *SheetsMap) SetItemKeyString(itemKey, cmdRaw string) (Intent, error) {
 	cmdRawLc := TrimSpaceToLower(cmdRaw)
 	intent := Intent{Slots: map[string]string{}}
-
-	fmt.Println(len(sm.Columns))
 
 	for _, col := range sm.ColumnMapKeyLc {
 		colKeyLc := TrimSpaceToLower(col.Value)
 		pat := fmt.Sprintf("^%v\\s*(.*)$", colKeyLc)
 		pat1, err := regexp.Compile(pat)
 		if err != nil {
-			return intent, fmt.Errorf("Cannot compile regexp for colKey")
+			return intent, err
 		}
 		m := pat1.FindStringSubmatch(cmdRawLc)
 		if len(m) == 2 {
 			valCanonical, err := col.ValueToCanonical(m[1])
 			if err != nil {
-				return intent, fmt.Errorf("E_INCORRECT_VALUE")
+				return intent, err
 			}
 			item, err := sm.SetItemKeyColValue(itemKey, col.Value, valCanonical)
 			if err != nil {
-				panic(err)
+				return intent, err
 			}
 			err = sm.SynchronizeItem(item)
 			if err != nil {
-				panic(err)
+				return intent, err
 			}
-			break
+			return intent, nil
 		}
 	}
-	return intent, nil
 
+	return intent, fmt.Errorf("E_CANNOT_FIND_MATCH KEY[%v] CMD[%v]", itemKey, cmdRaw)
 }
