@@ -299,6 +299,21 @@ func (sm *SheetsMap) SynchronizeItem(item Item) error {
 	return sm.Sheet.Synchronize()
 }
 
+func (sm *SheetsMap) EmptyCols(item Item) []string {
+	//rowIdx := item.Row
+	emptyCols := []string{}
+	for _, col := range sm.Columns {
+		if val, ok := item.Data[col.Value]; ok {
+			if len(strings.TrimSpace(val)) == 0 {
+				emptyCols = append(emptyCols, col.Value)
+			}
+		} else {
+			emptyCols = append(emptyCols, col.Value)
+		}
+	}
+	return emptyCols
+}
+
 func (sm *SheetsMap) SetItemKeyColValue(itemKey, colKeyRaw, colValRaw string) (Item, error) {
 	item, err := sm.GetOrCreateItem(itemKey)
 	if err != nil {
@@ -315,8 +330,8 @@ func (sm *SheetsMap) SetItemKeyColValue(itemKey, colKeyRaw, colValRaw string) (I
 	colVal, err := col.ValueToCanonical(colValRaw)
 	if err != nil {
 		//enumsCanonical := []string{}
-		return item, err
 		//fmt.Errorf("%s [%s] [%s]", ErrorEnumNotMatched, colValRaw, strings.Join(col.EnumsCanonical(), ", "))
+		return item, err
 	}
 
 	item.Data[colKey] = colVal
@@ -383,7 +398,7 @@ func (sm *SheetsMap) CombinedStatsCol0Enum() ([]Stat, error) {
 	for _, enum := range col0.Enums {
 		if mss, ok := permutationsMap[enum.Canonical]; ok {
 			valsStrs := []string{}
-			for valsStr, _ := range mss {
+			for valsStr := range mss {
 				valsStrs = append(valsStrs, valsStr)
 			}
 			sort.Strings(valsStrs)
@@ -399,7 +414,7 @@ func (sm *SheetsMap) CombinedStatsCol0Enum() ([]Stat, error) {
 	enumCanonicalUnknown := "?"
 	if mss, ok := permutationsMap[enumCanonicalUnknown]; ok {
 		valsStrs := []string{}
-		for valsStr, _ := range mss {
+		for valsStr := range mss {
 			valsStrs = append(valsStrs, valsStr)
 		}
 		sort.Strings(valsStrs)
