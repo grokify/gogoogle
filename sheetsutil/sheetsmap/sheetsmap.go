@@ -242,6 +242,46 @@ func (sm *SheetsMap) GetItem(key string) (Item, error) {
 	}
 }
 
+func (sm *SheetsMap) GetOrCreateItemWithName(itemKey, itemName string) (Item, error) {
+	itemKey = TrimSpaceToLower(itemKey)
+	itemName = strings.TrimSpace(itemName)
+	if item, ok := sm.ItemMap[itemKey]; !ok {
+		item := Item{
+			Key:     itemKey,
+			Display: itemName,
+			Data:    map[string]string{},
+		}
+		if len(sm.Columns) > 0 {
+			item.Data[sm.Columns[0].Value] = itemKey
+		}
+		if len(sm.Columns) > 1 {
+			item.Data[sm.Columns[1].Value] = itemName
+		}
+
+		itemCount := len(sm.ItemMap)
+		nextRowIdx := itemCount + 1
+		item.Row = uint(nextRowIdx)
+
+		sm.Sheet.Update(nextRowIdx, 0, itemKey)
+		err := sm.Sheet.Synchronize()
+		if err == nil {
+			sm.ItemMap[itemKey] = item
+		}
+		return item, err
+	} else {
+		if len(strings.TrimSpace(item.Display)) == 0 &&
+			len(itemName) > 0 {
+			item.Display = itemName
+			if len(sm.Columns) > 1 {
+				item.Data[sm.Columns[1].Value] = itemName
+			}
+			err := sm.SynchronizeItem(item)
+			return item, err
+		}
+		return item, nil
+	}
+}
+
 func (sm *SheetsMap) GetOrCreateItem(itemKey string) (Item, error) {
 	itemKey = TrimSpaceToLower(itemKey)
 	if item, ok := sm.ItemMap[itemKey]; !ok {
