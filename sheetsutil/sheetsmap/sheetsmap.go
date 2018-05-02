@@ -81,6 +81,14 @@ type Item struct {
 	Data    map[string]string
 }
 
+func (item *Item) ItemDisplayOrKey() string {
+	display := strings.TrimSpace(item.Display)
+	if len(display) > 0 {
+		return display
+	}
+	return strings.TrimSpace(item.Key)
+}
+
 type Column struct {
 	Value              string
 	Index              uint64
