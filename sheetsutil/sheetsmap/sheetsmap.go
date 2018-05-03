@@ -271,14 +271,14 @@ func (sm *SheetsMap) GetOrCreateItemWithName(itemKey, itemName string) (Item, er
 		item.Row = uint(nextRowIdx)
 
 		sm.Sheet.Update(nextRowIdx, 0, itemKey)
+		sm.Sheet.Update(nextRowIdx, 1, itemName)
 		err := sm.Sheet.Synchronize()
 		if err == nil {
 			sm.ItemMap[itemKey] = item
 		}
 		return item, err
 	} else {
-		if len(strings.TrimSpace(item.Display)) == 0 &&
-			len(itemName) > 0 {
+		if item.Display != itemName {
 			item.Display = itemName
 			if len(sm.Columns) > 1 {
 				item.Data[sm.Columns[1].Value] = itemName
