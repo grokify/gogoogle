@@ -32,7 +32,7 @@ type SheetsMap struct {
 func (sm *SheetsMap) ColumnsKeys() []string {
 	keys := []string{}
 	for _, col := range sm.Columns {
-		keys = append(keys, col.Value)
+		keys = append(keys, col.Name)
 	}
 	return keys
 }
@@ -43,7 +43,7 @@ func (sm *SheetsMap) DataColumnsKeys() []string {
 		if i < 2 {
 			continue
 		}
-		keys = append(keys, col.Value)
+		keys = append(keys, col.Name)
 	}
 	return keys
 }
@@ -90,16 +90,25 @@ func (item *Item) ItemDisplayOrKey() string {
 }
 
 type Column struct {
-	Value              string
+	Name               string
+	NameAliases        []string
 	Index              uint64
 	Enums              []Enum
 	AliasLcToCanonical map[string]string
+	InfoURLs           []InfoURL
+}
+
+type InfoURL struct {
+	Text string
+	URL  string
 }
 
 func NewColumn() Column {
 	return Column{
+		NameAliases:        []string{},
 		Enums:              []Enum{},
-		AliasLcToCanonical: map[string]string{}}
+		AliasLcToCanonical: map[string]string{},
+		InfoURLs:           []InfoURL{}}
 }
 
 func (col *Column) AddEnum(enum Enum) {
@@ -129,12 +138,24 @@ func ParseColumn(input string) (Column, error) {
 	parts := strings.Split(input, " - ")
 	col := NewColumn()
 	if len(parts) <= 0 {
-		return col, fmt.Errorf("Column Format Error for: %v", input)
-	} else if len(parts) > 2 {
-		return col, fmt.Errorf("Column Format Error for: %v", input)
+		return col, fmt.Errorf("Column Format Error for [%v]", input)
+	} else if len(parts) > 3 {
+		return col, fmt.Errorf("Column Format Error for [%v]", input)
 	}
-	col.Value = strings.TrimSpace(parts[0])
-	if len(parts) == 2 { // Have enum values
+
+	if len(parts) > 0 {
+		colNames := stringsutil.SplitCondenseSpace(parts[0], "|")
+		if len(colNames) > 0 {
+			col.Name = colNames[0]
+		}
+		if len(colNames) > 1 {
+			for i := 1; i < len(colNames); i++ {
+				col.NameAliases = append(col.NameAliases, colNames[i])
+			}
+		}
+		// col.Value = strings.TrimSpace(parts[0])
+	}
+	if len(parts) >= 2 { // Have enum values
 		enums := stringsutil.SplitCondenseSpace(parts[1], ",")
 		for _, enumPlus := range enums {
 			enumVariations := stringsutil.SplitCondenseSpace(enumPlus, "|")
@@ -144,6 +165,18 @@ func ParseColumn(input string) (Column, error) {
 					enum.Aliases = enumVariations[1:]
 				}
 				col.AddEnum(enum)
+			}
+		}
+	}
+	if len(parts) >= 3 { // URL
+		urls := strings.Split(parts[2], " ~ ")
+		for _, urlInfoRaw := range urls {
+			urlInfoParts := stringsutil.SplitCondenseSpace(urlInfoRaw, "|")
+			if len(urlInfoParts) == 2 {
+				col.InfoURLs = append(col.InfoURLs, InfoURL{
+					Text: urlInfoParts[0],
+					URL:  urlInfoParts[1],
+				})
 			}
 		}
 	}
@@ -164,7 +197,7 @@ func (col *Column) ValueToCanonical(val string) (string, error) {
 	}
 
 	enums := strings.Join(col.EnumsCanonical(), ", ")
-	return enums, fmt.Errorf("Column [%v] Value [%v] not valid [%v]", col.Value, val, enums)
+	return enums, fmt.Errorf("Column [%v] Value [%v] not valid [%v]", col.Name, val, enums)
 }
 
 func (sm *SheetsMap) FullRead() error {
@@ -191,7 +224,7 @@ func (sm *SheetsMap) ReadColumns() error {
 				return err
 			}
 			col.Index = uint64(j)
-			colKeyParsedLc := strings.ToLower(col.Value)
+			colKeyParsedLc := strings.ToLower(col.Name)
 
 			colsArr = append(colsArr, col)
 			if _, ok := colsMap[colKeyParsedLc]; ok {
@@ -230,7 +263,7 @@ func (sm *SheetsMap) ReadItems() error {
 				item.Display = val
 			}
 			col := sm.Columns[j]
-			item.Data[col.Value] = val
+			item.Data[col.Name] = val
 		}
 		if _, ok := itemMap[item.Key]; ok {
 			return fmt.Errorf("Duplicate key names for: %v", item.Key)
@@ -260,10 +293,10 @@ func (sm *SheetsMap) GetOrCreateItemWithName(itemKey, itemName string) (Item, er
 			Data:    map[string]string{},
 		}
 		if len(sm.Columns) > 0 {
-			item.Data[sm.Columns[0].Value] = itemKey
+			item.Data[sm.Columns[0].Name] = itemKey
 		}
 		if len(sm.Columns) > 1 {
-			item.Data[sm.Columns[1].Value] = itemName
+			item.Data[sm.Columns[1].Name] = itemName
 		}
 
 		itemCount := len(sm.ItemMap)
@@ -281,7 +314,7 @@ func (sm *SheetsMap) GetOrCreateItemWithName(itemKey, itemName string) (Item, er
 		if item.Display != itemName {
 			item.Display = itemName
 			if len(sm.Columns) > 1 {
-				item.Data[sm.Columns[1].Value] = itemName
+				item.Data[sm.Columns[1].Name] = itemName
 			}
 			err := sm.SynchronizeItem(item)
 			return item, err
@@ -298,7 +331,7 @@ func (sm *SheetsMap) GetOrCreateItem(itemKey string) (Item, error) {
 			Data: map[string]string{},
 		}
 		if len(sm.Columns) > 0 {
-			item.Data[sm.Columns[0].Value] = itemKey
+			item.Data[sm.Columns[0].Name] = itemKey
 		}
 
 		itemCount := len(sm.ItemMap)
@@ -337,7 +370,7 @@ func (sm *SheetsMap) UpdateItem(item Item, key, val string, synchronize bool) (s
 func (sm *SheetsMap) SynchronizeItem(item Item) error {
 	rowIdx := item.Row
 	for colIdx, col := range sm.Columns {
-		if val, ok := item.Data[col.Value]; ok {
+		if val, ok := item.Data[col.Name]; ok {
 			sm.Sheet.Update(int(rowIdx), colIdx, val)
 		} else {
 			sm.Sheet.Update(int(rowIdx), colIdx, "")
@@ -351,12 +384,12 @@ func (sm *SheetsMap) EmptyCols(item Item) []string {
 	//rowIdx := item.Row
 	emptyCols := []string{}
 	for _, col := range sm.Columns {
-		if val, ok := item.Data[col.Value]; ok {
+		if val, ok := item.Data[col.Name]; ok {
 			if len(strings.TrimSpace(val)) == 0 {
-				emptyCols = append(emptyCols, col.Value)
+				emptyCols = append(emptyCols, col.Name)
 			}
 		} else {
-			emptyCols = append(emptyCols, col.Value)
+			emptyCols = append(emptyCols, col.Name)
 		}
 	}
 	return emptyCols
@@ -403,7 +436,6 @@ type Stat struct {
 }
 
 func (sm *SheetsMap) CombinedStatsCol0Enum() ([]Stat, error) {
-	fmt.Println("BUILDING_STATS")
 	permutationsMap := map[string]map[string]int64{}
 	col0 := Column{}
 	for _, item := range sm.ItemMap {
@@ -415,7 +447,7 @@ func (sm *SheetsMap) CombinedStatsCol0Enum() ([]Stat, error) {
 			if i == 2 {
 				col0 = col
 			}
-			if colVal, ok := item.Data[col.Value]; ok {
+			if colVal, ok := item.Data[col.Name]; ok {
 				colVal = strings.TrimSpace(colVal)
 				if len(colVal) > 0 {
 					vals = append(vals, colVal)
@@ -495,27 +527,38 @@ func (sm *SheetsMap) SetItemKeyString(itemKey, cmdRaw string) (Intent, error) {
 	intent := Intent{Slots: map[string]string{}}
 
 	for _, col := range sm.ColumnMapKeyLc {
-		colKeyLc := TrimSpaceToLower(col.Value)
-		pat := fmt.Sprintf("^%v\\s*(.*)$", colKeyLc)
-		pat1, err := regexp.Compile(pat)
-		if err != nil {
-			return intent, err
-		}
-		m := pat1.FindStringSubmatch(cmdRawLc)
-		if len(m) == 2 {
-			valCanonical, err := col.ValueToCanonical(m[1])
+		numColNameAll := 1 + len(col.NameAliases)
+		for i := 0; i < numColNameAll; i++ {
+			colNameTry := ""
+			if i == 0 {
+				colNameTry = col.Name
+			} else {
+				colNameTry = col.NameAliases[i-1]
+			}
+
+			colNameTryLc := TrimSpaceToLower(colNameTry)
+			//pat := fmt.Sprintf("^%v\\s*(.*)$", colNameTryLc)
+			pat := `^` + colNameTryLc + `\s*(.*)$`
+			pat1, err := regexp.Compile(pat)
 			if err != nil {
 				return intent, err
 			}
-			item, err := sm.SetItemKeyColValue(itemKey, col.Value, valCanonical)
-			if err != nil {
-				return intent, err
+			m := pat1.FindStringSubmatch(cmdRawLc)
+			if len(m) == 2 {
+				valCanonical, err := col.ValueToCanonical(m[1])
+				if err != nil {
+					return intent, err
+				}
+				item, err := sm.SetItemKeyColValue(itemKey, col.Name, valCanonical)
+				if err != nil {
+					return intent, err
+				}
+				err = sm.SynchronizeItem(item)
+				if err != nil {
+					return intent, err
+				}
+				return intent, nil
 			}
-			err = sm.SynchronizeItem(item)
-			if err != nil {
-				return intent, err
-			}
-			return intent, nil
 		}
 	}
 
