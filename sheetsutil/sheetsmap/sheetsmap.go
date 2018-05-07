@@ -92,6 +92,7 @@ func (item *Item) ItemDisplayOrKey() string {
 type Column struct {
 	Name               string
 	NameAliases        []string
+	Abbreviation       string
 	Index              uint64
 	Enums              []Enum
 	AliasLcToCanonical map[string]string
@@ -127,23 +128,43 @@ func (col *Column) EnumsCanonical() []string {
 	return canonicals
 }
 
+func (col *Column) EnumsStrings() []string {
+	enums := []string{}
+	for _, enum := range col.Enums {
+		enums = append(enums, enum.Values()...)
+	}
+	return enums
+}
+
 type Enum struct {
 	Canonical string
 	Aliases   []string
 }
 
+func (enum *Enum) Values() []string {
+	values := []string{}
+	if len(enum.Canonical) > 0 {
+		values = append(values, enum.Canonical)
+	}
+	if len(enum.Aliases) > 0 {
+		values = append(values, enum.Aliases...)
+	}
+	return values
+}
+
 // ParseColumn
 // tshirt size - XS, S, M, L, XL, XXL, XXXL
+// colName | colAbbr | Enums | URLs
 func ParseColumn(input string) (Column, error) {
 	parts := strings.Split(input, " - ")
 	col := NewColumn()
 	if len(parts) <= 0 {
 		return col, fmt.Errorf("Column Format Error for [%v]", input)
-	} else if len(parts) > 3 {
+	} else if len(parts) > 4 {
 		return col, fmt.Errorf("Column Format Error for [%v]", input)
 	}
 
-	if len(parts) > 0 {
+	if len(parts) >= 1 {
 		colNames := stringsutil.SplitCondenseSpace(parts[0], "|")
 		if len(colNames) > 0 {
 			col.Name = colNames[0]
@@ -155,8 +176,12 @@ func ParseColumn(input string) (Column, error) {
 		}
 		// col.Value = strings.TrimSpace(parts[0])
 	}
-	if len(parts) >= 2 { // Have enum values
-		enums := stringsutil.SplitCondenseSpace(parts[1], ",")
+	if len(parts) >= 2 { // Have Abbrevations
+		col.Abbreviation = strings.TrimSpace(parts[1])
+	}
+
+	if len(parts) >= 3 { // Have enum values
+		enums := stringsutil.SplitCondenseSpace(parts[2], ",")
 		for _, enumPlus := range enums {
 			enumVariations := stringsutil.SplitCondenseSpace(enumPlus, "|")
 			if len(enumVariations) > 0 {
@@ -168,8 +193,8 @@ func ParseColumn(input string) (Column, error) {
 			}
 		}
 	}
-	if len(parts) >= 3 { // URL
-		urls := strings.Split(parts[2], " ~ ")
+	if len(parts) >= 4 { // URL
+		urls := strings.Split(parts[3], " ~ ")
 		for _, urlInfoRaw := range urls {
 			urlInfoParts := stringsutil.SplitCondenseSpace(urlInfoRaw, "|")
 			if len(urlInfoParts) == 2 {
