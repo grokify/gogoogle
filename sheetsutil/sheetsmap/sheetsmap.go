@@ -23,10 +23,15 @@ type SheetsMap struct {
 	Spreadsheet    spreadsheet.Spreadsheet
 	Sheet          *spreadsheet.Sheet
 	sheetIndex     uint
+	sheetTitle     string
 	KeyColumnIndex uint
 	Columns        []Column
 	ColumnMapKeyLc map[string]Column
 	ItemMap        map[string]Item
+}
+
+func (sm *SheetsMap) SheetTitle() string {
+	return sm.sheetTitle
 }
 
 func (sm *SheetsMap) ColumnsKeys() []string {
@@ -48,16 +53,21 @@ func (sm *SheetsMap) DataColumnsKeys() []string {
 	return keys
 }
 
-func NewSheetsMap(googleClient *http.Client, spreadsheetId string, sheetIndex uint) (SheetsMap, error) {
-	sm := SheetsMap{
-		GoogleClient:   googleClient,
-		Service:        spreadsheet.NewServiceWithClient(googleClient),
-		sheetsId:       spreadsheetId,
-		sheetIndex:     sheetIndex,
+func NewSheetsMap() SheetsMap {
+	return SheetsMap{
+		GoogleClient:   nil,
+		Service:        nil,
+		sheetsId:       "",
 		Columns:        []Column{},
 		ColumnMapKeyLc: map[string]Column{},
 		ItemMap:        map[string]Item{},
 	}
+}
+
+func NewSheetsMapIndex(googleClient *http.Client, spreadsheetId string, sheetIndex uint) (SheetsMap, error) {
+	sm := NewSheetsMap()
+	sm.GoogleClient = googleClient
+	sm.Service = spreadsheet.NewServiceWithClient(googleClient)
 
 	spreadsheet, err := sm.Service.FetchSpreadsheet(spreadsheetId)
 	if err != nil {
@@ -69,6 +79,28 @@ func NewSheetsMap(googleClient *http.Client, spreadsheetId string, sheetIndex ui
 	if err != nil {
 		return sm, err
 	}
+	sm.sheetIndex = sheetIndex
+	sm.Sheet = sheet
+
+	return sm, nil
+}
+
+func NewSheetsMapTitle(googleClient *http.Client, spreadsheetId string, sheetTitle string) (SheetsMap, error) {
+	sm := NewSheetsMap()
+	sm.GoogleClient = googleClient
+	sm.Service = spreadsheet.NewServiceWithClient(googleClient)
+
+	spreadsheet, err := sm.Service.FetchSpreadsheet(spreadsheetId)
+	if err != nil {
+		return sm, err
+	}
+	sm.Spreadsheet = spreadsheet
+
+	sheet, err := sm.Spreadsheet.SheetByTitle(sheetTitle)
+	if err != nil {
+		return sm, err
+	}
+	sm.sheetTitle = sheetTitle
 	sm.Sheet = sheet
 
 	return sm, nil
@@ -306,6 +338,18 @@ func (sm *SheetsMap) GetItem(key string) (Item, error) {
 	} else {
 		return item, nil
 	}
+}
+
+func (sm *SheetsMap) GetItemProperty(key string, val string) (string, error) {
+	item, err := sm.GetItem(key)
+	if err != nil {
+		return "", err
+	}
+	val, ok := item.Data[val]
+	if !ok {
+		return "", fmt.Errorf("Cannot find value for property [%v]", val)
+	}
+	return val, nil
 }
 
 func (sm *SheetsMap) GetOrCreateItemWithName(itemKey, itemName string) (Item, error) {
