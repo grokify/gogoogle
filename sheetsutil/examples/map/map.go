@@ -38,7 +38,7 @@ func GetSheetsMap() (*sheetsmap.SheetsMap, error) {
 
 	spreadsheetId := os.Getenv("GOOGLE_SPREADSHEET_ID")
 
-	sm, err := sheetsmap.NewSheetsMap(
+	sm, err := sheetsmap.NewSheetsMapIndex(
 		googleClient,
 		spreadsheetId,
 		uint(0))
