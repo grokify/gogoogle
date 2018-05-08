@@ -352,6 +352,34 @@ func (sm *SheetsMap) GetItemProperty(key string, val string) (string, error) {
 	return val, nil
 }
 
+func (sm *SheetsMap) IsItemComplete(item *Item) bool {
+	complete := true
+	for _, col := range sm.Columns {
+		if val, ok := item.Data[col.Name]; !ok || len(strings.TrimSpace(val)) == 0 {
+			complete = false
+			break
+		}
+	}
+	return complete
+}
+
+func (sm *SheetsMap) IsItemPartial(item *Item) bool {
+	completeCols := 0
+	for _, col := range sm.Columns {
+		if val, ok := item.Data[col.Name]; ok && len(strings.TrimSpace(val)) > 0 {
+			completeCols += 1
+		}
+	}
+	switch completeCols {
+	case len(sm.Columns):
+		return false
+	case 0:
+		return false
+	default:
+		return true
+	}
+}
+
 func (sm *SheetsMap) GetOrCreateItemWithName(itemKey, itemName string) (Item, error) {
 	itemKey = TrimSpaceToLower(itemKey)
 	itemName = strings.TrimSpace(itemName)
