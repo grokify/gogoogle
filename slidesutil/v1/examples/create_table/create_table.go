@@ -12,8 +12,8 @@ import (
 	"net/http"
 
 	"github.com/grokify/gotilla/fmt/fmtutil"
-	ou "github.com/grokify/oauth2util"
-	oug "github.com/grokify/oauth2util/google"
+	ou "github.com/grokify/oauth2more"
+	oug "github.com/grokify/oauth2more/google"
 	"github.com/joho/godotenv"
 	"golang.org/x/net/context"
 	"google.golang.org/api/slides/v1"

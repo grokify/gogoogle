@@ -11,8 +11,8 @@ import (
 	"log"
 	"net/http"
 
-	ou "github.com/grokify/oauth2util"
-	oug "github.com/grokify/oauth2util/google"
+	ou "github.com/grokify/oauth2more"
+	oug "github.com/grokify/oauth2more/google"
 	"github.com/joho/godotenv"
 	"golang.org/x/net/context"
 	"google.golang.org/api/slides/v1"
@@ -91,22 +91,15 @@ func main() {
 						ScaleY:     1.0,
 						TranslateX: 350.0,
 						TranslateY: 100.0,
-						Unit:       "PT",
-					},
-				},
-			},
-		},
+						Unit:       "PT"}}}},
 		{
 			InsertText: &slides.InsertTextRequest{
 				ObjectId:       elementId,
 				InsertionIndex: 0,
-				Text:           "New Box Text Inserted!",
-			},
-		},
+				Text:           "New Box Text Inserted!"}},
 	}
 	breq := &slides.BatchUpdatePresentationRequest{
-		Requests: requests,
-	}
+		Requests: requests}
 
 	resu, err := psv.BatchUpdate(res.PresentationId, breq).Do()
 	if err != nil {
