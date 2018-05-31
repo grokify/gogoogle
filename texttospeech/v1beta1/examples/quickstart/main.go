@@ -28,7 +28,7 @@ const (
 	MP3     = "MP3"
 )
 
-func TextSynthesize(ttsService *texttospeech.Service) {
+func TextSynthesize(ctx context.Context, ttsService *texttospeech.Service) {
 	textServce := texttospeech.NewTextService(ttsService)
 	synthesizeSpeechRequest := &texttospeech.SynthesizeSpeechRequest{
 		AudioConfig: &texttospeech.AudioConfig{
@@ -40,7 +40,7 @@ func TextSynthesize(ttsService *texttospeech.Service) {
 			LanguageCode: EnUs},
 	}
 	textSynthesizeCall := textServce.Synthesize(synthesizeSpeechRequest)
-	textSynthesizeCall.Context(context.Background())
+	textSynthesizeCall.Context(ctx)
 	synthesizeSpeechResponse, err := textSynthesizeCall.Do()
 	if err != nil {
 		log.Fatal(err)
@@ -58,11 +58,11 @@ func TextSynthesize(ttsService *texttospeech.Service) {
 	fmt.Printf("WROTE: %v\n", filename)
 }
 
-func GetVoicesList(ttsService *texttospeech.Service) {
+func GetVoicesList(ctx context.Context, ttsService *texttospeech.Service) {
 	voiceService := texttospeech.NewVoicesService(ttsService)
 	voicesListCall := voiceService.List()
 	voicesListCall.LanguageCode(EnUs)
-	voicesListCall.Context(context.Background())
+	voicesListCall.Context(ctx)
 	listVoicesResponse, err := voicesListCall.Do()
 	if err != nil {
 		log.Fatal(err)
@@ -79,8 +79,9 @@ func main() {
 	googleJwt := os.Getenv("GOOGLE_SERVICE_ACCOUNT_JWT")
 	fmt.Println(googleJwt)
 
+	ctx := context.Background()
 	httpClient, err := gu.NewClientFromJWTJSON(
-		context.TODO(),
+		ctx,
 		[]byte(googleJwt),
 		texttospeech.CloudPlatformScope)
 	if err != nil {
@@ -92,8 +93,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	GetVoicesList(ttsService)
-	TextSynthesize(ttsService)
+	GetVoicesList(ctx, ttsService)
+	TextSynthesize(ctx, ttsService)
 
 	fmt.Println("DONE")
 }
