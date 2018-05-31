@@ -1,5 +1,10 @@
 # Google Text-to-Speech Quickstart in Go
 
-https://cloud.google.com/text-to-speech/
+## Google Documentation
+
+* https://cloud.google.com/text-to-speech/
+* https://cloud.google.com/text-to-speech/docs/base64-decoding
+
+## Text-to-Speech APIs Explorer API Calls
 
 ![](google_apis-explorer_text-to-speech.png)
