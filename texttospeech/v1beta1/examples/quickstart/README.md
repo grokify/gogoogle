@@ -3,6 +3,7 @@
 ## Google Documentation
 
 * https://cloud.google.com/text-to-speech/
+* https://cloud.google.com/text-to-speech/docs/voices
 * https://cloud.google.com/text-to-speech/docs/base64-decoding
 
 ## Text-to-Speech APIs Explorer API Calls
