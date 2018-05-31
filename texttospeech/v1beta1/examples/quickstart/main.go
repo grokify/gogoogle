@@ -29,7 +29,7 @@ const (
 )
 
 func TextSynthesize(ctx context.Context, ttsService *texttospeech.Service) {
-	textServce := texttospeech.NewTextService(ttsService)
+	textService := texttospeech.NewTextService(ttsService)
 	synthesizeSpeechRequest := &texttospeech.SynthesizeSpeechRequest{
 		AudioConfig: &texttospeech.AudioConfig{
 			AudioEncoding: MP3},
@@ -39,7 +39,7 @@ func TextSynthesize(ctx context.Context, ttsService *texttospeech.Service) {
 			Name:         Name,
 			LanguageCode: EnUs},
 	}
-	textSynthesizeCall := textServce.Synthesize(synthesizeSpeechRequest)
+	textSynthesizeCall := textService.Synthesize(synthesizeSpeechRequest)
 	textSynthesizeCall.Context(ctx)
 	synthesizeSpeechResponse, err := textSynthesizeCall.Do()
 	if err != nil {
