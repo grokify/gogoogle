@@ -36,8 +36,8 @@ func TextSynthesize(ctx context.Context, ttsService *texttospeech.Service) {
 			Text: Text},
 		Voice: &texttospeech.VoiceSelectionParams{
 			Name:         Name,
-			LanguageCode: EnUs},
-	}
+			LanguageCode: EnUs}}
+
 	textSynthesizeCall := textService.Synthesize(synthesizeSpeechRequest)
 	textSynthesizeCall.Context(ctx)
 	synthesizeSpeechResponse, err := textSynthesizeCall.Do()
@@ -45,11 +45,12 @@ func TextSynthesize(ctx context.Context, ttsService *texttospeech.Service) {
 		log.Fatal(err)
 	}
 	fmtutil.PrintJSON(synthesizeSpeechResponse)
-	filename := uu.ToSlugLowerString(Text) + "_" + Name + "." + strings.ToLower(MP3)
+
 	audio, err := base64.StdEncoding.DecodeString(synthesizeSpeechResponse.AudioContent)
 	if err != nil {
 		log.Fatal(err)
 	}
+	filename := uu.ToSlugLowerString(Text) + "_" + Name + "." + strings.ToLower(MP3)
 	err = ioutil.WriteFile(filepath.Join("output", filename), audio, 0644)
 	if err != nil {
 		log.Fatal(err)
