@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/grokify/googleutil/sheetsutil/sheetsmap"
+	"github.com/grokify/googleutil/sheetsutil/v4/sheetsmap"
 	"github.com/grokify/gotilla/config"
 	"github.com/grokify/gotilla/fmt/fmtutil"
 	gu "github.com/grokify/oauth2more/google"
