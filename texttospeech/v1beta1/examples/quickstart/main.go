@@ -20,11 +20,10 @@ import (
 const (
 	EnUs    = "en-US"
 	Text    = "I like the dreams of the future better than the history of the past."
-	Text1   = "Our greatest glory is not in never falling, but in rising every time we fall."
 	Male    = "MALE"
 	Female  = "FEMALE"
 	Neutral = "NEUTRAL"
-	Name    = "en-US-Wavenet-E"
+	Name    = "en-US-Wavenet-A"
 	MP3     = "MP3"
 )
 
@@ -71,18 +70,14 @@ func GetVoicesList(ctx context.Context, ttsService *texttospeech.Service) {
 }
 
 func main() {
-	err := config.LoadDotEnvSkipEmpty(os.Getenv("ENV_PATH"), "./.env")
-	if err != nil {
-		panic(err)
+	if err := config.LoadDotEnvSkipEmpty(os.Getenv("ENV_PATH"), "./.env"); err != nil {
+		log.Fatal(err)
 	}
-
-	googleJwt := os.Getenv("GOOGLE_SERVICE_ACCOUNT_JWT")
-	fmt.Println(googleJwt)
 
 	ctx := context.Background()
 	httpClient, err := gu.NewClientFromJWTJSON(
 		ctx,
-		[]byte(googleJwt),
+		[]byte(os.Getenv("GOOGLE_SERVICE_ACCOUNT_JWT")),
 		texttospeech.CloudPlatformScope)
 	if err != nil {
 		log.Fatal(err)
