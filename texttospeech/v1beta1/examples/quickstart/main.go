@@ -27,7 +27,7 @@ const (
 	MP3     = "MP3"
 )
 
-func TextSynthesize(ctx context.Context, ttsService *texttospeech.Service) {
+func TextSynthesize(ctx context.Context, ttsService *texttospeech.Service) error {
 	textService := texttospeech.NewTextService(ttsService)
 	synthesizeSpeechRequest := &texttospeech.SynthesizeSpeechRequest{
 		AudioConfig: &texttospeech.AudioConfig{
@@ -42,32 +42,34 @@ func TextSynthesize(ctx context.Context, ttsService *texttospeech.Service) {
 	textSynthesizeCall.Context(ctx)
 	synthesizeSpeechResponse, err := textSynthesizeCall.Do()
 	if err != nil {
-		log.Fatal(err)
+		return errors.Wrap(err, "TextSynthesize")
 	}
 	fmtutil.PrintJSON(synthesizeSpeechResponse)
 
 	audio, err := base64.StdEncoding.DecodeString(synthesizeSpeechResponse.AudioContent)
 	if err != nil {
-		log.Fatal(err)
+		return errors.Wrap(err, "TextSynthesize")
 	}
 	filename := uu.ToSlugLowerString(Text) + "_" + Name + "." + strings.ToLower(MP3)
 	err = ioutil.WriteFile(filepath.Join("output", filename), audio, 0644)
 	if err != nil {
-		log.Fatal(err)
+		return errors.Wrap(err, "TextSynthesize")
 	}
 	fmt.Printf("WROTE: %v\n", filename)
+	return nil
 }
 
-func GetVoicesList(ctx context.Context, ttsService *texttospeech.Service) {
+func GetVoicesList(ctx context.Context, ttsService *texttospeech.Service) error {
 	voiceService := texttospeech.NewVoicesService(ttsService)
 	voicesListCall := voiceService.List()
 	voicesListCall.LanguageCode(EnUs)
 	voicesListCall.Context(ctx)
 	listVoicesResponse, err := voicesListCall.Do()
 	if err != nil {
-		log.Fatal(err)
+		return errors.Wrap(err, "GetVoicesList")
 	}
 	fmtutil.PrintJSON(listVoicesResponse)
+	return nil
 }
 
 func main() {
@@ -89,8 +91,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	GetVoicesList(ctx, ttsService)
-	TextSynthesize(ctx, ttsService)
+	if err = GetVoicesList(ctx, ttsService); err != nil {
+		log.Fatal(err)
+	}
+	if err = TextSynthesize(ctx, ttsService); err != nil {
+		log.Fatal(err)
+	}
 
 	fmt.Println("DONE")
 }
