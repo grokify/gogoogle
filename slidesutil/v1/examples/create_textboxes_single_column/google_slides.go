@@ -13,9 +13,9 @@ import (
 	"time"
 
 	//"github.com/grokify/gotilla/fmt/fmtutil"
-	"github.com/grokify/gotilla/image/colorutil"
-	ou "github.com/grokify/oauth2util"
-	oug "github.com/grokify/oauth2util/google"
+	"github.com/grokify/googleutil/slidesutil/v1"
+	ou "github.com/grokify/oauth2more"
+	oug "github.com/grokify/oauth2more/google"
 	"github.com/joho/godotenv"
 	"golang.org/x/net/context"
 	"google.golang.org/api/slides/v1"
@@ -55,7 +55,7 @@ type CreateShapeTextBoxRequestInfo struct {
 	BackgroundColorHex string
 }
 
-func (info *CreateShapeTextBoxRequestInfo) Requests([]*slides.Request, error) {
+func (info *CreateShapeTextBoxRequestInfo) Requests() ([]*slides.Request, error) {
 	requests := []*slides.Request{
 		{
 			CreateShape: &slides.CreateShapeRequest{
@@ -83,12 +83,12 @@ func (info *CreateShapeTextBoxRequestInfo) Requests([]*slides.Request, error) {
 			InsertText: &slides.InsertTextRequest{
 				ObjectId:       info.ObjectId,
 				InsertionIndex: 0,
-				Text:           text,
+				Text:           info.Text,
 			},
 		})
 	}
 
-	if len(info.ForegroundColorHex) {
+	if len(info.ForegroundColorHex) > 0 {
 
 	}
 	/*
@@ -218,11 +218,13 @@ func main() {
 	pageId := res.Slides[0].ObjectId
 	requests := []*slides.Request{}
 
-	fgColor, err := colorutil.GoogleSlidesRgbColorParseHex("#ffffff")
+	//fgColor, err := colorutil.GoogleSlidesRgbColorParseHex("#ffffff")
+	fgColor, err := slidesutil.ParseRgbColorHex("#ffffff")
 	if err != nil {
 		panic(err)
 	}
-	bgColor, err := colorutil.GoogleSlidesRgbColorParseHex("#4688f1")
+	//bgColor, err := colorutil.GoogleSlidesRgbColorParseHex("#4688f1")
+	bgColor, err := slidesutil.ParseRgbColorHex("#4688f1")
 	if err != nil {
 		panic(err)
 	}
