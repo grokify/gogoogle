@@ -77,6 +77,12 @@ func main() {
 			panic(err)
 		}
 
+		err = service.ExpandSheet(sheet, 20, 10)
+		if err != nil {
+			panic(err)
+			log.Fatal(err)
+		}
+
 		sheet.Update(3, 2, "Woza2")
 		err = sheet.Synchronize()
 		if err != nil {
