@@ -48,8 +48,8 @@ func NewRecognitionAudioFile(file string) (*speechpb.RecognitionAudio, error) {
 }
 
 func RecognizeResponseTextFirst(resp *speechpb.RecognizeResponse, threshold float32) (string, error) {
-	highestThreshold := 0.0
-	highestThresholdTranscript := ""
+	//highestThreshold := 0.0
+	//highestThresholdTranscript := ""
 	for _, result := range resp.Results {
 		for _, alt := range result.Alternatives {
 			trimmed := strings.TrimSpace(alt.Transcript)
@@ -114,7 +114,11 @@ func main() {
 			fmt.Printf("\"%v\" (confidence=%3f)\n", alt.Transcript, alt.Confidence)
 		}
 	}
-	fmt.Printf("FIRST: [%v]\n", RecognizeResponseTextFirst(resp, 0.5))
+	firstText, err := RecognizeResponseTextFirst(resp, 0.5)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("FIRST: [%v]\n", firstText)
 	fmt.Println("S5")
 	fmt.Println("DONE")
 }
