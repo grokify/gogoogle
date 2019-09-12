@@ -3,14 +3,13 @@ package main
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
 	"log"
-	"strings"
 
 	"github.com/grokify/gotilla/fmt/fmtutil"
 	"github.com/jessevdk/go-flags"
 	"google.golang.org/api/option"
 
+	"github.com/grokify/googleutil/speechtotext"
 	//gu "github.com/grokify/oauth2more/google"
 
 	speech "cloud.google.com/go/speech/apiv1"
@@ -33,37 +32,6 @@ type Args struct {
 	AudioFile string `short:"f" long:"file" description:"Path to audio file." required:"true"`
 }
 
-func NewRecognitionAudio(data []byte) *speechpb.RecognitionAudio {
-	return &speechpb.RecognitionAudio{
-		AudioSource: &speechpb.RecognitionAudio_Content{Content: data},
-	}
-}
-
-func NewRecognitionAudioFile(file string) (*speechpb.RecognitionAudio, error) {
-	data, err := ioutil.ReadFile(file)
-	if err != nil {
-		return nil, err
-	}
-	return NewRecognitionAudio(data), nil
-}
-
-func RecognizeResponseTextFirst(resp *speechpb.RecognizeResponse, threshold float32) (string, error) {
-	//highestThreshold := 0.0
-	//highestThresholdTranscript := ""
-	for _, result := range resp.Results {
-		for _, alt := range result.Alternatives {
-			trimmed := strings.TrimSpace(alt.Transcript)
-			if len(trimmed) > 0 {
-				if threshold == 0 ||
-					(threshold > 0 && alt.Confidence >= threshold) {
-					return trimmed, nil
-				}
-			}
-		}
-	}
-	return "", fmt.Errorf("No responses found")
-}
-
 func main() {
 	args := Args{}
 
@@ -82,7 +50,7 @@ func main() {
 
 	fmt.Println("S1")
 	// ffmpeg -i input.mp3 output.flac
-	audio, err := NewRecognitionAudioFile(args.AudioFile)
+	audio, err := speechtotext.NewRecognitionAudioFile(args.AudioFile)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -114,7 +82,7 @@ func main() {
 			fmt.Printf("\"%v\" (confidence=%3f)\n", alt.Transcript, alt.Confidence)
 		}
 	}
-	firstText, err := RecognizeResponseTextFirst(resp, 0.5)
+	firstText, err := speechtotext.RecognizeResponseTextFirst(resp, 0.5)
 	if err != nil {
 		log.Fatal(err)
 	}
