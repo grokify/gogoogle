@@ -32,7 +32,7 @@ func ParseRgbColorHex(hexColor string) (*slides.RgbColor, error) {
 func MustParseRgbColorHex(hexColor string) *slides.RgbColor {
 	c, err := ParseRgbColorHex(hexColor)
 	if err != nil {
-		panic(`colorful: Hex(` + quote(hexColor) + `): ` + err.Error())
+		panic(`ParseColor: Hex(` + quote(hexColor) + `): ` + err.Error())
 	}
 	return c
 }
