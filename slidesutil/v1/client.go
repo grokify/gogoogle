@@ -14,10 +14,10 @@ type GoogleSlidesService struct {
 	PresentationsService *slides.PresentationsService
 }
 
-func NewGoogleSlidesService(httpClient *http.Client) (GoogleSlidesService, error) {
+func NewGoogleSlidesService(httpClient *http.Client) (*GoogleSlidesService, error) {
 	gsc := GoogleSlidesService{}
 	err := gsc.SetHTTPClient(httpClient)
-	return gsc, err
+	return &gsc, err
 }
 
 func (gsc *GoogleSlidesService) SetHTTPClient(httpClient *http.Client) error {
