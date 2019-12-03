@@ -18,11 +18,11 @@ func NewCommonMarkData(cm string) CommonMarkData {
 	cmd := CommonMarkData{
 		text:  cm,
 		lines: Split(cm)}
-	cmd.inflate()
+	cmd.Inflate()
 	return cmd
 }
 
-func (cmd *CommonMarkData) inflate() {
+func (cmd *CommonMarkData) Inflate() {
 	prefix := int64(0)
 	for i, line := range cmd.lines {
 		line = InflateCommonMarkToGoogleSlides(line)
