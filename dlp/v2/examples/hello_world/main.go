@@ -44,10 +44,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	creds, err := gu.NewCredentialsFromFile(args.CredentialsFile)
+	credsContainer, err := gu.CredentialsContainerFromFile(args.CredentialsFile)
 	if err != nil {
 		log.Fatal(err)
 	}
+	creds := credsContainer.Credentials()
 
 	projectID := creds.ProjectID
 	input := "Hello World 680-26-5240"
