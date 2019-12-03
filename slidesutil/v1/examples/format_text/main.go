@@ -3,56 +3,16 @@
 package main
 
 import (
-	"os"
-
-	su "github.com/grokify/googleutil/slidesutil/v1"
-	"github.com/grokify/gotilla/config"
 	"github.com/grokify/gotilla/fmt/fmtutil"
-	omg "github.com/grokify/oauth2more/google"
-	"github.com/jessevdk/go-flags"
 	log "github.com/sirupsen/logrus"
 
 	"google.golang.org/api/slides/v1"
-	//"github.com/google/google-api-go-client/slides/v1"
+
+	slidesutilexamples "github.com/grokify/googleutil/slidesutil/v1/examples"
 )
 
-type Options struct {
-	EnvFile     string `short:"e" long:"env" description:"Env filepath"`
-	NewTokenRaw []bool `short:"n" long:"newtoken" description:"Retrieve new token"`
-}
-
-func (opt *Options) NewToken() bool {
-	if len(opt.NewTokenRaw) > 0 {
-		return true
-	}
-	return false
-}
-
-func setup() (*su.GoogleSlidesService, error) {
-	opts := Options{}
-	_, err := flags.Parse(&opts)
-	if err != nil {
-		return nil, err
-	}
-
-	err = config.LoadDotEnvFirst(opts.EnvFile, os.Getenv("ENV_PATH"))
-	if err != nil {
-		return nil, err
-	}
-
-	googleClient, err := omg.NewClientFileStoreWithDefaults(
-		[]byte(os.Getenv(omg.EnvGoogleAppCredentials)),
-		[]string{omg.ScopeDrive, omg.ScopePresentations},
-		opts.NewToken())
-	if err != nil {
-		return nil, err
-	}
-
-	return su.NewGoogleSlidesService(googleClient)
-}
-
 func main() {
-	gss, err := setup()
+	gss, err := slidesutilexamples.Setup()
 	if err != nil {
 		log.Fatal(err)
 	}
