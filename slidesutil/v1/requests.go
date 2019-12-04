@@ -12,6 +12,25 @@ const (
 	RangeTypeAll         string = "ALL"
 )
 
+func CreateSlideRequestLayout(predefinedLayout string) *slides.Request {
+	return &slides.Request{
+		CreateSlide: &slides.CreateSlideRequest{
+			SlideLayoutReference: &slides.LayoutReference{
+				PredefinedLayout: predefinedLayout,
+			},
+		},
+	}
+}
+
+func InsertTextRequest(objectID, text string) *slides.Request {
+	return &slides.Request{
+		InsertText: &slides.InsertTextRequest{
+			ObjectId: objectID,
+			Text:     text,
+		},
+	}
+}
+
 func UpdateTextStyleRequestBold(objectID string, startIdx, endIdx int64) *slides.Request {
 	return &slides.Request{
 		UpdateTextStyle: &slides.UpdateTextStyleRequest{
