@@ -5,6 +5,7 @@ import (
 )
 
 const (
+	LayoutMainPoint      string = "MAIN_POINT"
 	LayoutTitleAndBody   string = "TITLE_AND_BODY"
 	RangeTypeUnspecified string = "RANGE_TYPE_UNSPECIFIED"
 	RangeTypeFixedRange  string = "FIXED_RANGE"
