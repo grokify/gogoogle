@@ -1,5 +1,9 @@
 // Formatting text with the Google Slides API
 // Video: https://www.youtube.com/watch?v=_O2aUCJyCoQ
+// This intentially does not use any of the helpers
+// in https://github.com/grokify/googleutil/slidesutil/v1/
+// See the `examples/format_markdown` for how to use
+// the slidesutil request helpers.
 package main
 
 import (
