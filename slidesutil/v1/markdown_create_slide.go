@@ -22,7 +22,7 @@ func CreateSlideMarkdown(srv *slides.Service, psv *slides.PresentationsService, 
 
 	if 1 == 0 {
 		slideID := resp1.Replies[0].CreateSlide.ObjectId
-		fmt.Println("CREATED SLIDE [%v]\n", slideID)
+		fmt.Printf("CREATED SLIDE [%v]\n", slideID)
 	}
 	//log.Infof("Created SlideID: %v\n", slideID)
 	//log.Info(`== Fetch "main point" slide title (textbox) ID`)
