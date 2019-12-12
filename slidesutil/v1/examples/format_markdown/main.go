@@ -16,7 +16,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	srv := gss.SlidesSerivce
 	psv := gss.PresentationsService
 
@@ -27,7 +26,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = slidesutil.CreateSlideMarkdown(srv, psv, presentationID, "Markdown Test Slide Quick", Markdown)
+
+	err = slidesutil.CreateSlideMarkdown(srv, psv,
+		presentationID, "Markdown Test Slide", Markdown)
 	if err != nil {
 		log.Fatal(err)
 	}
