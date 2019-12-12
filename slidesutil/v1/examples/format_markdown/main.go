@@ -3,10 +3,8 @@
 package main
 
 import (
-	su "github.com/grokify/googleutil/slidesutil/v1"
-	"github.com/grokify/gotilla/fmt/fmtutil"
+	"github.com/grokify/googleutil/slidesutil/v1"
 	log "github.com/sirupsen/logrus"
-	"google.golang.org/api/slides/v1"
 
 	slidesutilexamples "github.com/grokify/googleutil/slidesutil/v1/examples"
 )
@@ -22,65 +20,17 @@ func main() {
 	srv := gss.SlidesSerivce
 	psv := gss.PresentationsService
 
-	pres := &slides.Presentation{Title: "Slides markdown formatting DEMO"}
-	rsp1, err := psv.Create(pres).Do()
+	presentationID, err := slidesutil.CreatePresentation(srv, psv,
+		"Slides markdown formatting DEMO",
+		"Formatting Markdown",
+		"via the Google Slides API")
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = slidesutil.CreateSlideMarkdown(srv, psv, presentationID, "Markdown Test Slide Quick", Markdown)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	deckID := rsp1.PresentationId
-	titleSlide := rsp1.Slides[0]
-	titleID := titleSlide.PageElements[0].ObjectId
-	subtitleID := titleSlide.PageElements[1].ObjectId
-	log.Infof("PresentationID: %v\nTitleID: %v\nSubtitleID: %v\n", deckID, titleID, subtitleID)
-
-	log.Info(`== Create "main point" layout slide & add titles `)
-	reqs := []*slides.Request{
-		su.CreateSlideRequestLayout(su.LayoutTitleAndBody),
-		su.InsertTextRequest(titleID, "Formatting Markdown"),
-		su.InsertTextRequest(subtitleID, "via the Google Slides API")}
-
-	rsp2, err := psv.BatchUpdate(
-		deckID,
-		&slides.BatchUpdatePresentationRequest{Requests: reqs}).Do()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmtutil.PrintJSON(rsp2)
-
-	slideID := rsp2.Replies[0].CreateSlide.ObjectId
-	log.Infof("Created SlideID: %v\n", slideID)
-
-	log.Info(`== Fetch "main point" slide title (textbox) ID`)
-	presentation, err := srv.Presentations.Get(deckID).Do()
-	fmtutil.PrintJSON(presentation)
-	if err != nil {
-		log.Fatal(err)
-	}
-	newSlide := presentation.Slides[len(presentation.Slides)-1]
-	fmtutil.PrintJSON(presentation.Slides)
-
-	newSlideTitleID := newSlide.PageElements[0].ObjectId
-	textboxID := newSlide.PageElements[1].ObjectId
-
-	log.Info("== Insert text & perform various formatting operations")
-
-	cm := su.NewCommonMarkData(Markdown)
-	cm.Inflate()
-	fmtutil.PrintJSON(cm.Lines())
-
-	reqs = su.CommonMarkDataToRequests(textboxID, cm)
-	reqs = append(
-		reqs,
-		su.InsertTextRequest(newSlideTitleID, "Markdown Test Slide"))
-	fmtutil.PrintJSON(reqs)
-
-	_, err = psv.BatchUpdate(
-		deckID,
-		&slides.BatchUpdatePresentationRequest{Requests: reqs}).Do()
-	if err != nil {
-		log.Fatal(err)
-	}
 	log.Info("DONE")
 }
