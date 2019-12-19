@@ -9,7 +9,7 @@ import (
 
 // CreateSlideMarkdown creates a slide using Markdown
 // given a PresentationID, title, and markdown body.
-func CreateSlideMarkdown(srv *slides.Service, psv *slides.PresentationsService, presentationID, titleText, bodyMarkdown string) error {
+func CreateSlideMarkdown(srv *slides.Service, psv *slides.PresentationsService, presentationID, titleText, bodyMarkdown string, underline bool) error {
 	reqs1 := []*slides.Request{
 		CreateSlideRequestLayout(LayoutTitleAndBody)}
 
@@ -41,10 +41,21 @@ func CreateSlideMarkdown(srv *slides.Service, psv *slides.PresentationsService, 
 	cm.Inflate()
 	//fmtutil.PrintJSON(cm.Lines())
 
-	reqs2 := CommonMarkDataToRequests(newSlideBodyTextboxID, cm)
+	reqs2 := CommonMarkDataToRequests(newSlideBodyTextboxID, cm, underline)
 	reqs2 = append(
 		reqs2,
 		InsertTextRequest(newSlideTitleID, titleText))
+	lineCount := cm.LineCount()
+	fmt.Printf("LINE_COUNT [%v]\n", lineCount)
+	// 22
+	if lineCount > 15 {
+		reqs2 = append(
+			reqs2,
+			UpdateTextStyleRequestFontSizePT(newSlideBodyTextboxID, float64(8)),
+			UpdateParagraphStyleRequestLineSpacing(newSlideBodyTextboxID, float64(100)),
+		)
+	}
+	//panic("Z")
 	//fmtutil.PrintJSON(reqs2)
 
 	_, err = psv.BatchUpdate(

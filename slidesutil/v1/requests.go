@@ -52,6 +52,13 @@ func UpdateTextStyleRequestBullet(objectID string, startIdx, endIdx int64) *slid
 	}
 }
 
+func UpdateTextStyleRequestFontSizePT(objectID string, pointSize float64) *slides.Request {
+	return UpdateTextStyleRequestFontSize(objectID,
+		slides.Dimension{
+			Magnitude: pointSize,
+			Unit:      "PT"})
+}
+
 func UpdateTextStyleRequestFontSize(objectID string, dimension slides.Dimension) *slides.Request {
 	return &slides.Request{
 		UpdateTextStyle: &slides.UpdateTextStyleRequest{
@@ -62,13 +69,41 @@ func UpdateTextStyleRequestFontSize(objectID string, dimension slides.Dimension)
 	}
 }
 
-func UpdateTextStyleRequestLinkURL(objectID, url string, textRange *slides.Range) *slides.Request {
+func UpdateParagraphStyleRequestLineSpacing(objectID string, lineSpacing float64) *slides.Request {
+	return &slides.Request{
+		UpdateParagraphStyle: &slides.UpdateParagraphStyleRequest{
+			ObjectId: objectID,
+			Style: &slides.ParagraphStyle{
+				LineSpacing: lineSpacing,
+			},
+			Fields: "lineSpacing",
+		},
+	}
+}
+
+/*
+func OptionalColorHex() {
+	c := &slides.OptionalColor{
+		OpaqueColor: &slides.OpaqueColor{
+			RgbColor: &slides.RgbColor{},
+		},
+	}
+}
+*/
+func UpdateTextStyleRequestLinkURL(objectID, url string, textRange *slides.Range, underline bool) *slides.Request {
+	optionalColor, err := OptionalColorParseHex("#666666")
+	if err != nil {
+		panic(err)
+	}
 	return &slides.Request{
 		UpdateTextStyle: &slides.UpdateTextStyleRequest{
 			ObjectId:  objectID,
 			TextRange: textRange,
-			Style:     &slides.TextStyle{Link: &slides.Link{Url: url}},
-			Fields:    "link",
+			Style: &slides.TextStyle{
+				ForegroundColor: optionalColor,
+				Link:            &slides.Link{Url: url},
+				Underline:       false},
+			Fields: "link,underline,foregroundColor",
 		},
 	}
 }
