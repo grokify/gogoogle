@@ -1,9 +1,8 @@
 package slidesutil
 
 import (
-	"fmt"
-
 	"github.com/grokify/gotilla/fmt/fmtutil"
+	log "github.com/sirupsen/logrus"
 	"google.golang.org/api/slides/v1"
 )
 
@@ -22,9 +21,8 @@ func CreateSlideMarkdown(srv *slides.Service, psv *slides.PresentationsService, 
 
 	if 1 == 0 {
 		slideID := resp1.Replies[0].CreateSlide.ObjectId
-		fmt.Printf("CREATED SLIDE [%v]\n", slideID)
+		log.Infof("CREATED SLIDE [%v]\n", slideID)
 	}
-	//log.Infof("Created SlideID: %v\n", slideID)
 	//log.Info(`== Fetch "main point" slide title (textbox) ID`)
 	presentation, err := srv.Presentations.Get(presentationID).Do()
 	fmtutil.PrintJSON(presentation)
@@ -45,9 +43,8 @@ func CreateSlideMarkdown(srv *slides.Service, psv *slides.PresentationsService, 
 	reqs2 = append(
 		reqs2,
 		InsertTextRequest(newSlideTitleID, titleText))
+
 	lineCount := cm.LineCount()
-	fmt.Printf("LINE_COUNT [%v]\n", lineCount)
-	// 22
 	if lineCount > 15 {
 		reqs2 = append(
 			reqs2,
@@ -55,9 +52,6 @@ func CreateSlideMarkdown(srv *slides.Service, psv *slides.PresentationsService, 
 			UpdateParagraphStyleRequestLineSpacing(newSlideBodyTextboxID, float64(100)),
 		)
 	}
-	//panic("Z")
-	//fmtutil.PrintJSON(reqs2)
-
 	_, err = psv.BatchUpdate(
 		presentationID,
 		&slides.BatchUpdatePresentationRequest{Requests: reqs2}).Do()
