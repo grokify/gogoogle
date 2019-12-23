@@ -128,7 +128,7 @@ func GoogleSlideDrawRoadmap(pageId string, srcCan roadmap.Canvas, outCan SlideCa
 			//panic("Z")
 			elementId := fmt.Sprintf("AutoBox%03d", idx)
 			requests = append(requests, TextBoxRequestsSimple(
-				pageId, elementId, el.Name, outCan.BoxFgColor, outCan.BoxBgColor,
+				pageId, elementId, el.NameShort, outCan.BoxFgColor, outCan.BoxBgColor,
 				loc.OutBoxWdtX, outCan.BoxHeight, loc.OutBoxMinX, rowYWatermark)...)
 			idx++
 			//break
