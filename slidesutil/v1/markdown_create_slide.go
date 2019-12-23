@@ -8,7 +8,7 @@ import (
 
 // CreateSlideMarkdown creates a slide using Markdown
 // given a PresentationID, title, and markdown body.
-func CreateSlideMarkdown(srv *slides.Service, psv *slides.PresentationsService, presentationID, titleText, bodyMarkdown string, underline bool) error {
+func CreateSlideMarkdown(srv *slides.Service, psv *slides.PresentationsService, presentationID, titleText, bodyMarkdown string, underlineLinks bool) error {
 	reqs1 := []*slides.Request{
 		CreateSlideRequestLayout(LayoutTitleAndBody)}
 
@@ -39,7 +39,7 @@ func CreateSlideMarkdown(srv *slides.Service, psv *slides.PresentationsService, 
 	cm.Inflate()
 	//fmtutil.PrintJSON(cm.Lines())
 
-	reqs2 := CommonMarkDataToRequests(newSlideBodyTextboxID, cm, underline)
+	reqs2 := CommonMarkDataToRequests(newSlideBodyTextboxID, cm, underlineLinks)
 	reqs2 = append(
 		reqs2,
 		InsertTextRequest(newSlideTitleID, titleText))

@@ -90,7 +90,7 @@ func OptionalColorHex() {
 	}
 }
 */
-func UpdateTextStyleRequestLinkURL(objectID, url string, textRange *slides.Range, underline bool) *slides.Request {
+func UpdateTextStyleRequestLinkURL(objectID, url string, textRange *slides.Range, underlineLinks bool) *slides.Request {
 	optionalColor, err := OptionalColorParseHex("#666666")
 	if err != nil {
 		panic(err)
@@ -102,7 +102,7 @@ func UpdateTextStyleRequestLinkURL(objectID, url string, textRange *slides.Range
 			Style: &slides.TextStyle{
 				ForegroundColor: optionalColor,
 				Link:            &slides.Link{Url: url},
-				Underline:       false},
+				Underline:       underlineLinks},
 			Fields: "link,underline,foregroundColor",
 		},
 	}

@@ -134,7 +134,7 @@ func LineStartEndIndexes(cml TextLine, priorLength int64) (int64, int64) {
 	return start, finish
 }
 
-func CommonMarkDataToRequests(textboxID string, cmd CommonMarkData, underline bool) []*slides.Request {
+func CommonMarkDataToRequests(textboxID string, cmd CommonMarkData, underlineLinks bool) []*slides.Request {
 	reqs := []*slides.Request{
 		{
 			InsertText: &slides.InsertTextRequest{
@@ -152,7 +152,7 @@ func CommonMarkDataToRequests(textboxID string, cmd CommonMarkData, underline bo
 			reqs = append(reqs, UpdateTextStyleRequestBullet(textboxID, line.GoogleIndexStart, line.GoogleIndexEnd))
 		}
 		for _, linkInfo := range line.Links {
-			reqs = append(reqs, UpdateTextStyleRequestLinkURL(textboxID, linkInfo.URL, linkInfo.Range, underline))
+			reqs = append(reqs, UpdateTextStyleRequestLinkURL(textboxID, linkInfo.URL, linkInfo.Range, underlineLinks))
 		}
 	}
 	if 1 == 0 {

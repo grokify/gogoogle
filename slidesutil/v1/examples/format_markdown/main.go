@@ -28,7 +28,7 @@ func main() {
 	}
 
 	err = slidesutil.CreateSlideMarkdown(srv, psv,
-		presentationID, "Markdown Test Slide", Markdown)
+		presentationID, "Markdown Test Slide", Markdown, false)
 	if err != nil {
 		log.Fatal(err)
 	}
