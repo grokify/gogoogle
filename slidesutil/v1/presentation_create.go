@@ -1,6 +1,10 @@
 package slidesutil
 
 import (
+	"fmt"
+	"net/http"
+
+	"github.com/pkg/errors"
 	"google.golang.org/api/slides/v1"
 )
 
@@ -35,4 +39,44 @@ func CreatePresentation(srv *slides.Service, psv *slides.PresentationsService,
 		}
 	}
 	return presentationID, nil
+}
+
+func CreatePresentationEmpty(googleClient *http.Client, slideName string) (string, error) {
+	gss, err := NewGoogleSlidesService(googleClient)
+	if err != nil {
+		return "", errors.Wrap(err, "CreateRoadmapSlide - slidesutil.NewGoogleSlidesService()")
+	}
+	psv := gss.PresentationsService
+
+	pres := &slides.Presentation{Title: slideName}
+	res, err := psv.Create(pres).Do()
+	if err != nil {
+		return "", errors.Wrap(err, "CreateRoadmapSlide - psv.Create(pres).Do()")
+	}
+
+	fmt.Printf("CREATED Presentation with Id %v\n", res.PresentationId)
+
+	if 1 == 0 {
+		for i, slide := range res.Slides {
+			fmt.Printf("- Slide #%d id %v contains %d elements.\n", (i + 1),
+				slide.ObjectId,
+				len(slide.PageElements))
+		}
+	}
+
+	pageId := res.Slides[0].ObjectId
+
+	requests := []*slides.Request{
+		{
+			DeleteObject: &slides.DeleteObjectRequest{ObjectId: pageId},
+		},
+	}
+	breq := &slides.BatchUpdatePresentationRequest{
+		Requests: requests,
+	}
+	_, err = psv.BatchUpdate(res.PresentationId, breq).Do() // resu
+	if err != nil {
+		return "", errors.Wrap(err, "CreateRoadmapSlide - psv.BatchUpdate(res.PresentationId, breq).Do()")
+	}
+	return res.PresentationId, nil
 }
