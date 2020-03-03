@@ -1,7 +1,6 @@
 package slidesutil
 
 import (
-	"github.com/grokify/gotilla/fmt/fmtutil"
 	"google.golang.org/api/slides/v1"
 )
 
@@ -18,16 +17,12 @@ func CreateSlideTitleOnly(srv *slides.Service, psv *slides.PresentationsService,
 	}
 
 	slideID := resp1.Replies[0].CreateSlide.ObjectId
-	//log.Infof("CREATED SLIDE [%v]\n", slideID)
-	//log.Info(`== Fetch "main point" slide title (textbox) ID`)
 	presentation, err := srv.Presentations.Get(presentationID).Do()
-	fmtutil.PrintJSON(presentation)
 	if err != nil {
 		return slideID, err
 	}
-	newSlide := presentation.Slides[len(presentation.Slides)-1]
-	fmtutil.PrintJSON(presentation.Slides)
 
+	newSlide := presentation.Slides[len(presentation.Slides)-1]
 	newSlideTitleID := newSlide.PageElements[0].ObjectId
 
 	_, err = psv.BatchUpdate(
