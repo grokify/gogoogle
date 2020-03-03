@@ -21,7 +21,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	srv := gss.SlidesSerivce
+	srv := gss.SlidesService
 	psv := gss.PresentationsService
 
 	pres := &slides.Presentation{Title: "Slides text formatting DEMO"}

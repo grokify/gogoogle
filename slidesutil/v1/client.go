@@ -10,7 +10,7 @@ import (
 
 type GoogleSlidesService struct {
 	httpClient           *http.Client
-	SlidesSerivce        *slides.Service
+	SlidesService        *slides.Service
 	PresentationsService *slides.PresentationsService
 }
 
@@ -29,7 +29,7 @@ func (gsc *GoogleSlidesService) SetHTTPClient(httpClient *http.Client) error {
 	if err != nil {
 		return errors.Wrap(err, "Unable to create slides.Service")
 	}
-	gsc.SlidesSerivce = service
+	gsc.SlidesService = service
 	gsc.PresentationsService = slides.NewPresentationsService(service)
 	return nil
 }

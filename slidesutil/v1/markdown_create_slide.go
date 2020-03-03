@@ -9,8 +9,7 @@ import (
 // CreateSlideMarkdown creates a slide using Markdown
 // given a PresentationID, title, and markdown body.
 func CreateSlideMarkdown(srv *slides.Service, psv *slides.PresentationsService, presentationID, titleText, bodyMarkdown string, underlineLinks bool) error {
-	reqs1 := []*slides.Request{
-		CreateSlideRequestLayout(LayoutTitleAndBody)}
+	reqs1 := []*slides.Request{CreateSlideRequestLayout(LayoutTitleAndBody)}
 
 	resp1, err := psv.BatchUpdate(
 		presentationID,

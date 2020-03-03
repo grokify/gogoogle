@@ -16,7 +16,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	srv := gss.SlidesSerivce
+	srv := gss.SlidesService
 	psv := gss.PresentationsService
 
 	presentationID, err := slidesutil.CreatePresentation(srv, psv,
