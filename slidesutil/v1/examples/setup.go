@@ -3,12 +3,17 @@
 package slidesutilexamples
 
 import (
+	"context"
+	"net/http"
 	"os"
 
 	su "github.com/grokify/googleutil/slidesutil/v1"
 	"github.com/grokify/gotilla/config"
+	ou "github.com/grokify/oauth2more"
 	omg "github.com/grokify/oauth2more/google"
+	oug "github.com/grokify/oauth2more/google"
 	"github.com/jessevdk/go-flags"
+	"google.golang.org/api/slides/v1"
 	//"github.com/google/google-api-go-client/slides/v1"
 )
 
@@ -45,4 +50,20 @@ func Setup() (*su.GoogleSlidesService, error) {
 	}
 
 	return su.NewGoogleSlidesService(googleClient)
+}
+
+func NewGoogleHTTPClient(forceNewToken bool) (*http.Client, error) {
+	conf, err := oug.ConfigFromEnv(oug.ClientSecretEnv,
+		[]string{slides.DriveScope, slides.PresentationsScope})
+	if err != nil {
+		return nil, err
+	}
+
+	tokenFile := "slides.googleapis.com-go-quickstart.json"
+	tokenStore, err := ou.NewTokenStoreFileDefault(tokenFile, true, 0700)
+	if err != nil {
+		return nil, err
+	}
+
+	return ou.NewClientWebTokenStore(context.Background(), conf, tokenStore, forceNewToken)
 }
