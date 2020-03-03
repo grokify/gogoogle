@@ -4,15 +4,6 @@ import (
 	"google.golang.org/api/slides/v1"
 )
 
-const (
-	LayoutMainPoint      string = "MAIN_POINT"
-	LayoutTitleAndBody   string = "TITLE_AND_BODY"
-	RangeTypeUnspecified string = "RANGE_TYPE_UNSPECIFIED"
-	RangeTypeFixedRange  string = "FIXED_RANGE"
-	RangeTypeStartIndex  string = "FROM_START_INDEX"
-	RangeTypeAll         string = "ALL"
-)
-
 func CreateSlideRequestLayout(predefinedLayout string) *slides.Request {
 	return &slides.Request{
 		CreateSlide: &slides.CreateSlideRequest{
