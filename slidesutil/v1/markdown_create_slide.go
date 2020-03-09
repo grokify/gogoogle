@@ -29,7 +29,6 @@ func CreateSlideMarkdown(srv *slides.Service, psv *slides.PresentationsService, 
 		return err
 	}
 	newSlide := presentation.Slides[len(presentation.Slides)-1]
-	fmtutil.PrintJSON(presentation.Slides)
 
 	newSlideTitleID := newSlide.PageElements[0].ObjectId
 	newSlideBodyTextboxID := newSlide.PageElements[1].ObjectId
