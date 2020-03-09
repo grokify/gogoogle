@@ -3,23 +3,25 @@
 package main
 
 import (
+	"github.com/grokify/googleutil/auth"
 	"github.com/grokify/googleutil/slidesutil/v1"
 	log "github.com/sirupsen/logrus"
-
-	slidesutilexamples "github.com/grokify/googleutil/slidesutil/v1/examples"
 )
 
 const Markdown = "Foo\n* [**Foo**](https://example.com/foo)\n* [**Bar**](http://example.com/bar)\nBar\n* **Foo**\n* **Bar**\n    * Baz"
 
 func main() {
-	gss, err := slidesutilexamples.Setup()
+	googHttpClient, err := auth.Setup()
 	if err != nil {
 		log.Fatal(err)
 	}
-	srv := gss.SlidesService
-	psv := gss.PresentationsService
 
-	presentationID, err := slidesutil.CreatePresentation(srv, psv,
+	slidesClient, err := slidesutil.NewSlidesClient(googHttpClient)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	presentationID, err := slidesClient.CreatePresentation(
 		"Slides markdown formatting DEMO",
 		"Formatting Markdown",
 		"via the Google Slides API")
@@ -27,7 +29,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	err = slidesutil.CreateSlideMarkdown(srv, psv,
+	err = slidesClient.CreateSlideMarkdown(
 		presentationID, "Markdown Test Slide", Markdown, false)
 	if err != nil {
 		log.Fatal(err)

@@ -48,6 +48,14 @@ func NewSlidesClient(googHttpClient *http.Client) (*SlidesClient, error) {
 	return sc, nil
 }
 
+func (sc *SlidesClient) CreatePresentation(
+	filename, titleText, subtitleText string) (string, error) {
+	return CreatePresentation(
+		sc.GoogleSlidesService.SlidesService,
+		sc.GoogleSlidesService.PresentationsService,
+		filename, titleText, subtitleText)
+}
+
 func (sc *SlidesClient) CreateEmptyPresentation(name string) (string, error) {
 	return CreateEmptyPresentation(
 		sc.GoogleSlidesService.PresentationsService, name)
@@ -68,4 +76,11 @@ func (sc *SlidesClient) CreateSlideTitleAndBody(presentationId string, filename 
 		sc.GoogleSlidesService.PresentationsService,
 		presentationId,
 		filename)
+}
+
+func (sc *SlidesClient) CreateSlideMarkdown(presentationID, titleText, bodyMarkdown string, underlineLinks bool) error {
+	return CreateSlideMarkdown(
+		sc.GoogleSlidesService.SlidesService,
+		sc.GoogleSlidesService.PresentationsService,
+		presentationID, titleText, bodyMarkdown, underlineLinks)
 }

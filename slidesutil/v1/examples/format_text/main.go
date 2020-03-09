@@ -12,14 +12,22 @@ import (
 
 	"google.golang.org/api/slides/v1"
 
-	slidesutilexamples "github.com/grokify/googleutil/slidesutil/v1/examples"
+	"github.com/grokify/googleutil/auth"
+	"github.com/grokify/googleutil/slidesutil/v1"
 )
 
 func main() {
-	gss, err := slidesutilexamples.Setup()
+	googHttpClient, err := auth.Setup()
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	slidesClient, err := slidesutil.NewSlidesClient(googHttpClient)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	gss := slidesClient.GoogleSlidesService
 
 	srv := gss.SlidesService
 	psv := gss.PresentationsService
