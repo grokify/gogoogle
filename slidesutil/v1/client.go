@@ -65,8 +65,7 @@ func (sc *SlidesClient) CreateEmptyPresentation(name string) (string, error) {
 // less verbose.
 func (sc *SlidesClient) BatchUpdate(presentationId string, batchupdatepresentationrequest *slides.BatchUpdatePresentationRequest) *slides.PresentationsBatchUpdateCall {
 	return sc.GoogleSlidesService.PresentationsService.BatchUpdate(
-		presentationId,
-		batchupdatepresentationrequest)
+		presentationId, batchupdatepresentationrequest)
 }
 
 // CreateSlideTitleAndBody is a convenience function.
@@ -74,8 +73,7 @@ func (sc *SlidesClient) CreateSlideTitleAndBody(presentationId string, filename 
 	return CreateSlideTitleAndBody(
 		sc.GoogleSlidesService.SlidesService,
 		sc.GoogleSlidesService.PresentationsService,
-		presentationId,
-		filename)
+		presentationId, filename)
 }
 
 func (sc *SlidesClient) CreateSlideMarkdown(presentationID, titleText, bodyMarkdown string, underlineLinks bool) error {
