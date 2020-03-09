@@ -11,8 +11,8 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/grokify/googleutil/auth"
 	"github.com/grokify/googleutil/slidesutil/v1"
-	slidesutilexamples "github.com/grokify/googleutil/slidesutil/v1/examples"
 	"google.golang.org/api/slides/v1"
 )
 
@@ -20,13 +20,14 @@ func main() {
 	imageURL := "http://11111111.ngrok.io/logo_google_slides.png"
 	imageURL = "http://11111111.ngrok.io/chart.png"
 
-	gss, err := slidesutilexamples.Setup()
+	gss, err := auth.Setup()
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	presentationID, err := slidesutil.CreateEmptyPresentation(gss.PresentationsService, "Test Image")
 	if err != nil {
+		err = auth.WrapError(err)
 		log.Fatal(err)
 	}
 	slideID, err := slidesutil.CreateSlideTitleOnly(

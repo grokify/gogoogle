@@ -1,11 +1,13 @@
 // Formatting text with the Google Slides API
 // Video: https://www.youtube.com/watch?v=_O2aUCJyCoQ
-package slidesutilexamples
+package auth
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"os"
+	"strings"
 
 	su "github.com/grokify/googleutil/slidesutil/v1"
 	"github.com/grokify/gotilla/config"
@@ -21,6 +23,11 @@ type Options struct {
 	EnvFile     string `short:"e" long:"env" description:"Env filepath"`
 	NewTokenRaw []bool `short:"n" long:"newtoken" description:"Retrieve new token"`
 }
+
+const (
+	apiErrorTokenExpired = "oauth2: token expired and refresh token is not set"
+	apiCliTokenRefresh   = ": use `-n` option to refresh token."
+)
 
 func (opt *Options) NewToken() bool {
 	if len(opt.NewTokenRaw) > 0 {
@@ -65,5 +72,18 @@ func NewGoogleHTTPClient(forceNewToken bool) (*http.Client, error) {
 		return nil, err
 	}
 
-	return ou.NewClientWebTokenStore(context.Background(), conf, tokenStore, forceNewToken)
+	client, err := ou.NewClientWebTokenStore(context.Background(), conf, tokenStore, forceNewToken)
+	if err != nil {
+		panic(err)
+		return nil, err
+	}
+	return client, err
+}
+
+// WrapError adds CLI instructions to refresh the auth token.
+func WrapError(err error) error {
+	if strings.Index(err.Error(), apiErrorTokenExpired) > -1 {
+		err = fmt.Errorf("%s%s", err.Error(), apiCliTokenRefresh)
+	}
+	return err
 }
