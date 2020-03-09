@@ -23,12 +23,12 @@ func main() {
 	name := "Test Image " + time.Now().Format(time.RFC3339)
 	imageID := "MyImageId_01"
 
-	httpClient, err := auth.Setup()
+	googHttpClient, err := auth.Setup()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	slidesClient, err := slidesutil.NewSlidesClient(httpClient)
+	slidesClient, err := slidesutil.NewSlidesClient(googHttpClient)
 	if err != nil {
 		log.Fatal(err)
 	}
