@@ -9,7 +9,6 @@ import (
 	"os"
 	"strings"
 
-	su "github.com/grokify/googleutil/slidesutil/v1"
 	"github.com/grokify/gotilla/config"
 	ou "github.com/grokify/oauth2more"
 	omg "github.com/grokify/oauth2more/google"
@@ -36,7 +35,7 @@ func (opt *Options) NewToken() bool {
 	return false
 }
 
-func Setup() (*su.GoogleSlidesService, error) {
+func Setup() (*http.Client, error) {
 	opts := Options{}
 	_, err := flags.Parse(&opts)
 	if err != nil {
@@ -55,8 +54,7 @@ func Setup() (*su.GoogleSlidesService, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	return su.NewGoogleSlidesService(googleClient)
+	return googleClient, nil
 }
 
 func NewGoogleHTTPClient(forceNewToken bool) (*http.Client, error) {

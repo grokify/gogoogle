@@ -10,6 +10,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/grokify/googleutil/auth"
 	"github.com/grokify/googleutil/slidesutil/v1"
@@ -19,24 +20,45 @@ import (
 func main() {
 	imageURL := "http://11111111.ngrok.io/logo_google_slides.png"
 	imageURL = "http://11111111.ngrok.io/chart.png"
+	name := "Test Image " + time.Now().Format(time.RFC3339)
+	imageID := "MyImageId_01"
 
-	gss, err := auth.Setup()
+	httpClient, err := auth.Setup()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	presentationID, err := slidesutil.CreateEmptyPresentation(gss.PresentationsService, "Test Image")
+	slidesClient, err := slidesutil.NewSlidesClient(httpClient)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	presentationID, err := slidesClient.CreateEmptyPresentation(name)
 	if err != nil {
 		err = auth.WrapError(err)
 		log.Fatal(err)
 	}
-	slideID, err := slidesutil.CreateSlideTitleOnly(
-		gss.SlidesService, gss.PresentationsService,
-		presentationID, "Test Image")
 
-	imageID := "MyImageId_01"
+	slideID, err := slidesClient.CreateSlideTitleAndBody(presentationID, name)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	requests := CreateSlideRequests(slideID, imageID, imageURL)
+	breq := &slides.BatchUpdatePresentationRequest{
+		Requests: requests,
+	}
+
+	resu, err := slidesClient.BatchUpdate(presentationID, breq).Do()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(resu.PresentationId)
+	fmt.Println("DONE")
+}
+
+func CreateSlideRequests(slideID, imageID, imageURL string) []*slides.Request {
 	emu4M := slides.Dimension{Magnitude: 6000000, Unit: "EMU"}
-
 	requests := []*slides.Request{
 		{
 			CreateImage: &slides.CreateImageRequest{
@@ -46,26 +68,16 @@ func main() {
 					PageObjectId: slideID,
 					Size: &slides.Size{
 						Height: &emu4M,
-						Width:  &emu4M,
-					},
+						Width:  &emu4M},
 					Transform: &slides.AffineTransform{
-						ScaleX:     1.0,
-						ScaleY:     1.0,
-						TranslateX: 100000.0,
-						TranslateY: 100000.0,
-						Unit:       "EMU",
-					},
+						ScaleX:     1.15,
+						ScaleY:     1.15,
+						TranslateX: 400000.0,
+						TranslateY: -300000.0,
+						Unit:       "EMU"},
 				},
 			},
 		},
 	}
-	breq := &slides.BatchUpdatePresentationRequest{
-		Requests: requests,
-	}
-
-	resu, err := gss.PresentationsService.BatchUpdate(presentationID, breq).Do()
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(resu.PresentationId)
+	return requests
 }
