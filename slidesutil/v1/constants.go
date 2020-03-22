@@ -1,6 +1,9 @@
 package slidesutil
 
 const (
+	UnitUnspecified                  = "UNIT_UNSPECIFIED"              // The units are unknown.
+	UnitEMU                          = "EMU"                           // An English Metric Unit (EMU) is defined as 1/360,000 of a centimeter
+	UnitPT                           = "PT"                            // A point, 1/72 of an inch.
 	LayoutUnspecified                = "PREDEFINED_LAYOUT_UNSPECIFIED" // Unspecified layout.
 	LayoutBlank                      = "BLANK"                         // Blank layout, with no placeholders.
 	LayoutCaptionOnly                = "CAPTION_ONLY"                  // Layout with a caption at the bottom.
@@ -13,9 +16,8 @@ const (
 	LayoutOneColumnText              = "ONE_COLUMN_TEXT"               // Layout with one title and one body, arranged in a single column.
 	LayoutMainPoint                  = "MAIN_POINT"                    // Layout with a main point.
 	LayoutBigNumber                  = "BIG_NUMBER"                    // Layout with a big number heading.
-
-	RangeTypeUnspecified string = "RANGE_TYPE_UNSPECIFIED"
-	RangeTypeFixedRange  string = "FIXED_RANGE"
-	RangeTypeStartIndex  string = "FROM_START_INDEX"
-	RangeTypeAll         string = "ALL"
+	RangeTypeUnspecified             = "RANGE_TYPE_UNSPECIFIED"
+	RangeTypeFixedRange              = "FIXED_RANGE"
+	RangeTypeStartIndex              = "FROM_START_INDEX"
+	RangeTypeAll                     = "ALL"
 )

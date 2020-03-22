@@ -23,6 +23,7 @@ func main() {
 	name := "Test Image " + time.Now().Format(time.RFC3339)
 	imageID := "MyImageId_01"
 
+	// Requires Drive and Presentations Scopes
 	googHttpClient, err := auth.Setup()
 	if err != nil {
 		log.Fatal(err)
