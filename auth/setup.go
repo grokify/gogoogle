@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/grokify/gotilla/config"
+	"github.com/grokify/gotilla/type/stringsutil"
 	ou "github.com/grokify/oauth2more"
 	omg "github.com/grokify/oauth2more/google"
 	oug "github.com/grokify/oauth2more/google"
@@ -47,14 +48,10 @@ func Setup() (*http.Client, error) {
 		return nil, err
 	}
 
-	googleClient, err := omg.NewClientFileStoreWithDefaults(
+	return omg.NewClientFileStoreWithDefaults(
 		[]byte(os.Getenv(omg.EnvGoogleAppCredentials)),
-		[]string{omg.ScopeDrive, omg.ScopePresentations},
+		stringsutil.SplitCondenseSpace(os.Getenv(omg.EnvGoogleAppScopes), ","),
 		opts.NewToken())
-	if err != nil {
-		return nil, err
-	}
-	return googleClient, nil
 }
 
 func NewGoogleHTTPClient(forceNewToken bool) (*http.Client, error) {
