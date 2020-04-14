@@ -1,16 +1,29 @@
 package slidesutil
 
 import (
+	"strings"
+	"time"
+
+	"github.com/grokify/gotilla/crypto/md5"
 	"github.com/pkg/errors"
 	"google.golang.org/api/slides/v1"
 )
 
-// CreateSlideImageRequestsSidebarRight creates a slide using a main image
-// as the body given a PresentationID, title, and imageURL.
+// CreateSlideImageRequestsSidebarRight creates API batch requests to
+// load a main page with optional right sidebar text. `imageID` is
+// optional and will be auto-generated if not provided.
 func CreateSlideImageRequestsSidebarRight(slideID, imageID, imageURL, sidebarText string) ([]*slides.Request, error) {
-	emu4M := slides.Dimension{Magnitude: 6000000, Unit: "EMU"}
-	requests := []*slides.Request{
-		{
+	slideID = strings.TrimSpace(slideID)
+	imageID = strings.TrimSpace(imageID)
+	imageURL = strings.TrimSpace(imageURL)
+
+	requests := []*slides.Request{}
+	if len(imageURL) > 0 {
+		if len(imageID) == 0 {
+			imageID = md5.Md5Base62(slideID + "." + imageURL + "." + time.Now().Format(time.RFC3339))
+		}
+		emu4M := slides.Dimension{Magnitude: 6000000, Unit: "EMU"}
+		requests = append(requests, &slides.Request{
 			CreateImage: &slides.CreateImageRequest{
 				ObjectId: imageID,
 				Url:      imageURL,
@@ -27,7 +40,7 @@ func CreateSlideImageRequestsSidebarRight(slideID, imageID, imageURL, sidebarTex
 						Unit:       "EMU"},
 				},
 			},
-		},
+		})
 	}
 	if len(sidebarText) > 0 {
 		textboxes := CreateShapeTextBoxRequestInfo{

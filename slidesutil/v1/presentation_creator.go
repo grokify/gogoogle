@@ -15,8 +15,8 @@ type PresentationCreator struct {
 	PresentationID string
 }
 
-func NewPresentationCreator(googHttpClient *http.Client) (PresentationCreator, error) {
-	pc := PresentationCreator{}
+func NewPresentationCreator(googHttpClient *http.Client) (*PresentationCreator, error) {
+	pc := &PresentationCreator{}
 	slidesClient, err := NewSlidesClient(googHttpClient)
 	if err != nil {
 		return pc, err
@@ -38,6 +38,9 @@ func (pc *PresentationCreator) Create(filename, title, subtitle string) error {
 	return nil
 }
 
+// CreateSlideImageSidebarRight creates a slide for the current
+// presentation. `imageID` is optional and will be auto-generated
+// if not provided.
 func (pc *PresentationCreator) CreateSlideImageSidebarRight(slideTitle, imageID, imageURL, sidebarText string) error {
 	slideID, err := pc.SlidesClient.CreateSlideTitleAndBody(
 		pc.PresentationID, slideTitle)
