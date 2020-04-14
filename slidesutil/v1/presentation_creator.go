@@ -38,6 +38,16 @@ func (pc *PresentationCreator) Create(filename, title, subtitle string) error {
 	return nil
 }
 
+func (pc *PresentationCreator) CreateEmpty(filename string) error {
+	presentationID, err := CreateEmptyPresentation(
+		pc.SlidesClient.GoogleSlidesService.PresentationsService, filename)
+	if err != nil {
+		return err
+	}
+	pc.PresentationID = presentationID
+	return nil
+}
+
 // CreateSlideImageSidebarRight creates a slide for the current
 // presentation. `imageID` is optional and will be auto-generated
 // if not provided.
