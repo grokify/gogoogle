@@ -25,27 +25,27 @@ func NewPresentationCreator(googHttpClient *http.Client) (*PresentationCreator, 
 	return pc, nil
 }
 
-func (pc *PresentationCreator) Create(filename, title, subtitle string) error {
+func (pc *PresentationCreator) Create(filename, title, subtitle string) (string, error) {
 	presentationID, err := pc.SlidesClient.CreatePresentation(
 		filename, title, subtitle)
 	if err != nil {
-		return err
+		return presentationID, err
 	}
 	pc.Filename = filename
 	pc.Title = title
 	pc.Subtitle = subtitle
 	pc.PresentationID = presentationID
-	return nil
+	return presentationID, nil
 }
 
-func (pc *PresentationCreator) CreateEmpty(filename string) error {
+func (pc *PresentationCreator) CreateEmpty(filename string) (string, error) {
 	presentationID, err := CreateEmptyPresentation(
 		pc.SlidesClient.GoogleSlidesService.PresentationsService, filename)
 	if err != nil {
-		return err
+		return presentationID, err
 	}
 	pc.PresentationID = presentationID
-	return nil
+	return presentationID, nil
 }
 
 // CreateSlideImageSidebarRight creates a slide for the current
