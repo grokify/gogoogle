@@ -8,6 +8,7 @@ package main
 
 import (
 	"github.com/grokify/gotilla/fmt/fmtutil"
+	"github.com/grokify/gotilla/pointer"
 	log "github.com/sirupsen/logrus"
 
 	"google.golang.org/api/slides/v1"
@@ -118,8 +119,8 @@ func main() {
 				},
 				TextRange: &slides.Range{
 					Type:       "FIXED_RANGE",
-					StartIndex: Int64Pointer(int64(1)),
-					EndIndex:   Int64Pointer(int64(5)),
+					StartIndex: pointer.Int64(int64(1)),
+					EndIndex:   pointer.Int64(int64(5)),
 				},
 				Fields: "bold",
 			},
@@ -132,8 +133,8 @@ func main() {
 				},
 				TextRange: &slides.Range{
 					Type:       "FIXED_RANGE",
-					StartIndex: Int64Pointer(int64(8)),
-					EndIndex:   Int64Pointer(int64(12)),
+					StartIndex: pointer.Int64(int64(8)),
+					EndIndex:   pointer.Int64(int64(12)),
 				},
 				Fields: "italic",
 			},
@@ -146,8 +147,8 @@ func main() {
 				},
 				TextRange: &slides.Range{
 					Type:       "FIXED_RANGE",
-					StartIndex: Int64Pointer(int64(36)),
-					EndIndex:   Int64Pointer(int64(40)),
+					StartIndex: pointer.Int64(int64(36)),
+					EndIndex:   pointer.Int64(int64(40)),
 				},
 				Fields: "fontFamily",
 			},
@@ -157,8 +158,8 @@ func main() {
 				ObjectId: textboxID,
 				TextRange: &slides.Range{
 					Type:       "FIXED_RANGE",
-					StartIndex: Int64Pointer(int64(1)),
-					EndIndex:   Int64Pointer(int64(42)),
+					StartIndex: pointer.Int64(int64(1)),
+					EndIndex:   pointer.Int64(int64(42)),
 				},
 			},
 		},
@@ -171,8 +172,4 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Info("DONE")
-}
-
-func Int64Pointer(num int64) *int64 {
-	return &num
 }
