@@ -118,8 +118,8 @@ func main() {
 				},
 				TextRange: &slides.Range{
 					Type:       "FIXED_RANGE",
-					StartIndex: int64(1),
-					EndIndex:   int64(5),
+					StartIndex: Int64Pointer(int64(1)),
+					EndIndex:   Int64Pointer(int64(5)),
 				},
 				Fields: "bold",
 			},
@@ -132,8 +132,8 @@ func main() {
 				},
 				TextRange: &slides.Range{
 					Type:       "FIXED_RANGE",
-					StartIndex: int64(8),
-					EndIndex:   int64(12),
+					StartIndex: Int64Pointer(int64(8)),
+					EndIndex:   Int64Pointer(int64(12)),
 				},
 				Fields: "italic",
 			},
@@ -146,8 +146,8 @@ func main() {
 				},
 				TextRange: &slides.Range{
 					Type:       "FIXED_RANGE",
-					StartIndex: int64(36),
-					EndIndex:   int64(40),
+					StartIndex: Int64Pointer(int64(36)),
+					EndIndex:   Int64Pointer(int64(40)),
 				},
 				Fields: "fontFamily",
 			},
@@ -157,8 +157,8 @@ func main() {
 				ObjectId: textboxID,
 				TextRange: &slides.Range{
 					Type:       "FIXED_RANGE",
-					StartIndex: int64(1),
-					EndIndex:   int64(42),
+					StartIndex: Int64Pointer(int64(1)),
+					EndIndex:   Int64Pointer(int64(42)),
 				},
 			},
 		},
@@ -171,4 +171,8 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Info("DONE")
+}
+
+func Int64Pointer(num int64) *int64 {
+	return &num
 }
