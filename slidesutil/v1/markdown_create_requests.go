@@ -113,10 +113,12 @@ func InflateCommonMarkToGoogleSlides(cml TextLine) TextLine {
 			linkURL := link[2]
 			idxStart := strings.Index(googLine, linkText)
 			if idxStart >= 0 {
+				startIndex := cml.GoogleIndexStart + int64(idxStart)
+				endIndex := cml.GoogleIndexStart + int64(idxStart+len(linkText))
 				linkRange := &slides.Range{
 					Type:       RangeTypeFixedRange,
-					StartIndex: cml.GoogleIndexStart + int64(idxStart),
-					EndIndex:   cml.GoogleIndexStart + int64(idxStart+len(linkText))}
+					StartIndex: &startIndex,
+					EndIndex:   &endIndex}
 				linksInfos = append(linksInfos, LinkInfo{
 					URL:   linkURL,
 					Range: linkRange})

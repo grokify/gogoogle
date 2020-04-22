@@ -26,10 +26,11 @@ func InsertTextRequest(objectID, text string) *slides.Request {
 func UpdateTextStyleRequestBold(objectID string, startIdx, endIdx int64) *slides.Request {
 	return &slides.Request{
 		UpdateTextStyle: &slides.UpdateTextStyleRequest{
-			ObjectId:  objectID,
-			Style:     &slides.TextStyle{Bold: true},
-			TextRange: &slides.Range{Type: RangeTypeFixedRange, StartIndex: startIdx, EndIndex: endIdx},
-			Fields:    "bold",
+			ObjectId: objectID,
+			Style:    &slides.TextStyle{Bold: true},
+			TextRange: &slides.Range{
+				Type: RangeTypeFixedRange, StartIndex: &startIdx, EndIndex: &endIdx},
+			Fields: "bold",
 		},
 	}
 }
@@ -37,8 +38,11 @@ func UpdateTextStyleRequestBold(objectID string, startIdx, endIdx int64) *slides
 func UpdateTextStyleRequestBullet(objectID string, startIdx, endIdx int64) *slides.Request {
 	return &slides.Request{
 		CreateParagraphBullets: &slides.CreateParagraphBulletsRequest{
-			ObjectId:  objectID,
-			TextRange: &slides.Range{Type: RangeTypeFixedRange, StartIndex: startIdx, EndIndex: endIdx},
+			ObjectId: objectID,
+			TextRange: &slides.Range{
+				Type:       RangeTypeFixedRange,
+				StartIndex: &startIdx,
+				EndIndex:   &endIdx},
 		},
 	}
 }
