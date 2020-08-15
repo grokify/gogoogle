@@ -1,4 +1,4 @@
-package gmail
+package gmailutil
 
 import (
 	"encoding/json"
