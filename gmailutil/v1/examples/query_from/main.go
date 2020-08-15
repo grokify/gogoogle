@@ -12,6 +12,8 @@ import (
 func main() {
 	query := gmailutil.MessageListQueryOpts{From: "foo@example.com"}
 
+	fmt.Printf("%v\n", query)
+
 	client := &http.Client{}
 
 	Quickstart(client)
