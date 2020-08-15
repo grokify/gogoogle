@@ -5,14 +5,14 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/google/google-api-go-client/gmail/v1"
 	"github.com/grokify/googleutil/gmailutil/v1"
+	"google.golang.org/api/gmail/v1"
 )
 
 func main() {
 	query := gmailutil.MessageListQueryOpts{From: "foo@example.com"}
 
-	client := http.Client{}
+	client := &http.Client{}
 
 	Quickstart(client)
 
