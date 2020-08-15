@@ -15,6 +15,10 @@ const (
 	ListApiExample   = "https://stackoverflow.com/questions/43057478/google-api-go-client-listing-messages-w-label-and-fetching-header-fields"
 	FilteringExample = "https://developers.google.com/gmail/api/guides/filtering"
 	FilterRules      = "https://support.google.com/mail/answer/7190"
+
+	ExampleRule1 = "category:promotions older_than:2y"
+	ExampleRule2 = "category:updates older_than:2y"
+	ExampleRule3 = "category:social older_than:2y"
 )
 
 // ?q=in:sent after:1388552400 before:1391230800
@@ -33,6 +37,8 @@ type MessageListQueryOpts struct {
 	RFC822msgid string
 	After       time.Time
 	Before      time.Time
+	OlderThan   string // #(mdy)
+	NewerThan   string // #(mdy)
 	Interval    timeutil.Interval
 }
 
@@ -49,6 +55,14 @@ func GenerateMessageListQueryString(opts MessageListQueryOpts) string {
 	opts.RFC822msgid = strings.TrimSpace(opts.RFC822msgid)
 	if len(opts.RFC822msgid) > 0 {
 		parts = append(parts, "rfc822msgid:"+opts.RFC822msgid)
+	}
+	opts.OlderThan = strings.TrimSpace(opts.OlderThan)
+	if len(opts.OlderThan) > 0 {
+		parts = append(parts, "older_than:"+opts.OlderThan)
+	}
+	opts.NewerThan = strings.TrimSpace(opts.NewerThan)
+	if len(opts.NewerThan) > 0 {
+		parts = append(parts, "newer_than:"+opts.NewerThan)
 	}
 	if !timeutil.TimeIsZeroAny(opts.After) {
 		parts = append(parts, "after:"+opts.After.Format(GmailDateFormat))
