@@ -102,14 +102,12 @@ func (opts *MessagesListQueryOpts) Encode() string {
 }
 
 func GetMessagesList(client *http.Client, apiOpts []googleapi.CallOption, opts MessagesListOpts) (*gmail.ListMessagesResponse, error) {
-	service, err := gmail.New(client)
+	usersService, err := NewUsersService(client)
 	if err != nil {
 		return nil, err
 	}
 
 	opts.Inflate()
-
-	usersService := gmail.NewUsersService(service)
 
 	userMessagesListCall := usersService.Messages.List(opts.UserId)
 	userMessagesListCall.IncludeSpamTrash(opts.IncludeSpamTrash)

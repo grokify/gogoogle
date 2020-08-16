@@ -19,9 +19,6 @@ import (
 type Options struct {
 	EnvFile     string `short:"e" long:"env" description:"Env filepath"`
 	NewTokenRaw []bool `short:"n" long:"newtoken" description:"Retrieve new token"`
-	//Products             string `short:"p" long:"productSlugs" description:"Aha Product Slugs" required:"true"`
-	//ReleaseQuarterBegin  int32  `short:"b" long:"begin" description:"Begin Quarter" required:"true"`
-	//ReleaseQuarterFinish int32  `short:"f" long:"finish" description:"Finish Quarter" required:"true"`
 }
 
 func (opt *Options) NewToken() bool {
@@ -60,14 +57,38 @@ func main() {
 	}
 	fmtutil.PrintJSON(labels)
 
-	msgs, err := GetMessagesFrom(client, "listings@redfin.com")
-	if err != nil {
-		log.Fatal(err)
+	rfc822s := []string{
+		"list1@example.com",
+		"list2@example.com",
+		"list3@example.com",
 	}
-	fmtutil.PrintJSON(msgs.Messages)
-	fmt.Printf("NUM_MSGS [%v]\n", len(msgs.Messages))
+
+	for _, rfc822 := range rfc822s {
+		ids, err := DeleteMessagesFrom(client, rfc822)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("DELETED [from:%v] [%v] messages\n", rfc822, len(ids))
+	}
 
 	fmt.Println("DONE")
+}
+
+func DeleteMessagesFrom(client *http.Client, rfc822 string) ([]string, error) {
+	ids := []string{}
+	msgs, err := GetMessagesFrom(client, rfc822)
+	if err != nil {
+		return ids, err
+	}
+
+	for _, msg := range msgs.Messages {
+		ids = append(ids, msg.Id)
+	}
+
+	if len(ids) == 0 {
+		return ids, nil
+	}
+	return ids, gmailutil.BatchDeleteMessages(client, []googleapi.CallOption{}, "", ids)
 }
 
 func GetMessagesFrom(client *http.Client, rfc822 string) (*gmail.ListMessagesResponse, error) {
