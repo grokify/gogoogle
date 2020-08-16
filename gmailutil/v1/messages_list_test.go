@@ -10,11 +10,11 @@ var listQueryStringTests = []struct {
 	qString  string
 	qAfter   string
 	qBefore  string
-	qOptions MessageListQueryOpts
+	qOptions MessagesListQueryOpts
 }{
-	{"from:foo@example.com", "", "", MessageListQueryOpts{From: "foo@example.com"}},
-	{"in:Inbox", "", "", MessageListQueryOpts{In: "Inbox"}},
-	{"after:2016/01/02 before:2019/11/12", "2016-01-02T00:00:00Z", "2019-11-12T00:00:00Z", MessageListQueryOpts{}},
+	{"from:foo@example.com", "", "", MessagesListQueryOpts{From: "foo@example.com"}},
+	{"in:Inbox", "", "", MessagesListQueryOpts{In: "Inbox"}},
+	{"after:2016/01/02 before:2019/11/12", "2016-01-02T00:00:00Z", "2019-11-12T00:00:00Z", MessagesListQueryOpts{}},
 }
 
 // TestGenerateMessageListQueryString creates a gmail query string.
@@ -36,7 +36,7 @@ func TestGenerateMessageListQueryString(t *testing.T) {
 			}
 			qOptions.Before = dt
 		}
-		gotString := GenerateMessageListQueryString(qOptions)
+		gotString := qOptions.Encode()
 		if gotString != tt.qString {
 			if err != nil {
 				t.Errorf("gmailutil.GenerateMessageListQueryString() Error: [%v]", err.Error())

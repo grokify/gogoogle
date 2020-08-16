@@ -8,10 +8,12 @@ import (
 
 	"github.com/grokify/googleutil/gmailutil/v1"
 	"github.com/grokify/gotilla/config"
+	"github.com/grokify/gotilla/fmt/fmtutil"
 	omg "github.com/grokify/oauth2more/google"
 	"github.com/jessevdk/go-flags"
 	"github.com/pkg/errors"
 	"google.golang.org/api/gmail/v1"
+	"google.golang.org/api/googleapi"
 )
 
 type Options struct {
@@ -40,46 +42,50 @@ func main() {
 		log.Fatal(err)
 	}
 
-	query := gmailutil.MessageListQueryOpts{From: "foo@example.com"}
+	query := gmailutil.MessagesListQueryOpts{From: "foo@example.com"}
 
 	fmt.Printf("%v\n", query)
 
-	client := GetClient(opts)
+	client, err := omg.NewClientFileStoreWithDefaults(
+		[]byte(os.Getenv(omg.EnvGoogleAppCredentials)),
+		[]string{},
+		opts.NewToken())
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	Quickstart(client)
+	labels, err := gmailutil.GetLabelNames(client)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmtutil.PrintJSON(labels)
+
+	msgs, err := GetMessagesFrom(client, "listings@redfin.com")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmtutil.PrintJSON(msgs.Messages)
+	fmt.Printf("NUM_MSGS [%v]\n", len(msgs.Messages))
 
 	fmt.Println("DONE")
 }
 
-func GetClient(opts Options) *http.Client {
+func GetMessagesFrom(client *http.Client, rfc822 string) (*gmail.ListMessagesResponse, error) {
+	opts := gmailutil.MessagesListOpts{
+		Query: gmailutil.MessagesListQueryOpts{
+			From: rfc822},
+	}
+
+	msgs, err := gmailutil.GetMessagesList(client, []googleapi.CallOption{}, opts)
+
+	return msgs, err
+}
+
+func GetClient(cfgJson []byte, scopes []string, forceNewToken bool) *http.Client {
 	googleClient, err := omg.NewClientFileStoreWithDefaults(
-		[]byte(os.Getenv(omg.EnvGoogleAppCredentials)),
-		[]string{gmail.GmailReadonlyScope},
-		opts.NewToken())
+		cfgJson, scopes, forceNewToken)
 	if err != nil {
 		log.Fatal(errors.Wrap(err, "NewClientFileStoreWithDefaults"))
 	}
 	return googleClient
-}
-
-func Quickstart(client *http.Client) {
-	// https://developers.google.com/gmail/api/quickstart/go
-	srv, err := gmail.New(client)
-	if err != nil {
-		log.Fatalf("Unable to retrieve Gmail client: %v", err)
-	}
-
-	user := "me"
-	r, err := srv.Users.Labels.List(user).Do()
-	if err != nil {
-		log.Fatalf("Unable to retrieve labels: %v", err)
-	}
-	if len(r.Labels) == 0 {
-		fmt.Println("No labels found.")
-		return
-	}
-	fmt.Println("Labels:")
-	for _, l := range r.Labels {
-		fmt.Printf("- %s\n", l.Name)
-	}
 }

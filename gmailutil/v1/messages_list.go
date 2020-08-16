@@ -1,10 +1,14 @@
 package gmailutil
 
 import (
+	"net/http"
 	"strings"
 	"time"
 
 	"github.com/grokify/gotilla/time/timeutil"
+	"github.com/grokify/gotilla/type/stringsutil"
+	"google.golang.org/api/gmail/v1"
+	"google.golang.org/api/googleapi"
 )
 
 const (
@@ -31,7 +35,31 @@ Warning: All dates used in the search query are interpretted as midnight on that
 
 */
 
-type MessageListQueryOpts struct {
+type MessagesListOpts struct {
+	UserId               string
+	IncludeSpamTrash     bool
+	LabelIds             []string
+	MaxResults           uint64
+	PageToken            string
+	Query                MessagesListQueryOpts
+	Fields               []googleapi.Field
+	IfNoneMatchEntityTag string
+}
+
+func (opts *MessagesListOpts) Condense() {
+	opts.UserId = strings.TrimSpace(opts.UserId)
+	opts.LabelIds = stringsutil.SliceCondenseSpace(opts.LabelIds, true, false)
+	opts.PageToken = strings.TrimSpace(opts.PageToken)
+}
+
+func (opts *MessagesListOpts) Inflate() {
+	opts.Condense()
+	if len(opts.UserId) == 0 {
+		opts.UserId = "me"
+	}
+}
+
+type MessagesListQueryOpts struct {
 	In          string
 	From        string
 	RFC822msgid string
@@ -42,7 +70,7 @@ type MessageListQueryOpts struct {
 	Interval    timeutil.Interval
 }
 
-func GenerateMessageListQueryString(opts MessageListQueryOpts) string {
+func (opts *MessagesListQueryOpts) Encode() string {
 	parts := []string{}
 	opts.From = strings.TrimSpace(opts.From)
 	if len(opts.From) > 0 {
@@ -70,5 +98,36 @@ func GenerateMessageListQueryString(opts MessageListQueryOpts) string {
 	if !timeutil.TimeIsZeroAny(opts.Before) {
 		parts = append(parts, "before:"+opts.Before.Format(GmailDateFormat))
 	}
-	return strings.Join(parts, " ")
+	return strings.TrimSpace(strings.Join(parts, " "))
+}
+
+func GetMessagesList(client *http.Client, apiOpts []googleapi.CallOption, opts MessagesListOpts) (*gmail.ListMessagesResponse, error) {
+	service, err := gmail.New(client)
+	if err != nil {
+		return nil, err
+	}
+
+	opts.Inflate()
+
+	usersService := gmail.NewUsersService(service)
+
+	userMessagesListCall := usersService.Messages.List(opts.UserId)
+	userMessagesListCall.IncludeSpamTrash(opts.IncludeSpamTrash)
+	if len(opts.LabelIds) > 0 {
+		userMessagesListCall.LabelIds(opts.LabelIds...)
+	}
+	if opts.MaxResults > 0 {
+		userMessagesListCall.MaxResults(int64(opts.MaxResults))
+	}
+	if len(opts.PageToken) > 0 {
+		userMessagesListCall.PageToken(opts.PageToken)
+	}
+	q := opts.Query.Encode()
+	if len(q) > 0 {
+		userMessagesListCall.Q(q)
+	}
+	if len(opts.Fields) > 0 {
+		userMessagesListCall.Fields(opts.Fields...)
+	}
+	return userMessagesListCall.Do(apiOpts...)
 }
