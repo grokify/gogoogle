@@ -159,8 +159,3 @@ func InflateMessages(gs *GmailService, userId string, msgMetas []*gmail.Message)
 	}
 	return msgs, nil
 }
-
-/*
-for _, msg := range msgsRes.Messages {
-	ids = append(ids, msg.Id)
-}*/

@@ -1,6 +1,7 @@
 package gmailutil
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"strings"
@@ -9,16 +10,19 @@ import (
 )
 
 func BatchDeleteMessages(gs *GmailService, userId string, messageIds []string) error {
+	if gs == nil {
+		return nil, errors.New("E_NIL_GMAIL_SERVICE")
+	}
+
 	userId = strings.TrimSpace(userId)
 	if len(userId) == 0 {
 		userId = "me"
 	}
 
-	usersMessagesBatchDeleteCall := gs.UsersService.Messages.BatchDelete(
+	return gs.UsersService.Messages.BatchDelete(
 		userId,
-		&gmail.BatchDeleteMessagesRequest{Ids: messageIds})
-
-	return usersMessagesBatchDeleteCall.Do(gs.APICallOptions...)
+		&gmail.BatchDeleteMessagesRequest{Ids: messageIds}).
+		Do(gs.APICallOptions...)
 }
 
 func DeleteMessagesFrom(gs *GmailService, rfc822s []string) (int, int) {

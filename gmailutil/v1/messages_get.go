@@ -1,16 +1,18 @@
 package gmailutil
 
 import (
+	"errors"
 	"strings"
 
 	"google.golang.org/api/gmail/v1"
 )
 
 func GetMessage(gs *GmailService, userId, messageId string) (*gmail.Message, error) {
-	userId = strings.TrimSpace(userId)
-	messageId = strings.TrimSpace(messageId)
-
-	userMessagesListCall := gs.UsersService.Messages.Get(
-		userId, messageId)
-	return userMessagesListCall.Do(gs.APICallOptions...)
+	if gs == nil {
+		return nil, errors.New("E_NIL_GMAIL_SERVICE")
+	}
+	return gs.UsersService.Messages.Get(
+		strings.TrimSpace(userId),
+		strings.TrimSpace(messageId)).
+		Do(gs.APICallOptions...)
 }
