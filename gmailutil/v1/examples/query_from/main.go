@@ -5,15 +5,16 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/grokify/googleutil/gmailutil/v1"
 	"github.com/grokify/gotilla/config"
 	"github.com/grokify/gotilla/fmt/fmtutil"
+	"github.com/grokify/gotilla/type/stringsutil"
 	omg "github.com/grokify/oauth2more/google"
 	"github.com/jessevdk/go-flags"
 	"github.com/pkg/errors"
 	"google.golang.org/api/gmail/v1"
-	"google.golang.org/api/googleapi"
 )
 
 type Options struct {
@@ -50,56 +51,47 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	labels, err := gmailutil.GetLabelNames(client)
+	gs, err := gmailutil.NewGmailService(client)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmtutil.PrintJSON(labels)
 
-	rfc822s := []string{
-		"list1@example.com",
-		"list2@example.com",
-		"list3@example.com",
-	}
-
-	for _, rfc822 := range rfc822s {
-		ids, err := DeleteMessagesFrom(client, rfc822)
+	if 1 == 0 {
+		labels, err := gmailutil.GetLabelNames(client)
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Printf("DELETED [from:%v] [%v] messages\n", rfc822, len(ids))
+		fmtutil.PrintJSON(labels)
+	}
+
+	if 1 == 0 {
+		rfc822s := []string{
+			"list1@example.com",
+			"list2@example.com",
+			"list3@example.com",
+		}
+		rfc822sRaw := os.Getenv("EMAIL_ADDRESSES_TO_DELETE")
+		if len(rfc822sRaw) > 0 {
+			rfc822s = stringsutil.SliceCondenseSpace(strings.Split(rfc822sRaw, ","), true, true)
+			fmt.Printf("EMAILS: %s\n", strings.Join(rfc822s, ","))
+		}
+
+		deletedCount, gte100Count := gmailutil.DeleteMessagesFrom(gs, rfc822s)
+
+		fmt.Printf("[TOT] DELETED [%v] messages\n", deletedCount)
+		fmt.Printf("[TOT] Over 100 [%v] email addresses\n", gte100Count)
+	}
+
+	if 1 == 1 {
+		msgs, err := GetMessagesByCategory(
+			gs, "me", gmailutil.CategoryForums, true)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmtutil.PrintJSON(msgs)
 	}
 
 	fmt.Println("DONE")
-}
-
-func DeleteMessagesFrom(client *http.Client, rfc822 string) ([]string, error) {
-	ids := []string{}
-	msgs, err := GetMessagesFrom(client, rfc822)
-	if err != nil {
-		return ids, err
-	}
-
-	for _, msg := range msgs.Messages {
-		ids = append(ids, msg.Id)
-	}
-
-	if len(ids) == 0 {
-		return ids, nil
-	}
-	return ids, gmailutil.BatchDeleteMessages(client, []googleapi.CallOption{}, "", ids)
-}
-
-func GetMessagesFrom(client *http.Client, rfc822 string) (*gmail.ListMessagesResponse, error) {
-	opts := gmailutil.MessagesListOpts{
-		Query: gmailutil.MessagesListQueryOpts{
-			From: rfc822},
-	}
-
-	msgs, err := gmailutil.GetMessagesList(client, []googleapi.CallOption{}, opts)
-
-	return msgs, err
 }
 
 func GetClient(cfgJson []byte, scopes []string, forceNewToken bool) *http.Client {
@@ -109,4 +101,25 @@ func GetClient(cfgJson []byte, scopes []string, forceNewToken bool) *http.Client
 		log.Fatal(errors.Wrap(err, "NewClientFileStoreWithDefaults"))
 	}
 	return googleClient
+}
+
+func GetMessagesByCategory(gs *gmailutil.GmailService, userId, categoryName string, getAll bool) ([]*gmail.Message, error) {
+	qOpts := gmailutil.MessagesListQueryOpts{
+		Category: categoryName,
+	}
+	opts := gmailutil.MessagesListOpts{
+		Query: qOpts,
+	}
+
+	listRes, err := gmailutil.GetMessagesList(gs, opts)
+	if err != nil {
+		fmt.Println("ERR [%s]", err.Error())
+		return []*gmail.Message{}, err
+	}
+	for _, msg := range listRes.Messages {
+		fmtutil.PrintJSON(msg)
+		break
+	}
+
+	return gmailutil.InflateMessages(gs, userId, listRes.Messages)
 }
