@@ -11,7 +11,7 @@ import (
 
 func BatchDeleteMessages(gs *GmailService, userId string, messageIds []string) error {
 	if gs == nil {
-		return nil, errors.New("E_NIL_GMAIL_SERVICE")
+		return errors.New("E_NIL_GMAIL_SERVICE")
 	}
 
 	userId = strings.TrimSpace(userId)
