@@ -12,5 +12,5 @@ func GetMessage(gs *GmailService, userId, messageId string) (*gmail.Message, err
 
 	userMessagesListCall := gs.UsersService.Messages.Get(
 		userId, messageId)
-	return userMessagesListCall.Do()
+	return userMessagesListCall.Do(gs.APICallOptions...)
 }
