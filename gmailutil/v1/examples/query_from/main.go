@@ -64,7 +64,7 @@ func main() {
 		fmtutil.PrintJSON(labels)
 	}
 
-	if 1 == 0 {
+	if 1 == 1 {
 		rfc822s := []string{
 			"list1@example.com",
 			"list2@example.com",
@@ -82,7 +82,7 @@ func main() {
 		fmt.Printf("[TOT] Over 100 [%v] email addresses\n", gte100Count)
 	}
 
-	if 1 == 1 {
+	if 1 == 0 {
 		msgs, err := GetMessagesByCategory(
 			gs, "me", gmailutil.CategoryForums, true)
 		if err != nil {
@@ -113,7 +113,7 @@ func GetMessagesByCategory(gs *gmailutil.GmailService, userId, categoryName stri
 
 	listRes, err := gmailutil.GetMessagesList(gs, opts)
 	if err != nil {
-		fmt.Println("ERR [%s]", err.Error())
+		fmt.Printf("ERR [%s]", err.Error())
 		return []*gmail.Message{}, err
 	}
 	for _, msg := range listRes.Messages {
