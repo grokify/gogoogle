@@ -1,7 +1,6 @@
 package gmailutil
 
 import (
-	"net/http"
 	"strings"
 	"time"
 
@@ -19,6 +18,11 @@ const (
 	ListApiExample   = "https://stackoverflow.com/questions/43057478/google-api-go-client-listing-messages-w-label-and-fetching-header-fields"
 	FilteringExample = "https://developers.google.com/gmail/api/guides/filtering"
 	FilterRules      = "https://support.google.com/mail/answer/7190"
+
+	CategoryForums     = "forums"
+	CategoryPromotions = "promotions"
+	CategorySocial     = "social"
+	CategoryUpdates    = "updates"
 
 	ExampleRule1 = "category:promotions older_than:2y"
 	ExampleRule2 = "category:updates older_than:2y"
@@ -60,6 +64,7 @@ func (opts *MessagesListOpts) Inflate() {
 }
 
 type MessagesListQueryOpts struct {
+	Category    string
 	In          string
 	From        string
 	RFC822msgid string
@@ -70,25 +75,34 @@ type MessagesListQueryOpts struct {
 	Interval    timeutil.Interval
 }
 
-func (opts *MessagesListQueryOpts) Encode() string {
-	parts := []string{}
+func (opts *MessagesListQueryOpts) TrimSpace() {
+	opts.Category = strings.TrimSpace(opts.Category)
 	opts.From = strings.TrimSpace(opts.From)
+	opts.In = strings.TrimSpace(opts.In)
+	opts.RFC822msgid = strings.TrimSpace(opts.RFC822msgid)
+	opts.OlderThan = strings.TrimSpace(opts.OlderThan)
+	opts.NewerThan = strings.TrimSpace(opts.NewerThan)
+}
+
+func (opts *MessagesListQueryOpts) Encode() string {
+	opts.TrimSpace()
+	parts := []string{}
+
+	if len(opts.Category) > 0 {
+		parts = append(parts, "category:"+opts.Category)
+	}
 	if len(opts.From) > 0 {
 		parts = append(parts, "from:"+opts.From)
 	}
-	opts.In = strings.TrimSpace(opts.In)
 	if len(opts.In) > 0 {
 		parts = append(parts, "in:"+opts.In)
 	}
-	opts.RFC822msgid = strings.TrimSpace(opts.RFC822msgid)
 	if len(opts.RFC822msgid) > 0 {
 		parts = append(parts, "rfc822msgid:"+opts.RFC822msgid)
 	}
-	opts.OlderThan = strings.TrimSpace(opts.OlderThan)
 	if len(opts.OlderThan) > 0 {
 		parts = append(parts, "older_than:"+opts.OlderThan)
 	}
-	opts.NewerThan = strings.TrimSpace(opts.NewerThan)
 	if len(opts.NewerThan) > 0 {
 		parts = append(parts, "newer_than:"+opts.NewerThan)
 	}
@@ -101,15 +115,10 @@ func (opts *MessagesListQueryOpts) Encode() string {
 	return strings.TrimSpace(strings.Join(parts, " "))
 }
 
-func GetMessagesList(client *http.Client, apiOpts []googleapi.CallOption, opts MessagesListOpts) (*gmail.ListMessagesResponse, error) {
-	usersService, err := NewUsersService(client)
-	if err != nil {
-		return nil, err
-	}
-
+func GetMessagesList(gs *GmailService, opts MessagesListOpts) (*gmail.ListMessagesResponse, error) {
 	opts.Inflate()
 
-	userMessagesListCall := usersService.Messages.List(opts.UserId)
+	userMessagesListCall := gs.UsersService.Messages.List(opts.UserId)
 	userMessagesListCall.IncludeSpamTrash(opts.IncludeSpamTrash)
 	if len(opts.LabelIds) > 0 {
 		userMessagesListCall.LabelIds(opts.LabelIds...)
@@ -127,5 +136,31 @@ func GetMessagesList(client *http.Client, apiOpts []googleapi.CallOption, opts M
 	if len(opts.Fields) > 0 {
 		userMessagesListCall.Fields(opts.Fields...)
 	}
-	return userMessagesListCall.Do(apiOpts...)
+	return userMessagesListCall.Do(gs.APICallOptions...)
 }
+
+func GetMessagesFrom(gs *GmailService, rfc822 string) (*gmail.ListMessagesResponse, error) {
+	opts := MessagesListOpts{
+		Query: MessagesListQueryOpts{
+			From: rfc822},
+	}
+
+	return GetMessagesList(gs, opts)
+}
+
+func InflateMessages(gs *GmailService, userId string, msgMetas []*gmail.Message) ([]*gmail.Message, error) {
+	msgs := []*gmail.Message{}
+	for _, msgMeta := range msgMetas {
+		msg, err := GetMessage(gs, userId, msgMeta.Id)
+		if err != nil {
+			return msgs, err
+		}
+		msgs = append(msgs, msg)
+	}
+	return msgs, nil
+}
+
+/*
+for _, msg := range msgsRes.Messages {
+	ids = append(ids, msg.Id)
+}*/
