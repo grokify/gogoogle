@@ -3,18 +3,21 @@ package slidesutil
 // EXPERIMENTAL - NON-WORKING
 
 import (
+	"strconv"
 	"strings"
 
 	svg "github.com/ajstarks/svgo"
-	ahaslides "github.com/grokify/go-aha/ahaslides"
+	// ahaslides "github.com/grokify/go-aha/ahaslides"
 	"google.golang.org/api/slides/v1"
 )
 
+/*
 func SVGStart(canvas *svg.SVG, canvasInfo ahaslides.CanvasFloat64) {
 	canvas.Start(
 		int(canvasInfo.MaxX-canvasInfo.MinX),
 		int(canvasInfo.MaxY-canvasInfo.MinY))
 }
+*/
 
 func SVGAddTextBox(canvas *svg.SVG, tbox CreateShapeTextBoxRequestInfo) {
 	// Example: https://www.w3.org/wiki/SVG_Links#Embedding_external_resources_in_an_SVG_document
@@ -38,7 +41,7 @@ func SVGAddTextBox(canvas *svg.SVG, tbox CreateShapeTextBoxRequestInfo) {
 			stylesText = append(stylesText, "fill:"+tbox.ForegroundColorHex)
 		}
 		if tbox.FontSize > 0 {
-			style := "font-size:" + string(int(tbox.FontSize)) + strings.TrimSpace(tbox.FontSizeUnit)
+			style := "font-size:" + strconv.Itoa((int(tbox.FontSize))) + strings.TrimSpace(tbox.FontSizeUnit)
 			stylesText = append(stylesText, style)
 		}
 		styleTextStr := strings.Join(stylesText, ";")

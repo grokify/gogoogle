@@ -5,13 +5,16 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/grokify/gotilla/fmt/fmtutil"
+	dlp "cloud.google.com/go/dlp/apiv2"
+	"github.com/grokify/simplego/fmt/fmtutil"
 	"github.com/jessevdk/go-flags"
 	"google.golang.org/api/option"
 
-	dlp "cloud.google.com/go/dlp/apiv2"
+	//dlp "cloud.google.com/go/dlp/v2"
 	dlpu "github.com/grokify/googleutil/dlp/v2"
 	gu "github.com/grokify/oauth2more/google"
+
+	//dlp "google.golang.org/api/dlp/v2"
 	dlppb "google.golang.org/genproto/googleapis/privacy/dlp/v2"
 )
 
