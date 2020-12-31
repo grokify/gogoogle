@@ -6,9 +6,9 @@ import (
 	"os"
 
 	"github.com/grokify/googleutil/sheetsutil/v4/sheetsmap"
-	"github.com/grokify/gotilla/config"
-	"github.com/grokify/gotilla/fmt/fmtutil"
 	gu "github.com/grokify/oauth2more/google"
+	"github.com/grokify/simplego/config"
+	"github.com/grokify/simplego/fmt/fmtutil"
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/api/sheets/v4"
 )

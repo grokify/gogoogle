@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"cloud.google.com/go/bigquery"
-	iu "github.com/grokify/gotilla/type/interfaceutil"
+	iu "github.com/grokify/simplego/type/interfaceutil"
 )
 
 const (

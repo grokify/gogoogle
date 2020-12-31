@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/Iwark/spreadsheet"
-	"github.com/grokify/gotilla/type/stringsutil"
+	"github.com/grokify/simplego/type/stringsutil"
 )
 
 const (

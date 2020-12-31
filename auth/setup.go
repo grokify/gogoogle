@@ -9,11 +9,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/grokify/gotilla/config"
-	"github.com/grokify/gotilla/type/stringsutil"
 	ou "github.com/grokify/oauth2more"
 	omg "github.com/grokify/oauth2more/google"
 	oug "github.com/grokify/oauth2more/google"
+	"github.com/grokify/simplego/config"
+	"github.com/grokify/simplego/type/stringsutil"
 	"github.com/jessevdk/go-flags"
 	"google.golang.org/api/slides/v1"
 	//"github.com/google/google-api-go-client/slides/v1"

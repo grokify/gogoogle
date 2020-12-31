@@ -14,8 +14,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/grokify/gotilla/fmt/fmtutil"
 	omg "github.com/grokify/oauth2more/google"
+	"github.com/grokify/simplego/fmt/fmtutil"
 	"github.com/joho/godotenv"
 	"google.golang.org/api/sheets/v4"
 

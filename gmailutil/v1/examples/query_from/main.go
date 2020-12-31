@@ -8,10 +8,10 @@ import (
 	"strings"
 
 	"github.com/grokify/googleutil/gmailutil/v1"
-	"github.com/grokify/gotilla/config"
-	"github.com/grokify/gotilla/fmt/fmtutil"
-	"github.com/grokify/gotilla/type/stringsutil"
 	omg "github.com/grokify/oauth2more/google"
+	"github.com/grokify/simplego/config"
+	"github.com/grokify/simplego/fmt/fmtutil"
+	"github.com/grokify/simplego/type/stringsutil"
 	"github.com/jessevdk/go-flags"
 	"github.com/pkg/errors"
 	"google.golang.org/api/gmail/v1"
@@ -76,8 +76,10 @@ func main() {
 			fmt.Printf("EMAILS: %s\n", strings.Join(rfc822s, ","))
 		}
 
-		deletedCount, gte100Count := gmailutil.DeleteMessagesFrom(gs, rfc822s)
-
+		deletedCount, gte100Count, err := gmailutil.DeleteMessagesFrom(gs, rfc822s)
+		if err != nil {
+			log.Fatal(err)
+		}
 		fmt.Printf("[TOT] DELETED [%v] messages\n", deletedCount)
 		fmt.Printf("[TOT] Over 100 [%v] email addresses\n", gte100Count)
 	}

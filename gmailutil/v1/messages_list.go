@@ -4,8 +4,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/grokify/gotilla/time/timeutil"
-	"github.com/grokify/gotilla/type/stringsutil"
+	"github.com/grokify/simplego/time/timeutil"
+	"github.com/grokify/simplego/type/stringsutil"
 	"google.golang.org/api/gmail/v1"
 	"google.golang.org/api/googleapi"
 )

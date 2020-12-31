@@ -7,8 +7,8 @@
 package main
 
 import (
-	"github.com/grokify/gotilla/fmt/fmtutil"
-	"github.com/grokify/gotilla/pointer"
+	"github.com/grokify/simplego/fmt/fmtutil"
+	"github.com/grokify/simplego/pointer"
 	log "github.com/sirupsen/logrus"
 
 	"google.golang.org/api/slides/v1"

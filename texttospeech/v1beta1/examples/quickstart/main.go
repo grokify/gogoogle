@@ -10,12 +10,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/grokify/gotilla/config"
-	"github.com/grokify/gotilla/fmt/fmtutil"
-	uu "github.com/grokify/gotilla/net/urlutil"
 	gu "github.com/grokify/oauth2more/google"
+	"github.com/grokify/simplego/config"
+	"github.com/grokify/simplego/fmt/fmtutil"
+	uu "github.com/grokify/simplego/net/urlutil"
 	"github.com/pkg/errors"
-	"google.golang.org/api/texttospeech/v1beta1"
+	texttospeech "google.golang.org/api/texttospeech/v1beta1"
 )
 
 const (

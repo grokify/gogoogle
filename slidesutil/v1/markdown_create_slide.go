@@ -1,7 +1,7 @@
 package slidesutil
 
 import (
-	"github.com/grokify/gotilla/fmt/fmtutil"
+	"github.com/grokify/simplego/fmt/fmtutil"
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/api/slides/v1"
 )

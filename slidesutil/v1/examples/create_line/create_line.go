@@ -11,9 +11,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/grokify/gotilla/math/mathutil"
 	ou "github.com/grokify/oauth2more"
 	oug "github.com/grokify/oauth2more/google"
+	"github.com/grokify/simplego/math/mathutil"
 	"github.com/joho/godotenv"
 	"golang.org/x/net/context"
 	"google.golang.org/api/slides/v1"

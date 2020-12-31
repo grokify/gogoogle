@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/grokify/gocharts/data/roadmap"
-	"github.com/grokify/gotilla/fmt/fmtutil"
+	"github.com/grokify/simplego/fmt/fmtutil"
 	"google.golang.org/api/slides/v1"
 )
 
