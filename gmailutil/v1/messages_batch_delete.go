@@ -27,6 +27,7 @@ func BatchDeleteMessages(gs *GmailService, userId string, messageIds []string) e
 func DeleteMessagesFrom(gs *GmailService, rfc822s []string) (int, int, error) {
 	deletedCount := 0
 	gte100Count := 0
+	rfc822Count := len(rfc822s)
 	for i, rfc822 := range rfc822s {
 		ids, err := deleteMessagesFromSingle(gs, rfc822)
 		if err != nil {
@@ -45,7 +46,12 @@ func DeleteMessagesFrom(gs *GmailService, rfc822s []string) (int, int, error) {
 			}
 			numDeleted = len(ids)
 		}
-		fmt.Printf("[%d] DELETED [%v]%s messages [from:%v]\n", i+1, numDeleted, alert, rfc822)
+		fmt.Printf("[%d/%d] DELETED [%v]%s messages [from:%v]\n", i+1, rfc822Count, numDeleted, alert, rfc822)
+		fmt.Printf("{\"addressNum\":%d, \"addressTotal\": %d, \"deletedCount\": %d}", i+1, rfc822Count, numDeleted)
+		/*log.Info().
+		Int("address_num", i+1).
+		Int("address_total", rfc822Count).
+		Int("deleted_count", numDeleted)*/
 		deletedCount += numDeleted
 	}
 	return deletedCount, gte100Count, nil

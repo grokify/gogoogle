@@ -3,18 +3,17 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/grokify/googleutil/sheetsutil/v4/sheetsmap"
-	gu "github.com/grokify/oauth2more/google"
+	"github.com/grokify/oauth2more/google"
 	"github.com/grokify/simplego/config"
 	"github.com/grokify/simplego/fmt/fmtutil"
-	log "github.com/sirupsen/logrus"
 	"google.golang.org/api/sheets/v4"
 )
 
 func GetSheetsMap() (*sheetsmap.SheetsMap, error) {
-	log.SetLevel(log.DebugLevel)
 
 	err := config.LoadDotEnvSkipEmpty(os.Getenv("ENV_PATH"), "./.env")
 	if err != nil {
@@ -27,7 +26,7 @@ func GetSheetsMap() (*sheetsmap.SheetsMap, error) {
 	}
 	fmt.Println(jwt)
 
-	googleClient, err := gu.NewClientFromJWTJSON(
+	googleClient, err := google.NewClientFromJWTJSON(
 		context.TODO(),
 		[]byte(jwt),
 		sheets.DriveScope,

@@ -1,8 +1,9 @@
 package slidesutil
 
 import (
+	"log"
+
 	"github.com/grokify/simplego/fmt/fmtutil"
-	log "github.com/sirupsen/logrus"
 	"google.golang.org/api/slides/v1"
 )
 
@@ -20,7 +21,7 @@ func CreateSlideMarkdown(srv *slides.Service, psv *slides.PresentationsService, 
 
 	if 1 == 0 {
 		slideID := resp1.Replies[0].CreateSlide.ObjectId
-		log.Infof("CREATED SLIDE [%v]\n", slideID)
+		log.Printf("CREATED SLIDE [%v]\n", slideID)
 	}
 	//log.Info(`== Fetch "main point" slide title (textbox) ID`)
 	presentation, err := srv.Presentations.Get(presentationID).Do()

@@ -3,9 +3,10 @@
 package main
 
 import (
+	"log"
+
 	"github.com/grokify/googleutil/auth"
 	"github.com/grokify/googleutil/slidesutil/v1"
-	log "github.com/sirupsen/logrus"
 )
 
 const Markdown = "Foo\n* [**Foo**](https://example.com/foo)\n* [**Bar**](http://example.com/bar)\nBar\n* **Foo**\n* **Bar**\n    * Baz"
@@ -35,5 +36,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Info("DONE")
+	log.Println("DONE")
 }

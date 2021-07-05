@@ -1,6 +1,6 @@
 module github.com/grokify/googleutil
 
-go 1.15
+go 1.16
 
 require (
 	cloud.google.com/go v0.74.0
@@ -14,7 +14,6 @@ require (
 	github.com/joho/godotenv v1.3.0
 	github.com/lucasb-eyer/go-colorful v1.0.3
 	github.com/pkg/errors v0.9.1
-	github.com/sirupsen/logrus v1.7.0
 	golang.org/x/net v0.0.0-20201224014010-6772e930b67b
 	google.golang.org/api v0.36.0
 	google.golang.org/genproto v0.0.0-20201214200347-8c77b98c765d

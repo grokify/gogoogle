@@ -7,10 +7,10 @@
 package main
 
 import (
+	"log"
+
 	"github.com/grokify/simplego/fmt/fmtutil"
 	"github.com/grokify/simplego/pointer"
-	log "github.com/sirupsen/logrus"
-
 	"google.golang.org/api/slides/v1"
 
 	"github.com/grokify/googleutil/auth"
@@ -43,9 +43,9 @@ func main() {
 	titleSlide := rsp1.Slides[0]
 	titleID := titleSlide.PageElements[0].ObjectId
 	subtitleID := titleSlide.PageElements[1].ObjectId
-	log.Infof("PresentationID: %v\nTitleID: %v\nSubtitleID: %v\n", deckID, titleID, subtitleID)
+	log.Printf("PresentationID: %v\nTitleID: %v\nSubtitleID: %v\n", deckID, titleID, subtitleID)
 
-	log.Info(`== Create "main point" layout slide & add titles `)
+	log.Println(`== Create "main point" layout slide & add titles `)
 	reqs := []*slides.Request{
 		{
 			CreateSlide: &slides.CreateSlideRequest{
@@ -79,9 +79,9 @@ func main() {
 	fmtutil.PrintJSON(rsp2)
 
 	slideID := rsp2.Replies[0].CreateSlide.ObjectId
-	log.Infof("Created SlideID: %v\n", slideID)
+	log.Printf("Created SlideID: %v\n", slideID)
 
-	log.Info(`== Fetch "main point" slide title (textbox) ID`)
+	log.Println(`== Fetch "main point" slide title (textbox) ID`)
 	presentation, err := srv.Presentations.Get(deckID).Do()
 	fmtutil.PrintJSON(presentation)
 	if err != nil {
@@ -90,7 +90,7 @@ func main() {
 	newSlide := presentation.Slides[len(presentation.Slides)-1]
 	textboxID := newSlide.PageElements[0].ObjectId
 
-	log.Info("== Insert text & perform various formatting operations")
+	log.Println("== Insert text & perform various formatting operations")
 
 	reqs = []*slides.Request{
 		{
@@ -171,5 +171,5 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Info("DONE")
+	log.Println("DONE")
 }
