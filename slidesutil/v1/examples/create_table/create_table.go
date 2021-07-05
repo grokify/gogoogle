@@ -11,8 +11,8 @@ import (
 	"log"
 	"net/http"
 
-	ou "github.com/grokify/oauth2more"
-	oug "github.com/grokify/oauth2more/google"
+	"github.com/grokify/oauth2more"
+	"github.com/grokify/oauth2more/google"
 	"github.com/grokify/simplego/fmt/fmtutil"
 	"github.com/joho/godotenv"
 	"golang.org/x/net/context"
@@ -23,19 +23,19 @@ import (
 )
 
 func NewClient(forceNewToken bool) (*http.Client, error) {
-	conf, err := oug.ConfigFromEnv(oug.ClientSecretEnv,
+	conf, err := google.ConfigFromEnv(google.ClientSecretEnv,
 		[]string{slides.DriveScope, slides.PresentationsScope})
 	if err != nil {
 		return nil, err
 	}
 
 	tokenFile := "slides.googleapis.com-go-quickstart.json"
-	tokenStore, err := ou.NewTokenStoreFileDefault(tokenFile, true, 0700)
+	tokenStore, err := oauth2more.NewTokenStoreFileDefault(tokenFile, true, 0700)
 	if err != nil {
 		return nil, err
 	}
 
-	return ou.NewClientWebTokenStore(context.Background(), conf, tokenStore, forceNewToken)
+	return oauth2more.NewClientWebTokenStore(context.Background(), conf, tokenStore, forceNewToken, "mystate")
 }
 
 type CreateLineRequestInfo struct {

@@ -9,9 +9,8 @@ import (
 	"os"
 	"strings"
 
-	ou "github.com/grokify/oauth2more"
-	omg "github.com/grokify/oauth2more/google"
-	oug "github.com/grokify/oauth2more/google"
+	"github.com/grokify/oauth2more"
+	"github.com/grokify/oauth2more/google"
 	"github.com/grokify/simplego/config"
 	"github.com/grokify/simplego/type/stringsutil"
 	"github.com/jessevdk/go-flags"
@@ -48,26 +47,28 @@ func Setup() (*http.Client, error) {
 		return nil, err
 	}
 
-	return omg.NewClientFileStoreWithDefaults(
-		[]byte(os.Getenv(omg.EnvGoogleAppCredentials)),
-		stringsutil.SplitCondenseSpace(os.Getenv(omg.EnvGoogleAppScopes), ","),
+	return google.NewClientFileStoreWithDefaults(
+		[]byte(os.Getenv(google.EnvGoogleAppCredentials)),
+		stringsutil.SplitCondenseSpace(os.Getenv(google.EnvGoogleAppScopes), ","),
 		opts.NewToken())
 }
 
 func NewGoogleHTTPClient(forceNewToken bool) (*http.Client, error) {
-	conf, err := oug.ConfigFromEnv(oug.ClientSecretEnv,
+	conf, err := google.ConfigFromEnv(google.ClientSecretEnv,
 		[]string{slides.DriveScope, slides.PresentationsScope})
 	if err != nil {
 		return nil, err
 	}
 
 	tokenFile := "slides.googleapis.com-go-quickstart.json"
-	tokenStore, err := ou.NewTokenStoreFileDefault(tokenFile, true, 0700)
+	tokenStore, err := oauth2more.NewTokenStoreFileDefault(tokenFile, true, 0700)
 	if err != nil {
 		return nil, err
 	}
 
-	client, err := ou.NewClientWebTokenStore(context.Background(), conf, tokenStore, forceNewToken)
+	client, err := oauth2more.NewClientWebTokenStore(
+		context.Background(), conf,
+		tokenStore, forceNewToken, "mystate")
 	if err != nil {
 		panic(err)
 		return nil, err
