@@ -20,5 +20,5 @@ GoogleUtil is a set of generic, higher-level libraries for interacting with the 
 
 Additional Google helper libraries and demo apps include:
 
-* OAuth 2.0 utilities via [`oauth2more/google`](https://github.com/grokify/oauth2more/tree/master/google)
+* OAuth 2.0 utilities via [`goauth/google`](https://github.com/grokify/goauth/tree/master/google)
 * OAuth 2.0 demo app via [`beegoutil`](https://github.com/grokify/beegoutil)

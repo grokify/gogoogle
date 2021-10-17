@@ -6,8 +6,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/grokify/goauth/google"
 	"github.com/grokify/googleutil/sheetsutil/v4/sheetsmap"
-	"github.com/grokify/oauth2more/google"
 	"github.com/grokify/simplego/config"
 	"github.com/grokify/simplego/fmt/fmtutil"
 	"google.golang.org/api/sheets/v4"

@@ -9,8 +9,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/grokify/oauth2more"
-	"github.com/grokify/oauth2more/google"
+	"github.com/grokify/goauth"
+	"github.com/grokify/goauth/google"
 	"github.com/grokify/simplego/config"
 	"github.com/grokify/simplego/type/stringsutil"
 	"github.com/jessevdk/go-flags"
@@ -61,12 +61,12 @@ func NewGoogleHTTPClient(forceNewToken bool) (*http.Client, error) {
 	}
 
 	tokenFile := "slides.googleapis.com-go-quickstart.json"
-	tokenStore, err := oauth2more.NewTokenStoreFileDefault(tokenFile, true, 0700)
+	tokenStore, err := goauth.NewTokenStoreFileDefault(tokenFile, true, 0700)
 	if err != nil {
 		return nil, err
 	}
 
-	client, err := oauth2more.NewClientWebTokenStore(
+	client, err := goauth.NewClientWebTokenStore(
 		context.Background(), conf,
 		tokenStore, forceNewToken, "mystate")
 	if err != nil {

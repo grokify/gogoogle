@@ -11,8 +11,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/grokify/oauth2more"
-	"github.com/grokify/oauth2more/google"
+	"github.com/grokify/goauth"
+	"github.com/grokify/goauth/google"
 	"github.com/grokify/simplego/fmt/fmtutil"
 	"github.com/joho/godotenv"
 	"golang.org/x/net/context"
@@ -30,12 +30,12 @@ func NewClient(forceNewToken bool) (*http.Client, error) {
 	}
 
 	tokenFile := "slides.googleapis.com-go-quickstart.json"
-	tokenStore, err := oauth2more.NewTokenStoreFileDefault(tokenFile, true, 0700)
+	tokenStore, err := goauth.NewTokenStoreFileDefault(tokenFile, true, 0700)
 	if err != nil {
 		return nil, err
 	}
 
-	return oauth2more.NewClientWebTokenStore(context.Background(), conf, tokenStore, forceNewToken, "mystate")
+	return goauth.NewClientWebTokenStore(context.Background(), conf, tokenStore, forceNewToken, "mystate")
 }
 
 type CreateLineRequestInfo struct {

@@ -10,7 +10,7 @@ import (
 	"google.golang.org/api/option"
 
 	"github.com/grokify/googleutil/speechtotext"
-	//gu "github.com/grokify/oauth2more/google"
+	//gu "github.com/grokify/goauth/google"
 
 	speech "cloud.google.com/go/speech/apiv1"
 	speechpb "google.golang.org/genproto/googleapis/cloud/speech/v1"

@@ -11,8 +11,8 @@ import (
 	"google.golang.org/api/option"
 
 	//dlp "cloud.google.com/go/dlp/v2"
+	gu "github.com/grokify/goauth/google"
 	dlpu "github.com/grokify/googleutil/dlp/v2"
-	gu "github.com/grokify/oauth2more/google"
 
 	//dlp "google.golang.org/api/dlp/v2"
 	dlppb "google.golang.org/genproto/googleapis/privacy/dlp/v2"

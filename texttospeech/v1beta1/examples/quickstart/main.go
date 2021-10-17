@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	gu "github.com/grokify/oauth2more/google"
+	gu "github.com/grokify/goauth/google"
 	"github.com/grokify/simplego/config"
 	"github.com/grokify/simplego/fmt/fmtutil"
 	uu "github.com/grokify/simplego/net/urlutil"

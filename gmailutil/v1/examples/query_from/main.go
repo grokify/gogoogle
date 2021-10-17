@@ -7,8 +7,8 @@ import (
 	"os"
 	"strings"
 
+	omg "github.com/grokify/goauth/google"
 	"github.com/grokify/googleutil/gmailutil/v1"
-	omg "github.com/grokify/oauth2more/google"
 	"github.com/grokify/simplego/config"
 	"github.com/grokify/simplego/fmt/fmtutil"
 	"github.com/grokify/simplego/type/stringsutil"
