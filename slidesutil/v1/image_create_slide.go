@@ -4,7 +4,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/grokify/simplego/crypto/md5"
+	"github.com/grokify/mogo/crypto/md5"
 	"github.com/pkg/errors"
 	"google.golang.org/api/slides/v1"
 )

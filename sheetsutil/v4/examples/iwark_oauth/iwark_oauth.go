@@ -15,7 +15,7 @@ import (
 	"strings"
 
 	omg "github.com/grokify/goauth/google"
-	"github.com/grokify/simplego/fmt/fmtutil"
+	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/joho/godotenv"
 	"google.golang.org/api/sheets/v4"
 

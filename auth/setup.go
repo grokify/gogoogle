@@ -11,8 +11,8 @@ import (
 
 	"github.com/grokify/goauth"
 	"github.com/grokify/goauth/google"
-	"github.com/grokify/simplego/config"
-	"github.com/grokify/simplego/type/stringsutil"
+	"github.com/grokify/mogo/config"
+	"github.com/grokify/mogo/type/stringsutil"
 	"github.com/jessevdk/go-flags"
 	"google.golang.org/api/slides/v1"
 	//"github.com/google/google-api-go-client/slides/v1"

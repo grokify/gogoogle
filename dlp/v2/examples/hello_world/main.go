@@ -6,7 +6,7 @@ import (
 	"log"
 
 	dlp "cloud.google.com/go/dlp/apiv2"
-	"github.com/grokify/simplego/fmt/fmtutil"
+	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/jessevdk/go-flags"
 	"google.golang.org/api/option"
 

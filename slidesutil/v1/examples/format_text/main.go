@@ -9,8 +9,8 @@ package main
 import (
 	"log"
 
-	"github.com/grokify/simplego/fmt/fmtutil"
-	"github.com/grokify/simplego/pointer"
+	"github.com/grokify/mogo/fmt/fmtutil"
+	"github.com/grokify/mogo/pointer"
 	"google.golang.org/api/slides/v1"
 
 	"github.com/grokify/googleutil/auth"

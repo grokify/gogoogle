@@ -9,9 +9,9 @@ import (
 
 	omg "github.com/grokify/goauth/google"
 	"github.com/grokify/googleutil/gmailutil/v1"
-	"github.com/grokify/simplego/config"
-	"github.com/grokify/simplego/fmt/fmtutil"
-	"github.com/grokify/simplego/type/stringsutil"
+	"github.com/grokify/mogo/config"
+	"github.com/grokify/mogo/fmt/fmtutil"
+	"github.com/grokify/mogo/type/stringsutil"
 	"github.com/jessevdk/go-flags"
 	"github.com/pkg/errors"
 	"google.golang.org/api/gmail/v1"

@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/grokify/simplego/fmt/fmtutil"
+	"github.com/grokify/mogo/fmt/fmtutil"
 	"google.golang.org/api/slides/v1"
 )
 

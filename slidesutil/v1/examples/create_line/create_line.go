@@ -13,7 +13,7 @@ import (
 
 	"github.com/grokify/goauth"
 	"github.com/grokify/goauth/google"
-	"github.com/grokify/simplego/math/mathutil"
+	"github.com/grokify/mogo/math/mathutil"
 	"github.com/joho/godotenv"
 	"golang.org/x/net/context"
 	"google.golang.org/api/slides/v1"

@@ -8,8 +8,8 @@ import (
 
 	"github.com/grokify/goauth/google"
 	"github.com/grokify/googleutil/sheetsutil/v4/sheetsmap"
-	"github.com/grokify/simplego/config"
-	"github.com/grokify/simplego/fmt/fmtutil"
+	"github.com/grokify/mogo/config"
+	"github.com/grokify/mogo/fmt/fmtutil"
 	"google.golang.org/api/sheets/v4"
 )
 

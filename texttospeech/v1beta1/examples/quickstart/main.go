@@ -11,9 +11,9 @@ import (
 	"strings"
 
 	gu "github.com/grokify/goauth/google"
-	"github.com/grokify/simplego/config"
-	"github.com/grokify/simplego/fmt/fmtutil"
-	uu "github.com/grokify/simplego/net/urlutil"
+	"github.com/grokify/mogo/config"
+	"github.com/grokify/mogo/fmt/fmtutil"
+	uu "github.com/grokify/mogo/net/urlutil"
 	"github.com/pkg/errors"
 	texttospeech "google.golang.org/api/texttospeech/v1beta1"
 )
