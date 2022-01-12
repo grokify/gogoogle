@@ -10,10 +10,10 @@ import (
 	omg "github.com/grokify/goauth/google"
 	"github.com/grokify/googleutil/gmailutil/v1"
 	"github.com/grokify/mogo/config"
+	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/grokify/mogo/type/stringsutil"
 	"github.com/jessevdk/go-flags"
-	"github.com/pkg/errors"
 	"google.golang.org/api/gmail/v1"
 )
 
@@ -100,7 +100,7 @@ func GetClient(cfgJson []byte, scopes []string, forceNewToken bool) *http.Client
 	googleClient, err := omg.NewClientFileStoreWithDefaults(
 		cfgJson, scopes, forceNewToken)
 	if err != nil {
-		log.Fatal(errors.Wrap(err, "NewClientFileStoreWithDefaults"))
+		log.Fatal(errorsutil.Wrap(err, "NewClientFileStoreWithDefaults"))
 	}
 	return googleClient
 }

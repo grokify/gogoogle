@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/pkg/errors"
+	"github.com/grokify/mogo/errors/errorsutil"
 	"google.golang.org/api/slides/v1"
 )
 
@@ -27,7 +27,7 @@ func (gsc *GoogleSlidesService) SetHTTPClient(httpClient *http.Client) error {
 	gsc.httpClient = httpClient
 	service, err := slides.New(gsc.httpClient)
 	if err != nil {
-		return errors.Wrap(err, "Unable to create slides.Service")
+		return errorsutil.Wrap(err, "Unable to create slides.Service")
 	}
 	gsc.SlidesService = service
 	gsc.PresentationsService = slides.NewPresentationsService(service)

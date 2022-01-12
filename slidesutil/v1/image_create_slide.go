@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/grokify/mogo/crypto/md5"
-	"github.com/pkg/errors"
+	"github.com/grokify/mogo/errors/errorsutil"
 	"google.golang.org/api/slides/v1"
 )
 
@@ -58,7 +58,7 @@ func CreateSlideImageRequestsSidebarRight(slideID, imageID, imageURL, sidebarTex
 		}
 		tbreq, err := textboxes.Requests()
 		if err != nil {
-			return requests, errors.Wrap(err, "")
+			return requests, errorsutil.Wrap(err, "textboxes.Requests")
 		}
 		requests = append(requests, tbreq...)
 	}

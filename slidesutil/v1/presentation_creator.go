@@ -3,7 +3,7 @@ package slidesutil
 import (
 	"net/http"
 
-	"github.com/pkg/errors"
+	"github.com/grokify/mogo/errors/errorsutil"
 	"google.golang.org/api/slides/v1"
 )
 
@@ -63,12 +63,12 @@ func (pc *PresentationCreator) CreateSlideImageSidebarRight(slideTitle, imageID,
 	slideID, err := pc.SlidesClient.CreateSlideTitleAndBody(
 		pc.PresentationID, slideTitle)
 	if err != nil {
-		return errors.Wrap(err, "PresentationCreator.CreateSlideImageSidebarRight")
+		return errorsutil.Wrap(err, "PresentationCreator.CreateSlideImageSidebarRight")
 	}
 
 	requests, err := CreateSlideImageRequestsSidebarRight(slideID, imageID, imageURL, sidebarText)
 	if err != nil {
-		return errors.Wrap(err, "PresentationCreator.CreateSlideImageSidebarRight")
+		return errorsutil.Wrap(err, "PresentationCreator.CreateSlideImageSidebarRight")
 	}
 	breq := &slides.BatchUpdatePresentationRequest{
 		Requests: requests,
@@ -76,7 +76,7 @@ func (pc *PresentationCreator) CreateSlideImageSidebarRight(slideTitle, imageID,
 
 	_, err = pc.SlidesClient.BatchUpdate(pc.PresentationID, breq).Do()
 	if err != nil {
-		return errors.Wrap(err, "PresentationCreator.CreateSlideImageSidebarRight")
+		return errorsutil.Wrap(err, "PresentationCreator.CreateSlideImageSidebarRight")
 	}
 	return nil
 }

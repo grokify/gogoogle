@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/pkg/errors"
+	"github.com/grokify/mogo/errors/errorsutil"
 	"google.golang.org/api/slides/v1"
 )
 
@@ -45,7 +45,7 @@ func CreateEmptyPresentation(psv *slides.PresentationsService, filename string) 
 	pres := &slides.Presentation{Title: filename}
 	res, err := psv.Create(pres).Do()
 	if err != nil {
-		return "", errors.Wrap(err, "CreateRoadmapSlide - psv.Create(pres).Do()")
+		return "", errorsutil.Wrap(err, "CreateRoadmapSlide - psv.Create(pres).Do()")
 	}
 
 	fmt.Printf("CREATED Presentation with Id %v\n", res.PresentationId)
@@ -70,7 +70,7 @@ func CreateEmptyPresentation(psv *slides.PresentationsService, filename string) 
 	}
 	_, err = psv.BatchUpdate(res.PresentationId, breq).Do() // resu
 	if err != nil {
-		return "", errors.Wrap(err, "CreateRoadmapSlide - psv.BatchUpdate(res.PresentationId, breq).Do()")
+		return "", errorsutil.Wrap(err, "CreateRoadmapSlide - psv.BatchUpdate(res.PresentationId, breq).Do()")
 	}
 	return res.PresentationId, nil
 }
@@ -82,7 +82,7 @@ func CreateEmptyPresentationGSS(gss *GoogleSlidesService, filename string) (stri
 func CreateEmptyPresentationHTTP(googleClient *http.Client, filename string) (string, error) {
 	gss, err := NewGoogleSlidesService(googleClient)
 	if err != nil {
-		return "", errors.Wrap(err, "CreateRoadmapSlide - slidesutil.NewGoogleSlidesService()")
+		return "", errorsutil.Wrap(err, "CreateRoadmapSlide - slidesutil.NewGoogleSlidesService()")
 	}
 
 	return CreateEmptyPresentationGSS(gss, filename)
