@@ -24,8 +24,8 @@ type Options struct {
 }
 
 const (
-	apiErrorTokenExpired = "oauth2: token expired and refresh token is not set"
-	apiCliTokenRefresh   = ": use `-n` option to refresh token."
+	apiErrorTokenExpired = "oauth2: token expired and refresh token is not set" // #nosec G101
+	apiCliTokenRefresh   = ": use `-n` option to refresh token."                // #nosec G101
 )
 
 func (opt *Options) NewToken() bool {
@@ -70,7 +70,6 @@ func NewGoogleHTTPClient(forceNewToken bool) (*http.Client, error) {
 		context.Background(), conf,
 		tokenStore, forceNewToken, "mystate")
 	if err != nil {
-		panic(err)
 		return nil, err
 	}
 	return client, err
@@ -78,7 +77,7 @@ func NewGoogleHTTPClient(forceNewToken bool) (*http.Client, error) {
 
 // WrapError adds CLI instructions to refresh the auth token.
 func WrapError(err error) error {
-	if strings.Index(err.Error(), apiErrorTokenExpired) > -1 {
+	if strings.Contains(err.Error(), apiErrorTokenExpired) {
 		err = fmt.Errorf("%s%s", err.Error(), apiCliTokenRefresh)
 	}
 	return err

@@ -567,7 +567,6 @@ func (sm *SheetsMap) CombinedStatsCol0Enum() ([]Stat, error) {
 				permutationsMap[val0][valsStr] += 1
 			}
 		}
-
 	}
 
 	stats := []Stat{}
@@ -583,7 +582,7 @@ func (sm *SheetsMap) CombinedStatsCol0Enum() ([]Stat, error) {
 				keyCount := mss[valsStr]
 				stats = append(stats, Stat{
 					Name:  valsStr,
-					Count: int64(keyCount),
+					Count: keyCount,
 				})
 			}
 		}
@@ -599,7 +598,7 @@ func (sm *SheetsMap) CombinedStatsCol0Enum() ([]Stat, error) {
 			keyCount := mss[valsStr]
 			stats = append(stats, Stat{
 				Name:  valsStr,
-				Count: int64(keyCount),
+				Count: keyCount,
 			})
 		}
 	}

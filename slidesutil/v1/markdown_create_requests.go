@@ -1,11 +1,9 @@
 package slidesutil
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
 
-	"github.com/grokify/mogo/fmt/fmtutil"
 	"google.golang.org/api/slides/v1"
 )
 
@@ -54,8 +52,8 @@ func (cmd *CommonMarkData) LineCount() int {
 func Split(cm string) []TextLine {
 	lines := []TextLine{}
 	raw := strings.Split(cm, "\n")
-	fmt.Println(cm)
-	fmtutil.PrintJSON(raw)
+	// fmt.Println(cm)
+	// fmtutil.PrintJSON(raw)
 	for _, line := range raw {
 		lines = append(lines, TextLine{CommonMarkText: line})
 	}

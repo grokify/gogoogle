@@ -40,9 +40,9 @@ type CanvasFloat64 struct {
 
 func (c64 *CanvasFloat64) ThisX(this, min, max float64) (float64, error) {
 	if min > max {
-		return 0.0, fmt.Errorf("Min (%v) is larger than max (%v)", min, max)
+		return 0.0, fmt.Errorf("min [%v] is larger than max [%v]", min, max)
 	} else if this < min || this > max {
-		return 0.0, fmt.Errorf("This (%v) is not within min,max (%v, %v)", this, min, max)
+		return 0.0, fmt.Errorf("this [%v] is not within min,max [%v, %v]", this, min, max)
 	}
 	diff := max - min
 	plus := this - min
@@ -83,7 +83,7 @@ func GoogleSlideDrawRoadmap(pageId string, srcCan roadmap.Canvas, outCan SlideCa
 
 	for i, row := range srcCan.Rows {
 		for _, el := range row {
-			fmtutil.PrintJSON(el)
+			// fmtutil.PrintJSON(el)
 			srcBoxWdtX := el.Max - el.Min
 			srcAllWdtX := srcCan.MaxX - srcCan.MinX
 			srcBoxMinX := el.Min
@@ -97,10 +97,10 @@ func GoogleSlideDrawRoadmap(pageId string, srcCan roadmap.Canvas, outCan SlideCa
 			boxOutPctX := float64(srcAllWdtX) / outAllWdtX
 
 			outAllMinX := outCan.Canvas.MinX
-			fmt.Printf("%v\n", srcBoxMinX-srcAllMinX)
-			fmt.Printf("%v\n", el.Min-srcCan.MinX)
-			outBoxMinX := (float64(srcBoxMinX-srcAllMinX) / float64(boxOutPctX)) + outAllMinX
-			outBoxMaxX := (float64(srcBoxMaxX-srcAllMinX) / float64(boxOutPctX)) + outAllMinX
+			// fmt.Printf("%v\n", srcBoxMinX-srcAllMinX)
+			// fmt.Printf("%v\n", el.Min-srcCan.MinX)
+			outBoxMinX := (float64(srcBoxMinX-srcAllMinX) / boxOutPctX) + outAllMinX
+			outBoxMaxX := (float64(srcBoxMaxX-srcAllMinX) / boxOutPctX) + outAllMinX
 
 			loc := Location{
 				SrcAllMinX: srcCan.MinX,
@@ -138,6 +138,5 @@ func GoogleSlideDrawRoadmap(pageId string, srcCan roadmap.Canvas, outCan SlideCa
 		}
 		rowYWatermark += outCan.BoxHeight + outCan.BoxMarginBottom
 	}
-
 	return requests, nil
 }

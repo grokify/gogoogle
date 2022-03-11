@@ -3,7 +3,6 @@ package slidesutil
 import (
 	"log"
 
-	"github.com/grokify/mogo/fmt/fmtutil"
 	"google.golang.org/api/slides/v1"
 )
 
@@ -25,7 +24,7 @@ func CreateSlideMarkdown(srv *slides.Service, psv *slides.PresentationsService, 
 	}
 	//log.Info(`== Fetch "main point" slide title (textbox) ID`)
 	presentation, err := srv.Presentations.Get(presentationID).Do()
-	fmtutil.PrintJSON(presentation)
+	// fmtutil.PrintJSON(presentation)
 	if err != nil {
 		return err
 	}
