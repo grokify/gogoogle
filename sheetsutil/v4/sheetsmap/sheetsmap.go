@@ -289,7 +289,7 @@ func (sm *SheetsMap) ReadColumns() error {
 			}
 			colsMap[colKeyParsedLc] = col
 		}
-		break
+		// break
 	}
 
 	sm.Columns = colsArr
@@ -323,7 +323,7 @@ func (sm *SheetsMap) ReadItems() error {
 			item.Data[col.Name] = val
 		}
 		if _, ok := itemMap[item.Key]; ok {
-			return fmt.Errorf("Duplicate key names for: %v", item.Key)
+			return fmt.Errorf("duplicate key names for: [%v]", item.Key)
 		}
 		itemMap[item.Key] = item
 	}
@@ -334,7 +334,7 @@ func (sm *SheetsMap) ReadItems() error {
 
 func (sm *SheetsMap) GetItem(key string) (Item, error) {
 	if item, ok := sm.ItemMap[key]; !ok {
-		return Item{}, fmt.Errorf("Cannot find key %v", key)
+		return Item{}, fmt.Errorf("cannot find key [%v]", key)
 	} else {
 		return item, nil
 	}
@@ -347,7 +347,7 @@ func (sm *SheetsMap) GetItemProperty(key string, val string) (string, error) {
 	}
 	val, ok := item.Data[val]
 	if !ok {
-		return "", fmt.Errorf("Cannot find value for property [%v]", val)
+		return "", fmt.Errorf("cannot find value for property [%v]", val)
 	}
 	return val, nil
 }
