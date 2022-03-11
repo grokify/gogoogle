@@ -285,7 +285,7 @@ func (sm *SheetsMap) ReadColumns() error {
 
 			colsArr = append(colsArr, col)
 			if _, ok := colsMap[colKeyParsedLc]; ok {
-				return fmt.Errorf("Duplicate column names for: %v", colValRaw)
+				return fmt.Errorf("duplicate column names for: err [%v]", colValRaw)
 			}
 			colsMap[colKeyParsedLc] = col
 		}

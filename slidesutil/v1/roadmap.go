@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/grokify/gocharts/data/roadmap"
-	"github.com/grokify/mogo/fmt/fmtutil"
 	"google.golang.org/api/slides/v1"
 )
 
@@ -46,7 +45,7 @@ func (c64 *CanvasFloat64) ThisX(this, min, max float64) (float64, error) {
 	}
 	diff := max - min
 	plus := this - min
-	pct := float64(plus) / float64(diff)
+	pct := plus / diff
 	diffCan := c64.MaxX - c64.MinX
 	thisPlus := pct * diffCan
 	thisX := c64.MinX + thisPlus
@@ -70,7 +69,7 @@ type Location struct {
 	BoxOutPctX float64
 }
 
-func GoogleSlideDrawRoadmap(pageId string, srcCan roadmap.Canvas, outCan SlideCanvasInfo) ([]*slides.Request, error) {
+func GoogleSlideDrawRoadmap(pageID string, srcCan roadmap.Canvas, outCan SlideCanvasInfo) ([]*slides.Request, error) {
 	requests := []*slides.Request{}
 	err := srcCan.InflateItems()
 	if err != nil {
@@ -81,7 +80,7 @@ func GoogleSlideDrawRoadmap(pageId string, srcCan roadmap.Canvas, outCan SlideCa
 	idx := 0
 	rowYWatermark := outCan.Canvas.MinY
 
-	for i, row := range srcCan.Rows {
+	for _, row := range srcCan.Rows {
 		for _, el := range row {
 			// fmtutil.PrintJSON(el)
 			srcBoxWdtX := el.Max - el.Min
@@ -119,22 +118,24 @@ func GoogleSlideDrawRoadmap(pageId string, srcCan roadmap.Canvas, outCan SlideCa
 				BoxOutPctX: boxOutPctX,
 			}
 
-			fmtutil.PrintJSON(loc)
+			// fmtutil.PrintJSON(loc)
 			if loc.OutBoxMaxX > loc.OutAllMaxX {
 				panic("C")
 			} else if loc.OutBoxMinX < loc.OutAllMinX {
 				panic("D")
 			}
 			//panic("Z")
-			elementId := fmt.Sprintf("AutoBox%03d", idx)
+			elementID := fmt.Sprintf("AutoBox%03d", idx)
 			requests = append(requests, TextBoxRequestsSimple(
-				pageId, elementId, el.NameShort, outCan.BoxFgColor, outCan.BoxBgColor,
+				pageID, elementID, el.NameShort, outCan.BoxFgColor, outCan.BoxBgColor,
 				loc.OutBoxWdtX, outCan.BoxHeight, loc.OutBoxMinX, rowYWatermark)...)
 			idx++
 			//break
-			if i > 3 {
-				//break
-			}
+			/*
+				if i > 3 {
+					break
+				}
+			*/
 		}
 		rowYWatermark += outCan.BoxHeight + outCan.BoxMarginBottom
 	}

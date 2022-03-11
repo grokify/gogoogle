@@ -1,10 +1,12 @@
 package slidesutil
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 
 	"github.com/grokify/mogo/errors/errorsutil"
+	"google.golang.org/api/option"
 	"google.golang.org/api/slides/v1"
 )
 
@@ -25,7 +27,7 @@ func (gsc *GoogleSlidesService) SetHTTPClient(httpClient *http.Client) error {
 		return fmt.Errorf("httpClient parameter canot be nil")
 	}
 	gsc.httpClient = httpClient
-	service, err := slides.New(gsc.httpClient)
+	service, err := slides.NewService(context.Background(), option.WithHTTPClient(httpClient))
 	if err != nil {
 		return errorsutil.Wrap(err, "Unable to create slides.Service")
 	}

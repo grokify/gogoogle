@@ -29,10 +29,7 @@ const (
 )
 
 func (opt *Options) NewToken() bool {
-	if len(opt.NewTokenRaw) > 0 {
-		return true
-	}
-	return false
+	return len(opt.NewTokenRaw) > 0
 }
 
 func Setup() (*http.Client, error) {
