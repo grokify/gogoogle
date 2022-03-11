@@ -64,12 +64,12 @@ func NewSheetsMap() SheetsMap {
 	}
 }
 
-func NewSheetsMapIndex(googleClient *http.Client, spreadsheetId string, sheetIndex uint) (SheetsMap, error) {
+func NewSheetsMapIndex(googleClient *http.Client, spreadsheetID string, sheetIndex uint) (SheetsMap, error) {
 	sm := NewSheetsMap()
 	sm.GoogleClient = googleClient
 	sm.Service = spreadsheet.NewServiceWithClient(googleClient)
 
-	spreadsheet, err := sm.Service.FetchSpreadsheet(spreadsheetId)
+	spreadsheet, err := sm.Service.FetchSpreadsheet(spreadsheetID)
 	if err != nil {
 		return sm, err
 	}

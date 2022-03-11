@@ -10,14 +10,14 @@ import (
 
 var (
 	GoogleSlideUnitPoint = "PT"
-	ObjectIdFormat       = `^[a-zA-Z0-9_][a-zA-Z0-9_\-:]*$`
+	ObjectIDFormat       = `^[a-zA-Z0-9_][a-zA-Z0-9_\-:]*$`
 )
 
 /*
 panic: googleapi: Error 400: Invalid requests[0].createShape: The object ID (TAGLABELBG-rmp-Glip Growth) should start with a word character [a-zA-Z0-9_] and then followed by any number of the following characters [a-zA-Z0-9_-:]., badRequest
 */
 
-func FormatObjectIdSimple(s string) string {
+func FormatObjectIDSimple(s string) string {
 	return regexp.MustCompile(`[^a-zA-Z0-9_\-:]`).ReplaceAllString(s, "_")
 }
 
@@ -45,8 +45,8 @@ func quote(s string) string {
 }
 
 type TextBoxInfoSimple struct {
-	PageId     string
-	ElementId  string
+	PageID     string
+	ElementID  string
 	Text       string
 	FgColorHex string
 	BgColorHex string
@@ -56,11 +56,11 @@ type TextBoxInfoSimple struct {
 	LocationY  float64
 }
 
-func AddFgColor(elementId string, fgColor *slides.RgbColor) []*slides.Request {
+func AddFgColor(elementID string, fgColor *slides.RgbColor) []*slides.Request {
 	reqs := []*slides.Request{
 		{
 			UpdateTextStyle: &slides.UpdateTextStyleRequest{
-				ObjectId: elementId,
+				ObjectId: elementID,
 				Fields:   "*",
 				Style: &slides.TextStyle{
 					FontSize: &slides.Dimension{
