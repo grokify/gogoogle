@@ -39,8 +39,8 @@ func NewClient(forceNewToken bool) (*http.Client, error) {
 }
 
 type CreateLineRequestInfo struct {
-	LineId        string
-	PageId        string
+	LineID        string
+	PageID        string
 	LineCategory  string // STRAIGHT
 	Height        float64
 	Width         float64
@@ -56,10 +56,10 @@ func (info *CreateLineRequestInfo) Requests() ([]*slides.Request, error) {
 	reqs := []*slides.Request{
 		{
 			CreateLine: &slides.CreateLineRequest{
-				ObjectId:     info.LineId,
+				ObjectId:     info.LineID,
 				LineCategory: info.LineCategory,
 				ElementProperties: &slides.PageElementProperties{
-					PageObjectId: info.PageId,
+					PageObjectId: info.PageID,
 					Size: &slides.Size{
 						Height: &slides.Dimension{Magnitude: info.Height, Unit: info.DimensionUnit},
 						Width:  &slides.Dimension{Magnitude: info.Width, Unit: info.DimensionUnit},
@@ -78,7 +78,7 @@ func (info *CreateLineRequestInfo) Requests() ([]*slides.Request, error) {
 	if len(info.ColorHex) > 0 || len(info.DashStyle) > 0 || info.Weight > 0 {
 		req := &slides.Request{
 			UpdateLineProperties: &slides.UpdateLinePropertiesRequest{
-				ObjectId:       info.LineId,
+				ObjectId:       info.LineID,
 				Fields:         "*",
 				LineProperties: &slides.LineProperties{},
 			},
@@ -238,16 +238,16 @@ func main() {
 			len(slide.PageElements))
 	}
 
-	pageId := res.Slides[0].ObjectId
-	elementId := "MyTextBox_01"
+	pageID := res.Slides[0].ObjectId
+	elementID := "MyTextBox_01"
 
 	requests := []*slides.Request{
 		{
 			CreateShape: &slides.CreateShapeRequest{
-				ObjectId:  elementId,
+				ObjectId:  elementID,
 				ShapeType: "TEXT_BOX",
 				ElementProperties: &slides.PageElementProperties{
-					PageObjectId: pageId,
+					PageObjectId: pageID,
 					Size: &slides.Size{
 						Height: &slides.Dimension{Magnitude: 350, Unit: "PT"},
 						Width:  &slides.Dimension{Magnitude: 350, Unit: "PT"},
@@ -264,14 +264,14 @@ func main() {
 		},
 		{
 			InsertText: &slides.InsertTextRequest{
-				ObjectId:       elementId,
+				ObjectId:       elementID,
 				InsertionIndex: 0,
 				Text:           "New Box Text Inserted!",
 			},
 		},
 	}
 
-	tableId := "MyTable_01"
+	tableID := "MyTable_01"
 	rowCount := int64(8)
 	columnCount := int64(5)
 
@@ -279,9 +279,9 @@ func main() {
 		// Create a table
 		{
 			CreateTable: &slides.CreateTableRequest{
-				ObjectId: tableId,
+				ObjectId: tableID,
 				ElementProperties: &slides.PageElementProperties{
-					PageObjectId: pageId,
+					PageObjectId: pageID,
 				},
 				Rows:    rowCount,
 				Columns: columnCount,
@@ -293,7 +293,7 @@ func main() {
 	for i, heading := range headings {
 		req := &slides.Request{
 			InsertText: &slides.InsertTextRequest{
-				ObjectId: tableId,
+				ObjectId: tableID,
 				CellLocation: &slides.TableCellLocation{
 					ColumnIndex: int64(i),
 					RowIndex:    0,
@@ -306,12 +306,12 @@ func main() {
 	}
 
 	if 1 == 0 {
-		borderReqs := BorderRequests(tableId)
+		borderReqs := BorderRequests(tableID)
 		requests = append(requests, borderReqs...)
 	}
 
 	if 1 == 0 {
-		newReqs, err := su.AlternateRowBgColor(tableId, rowCount, columnCount, "", "#ededed")
+		newReqs, err := su.AlternateRowBgColor(tableID, rowCount, columnCount, "", "#ededed")
 		if err != nil {
 			panic(err)
 		}
@@ -320,7 +320,7 @@ func main() {
 
 	if 1 == 0 {
 		headerStyle := su.UpdateTextStyle{
-			ObjectId:           tableId,
+			ObjectID:           tableID,
 			RowIndex:           0,
 			ColumnIndex:        0,
 			ForegroundColorHex: "#ff8800",
@@ -335,8 +335,8 @@ func main() {
 	}
 
 	if 1 == 0 {
-		//lineReqs := CreateLineRequest(pageId)
-		lineReqs := suex.LineExampleRequests(pageId)
+		//lineReqs := CreateLineRequest(pageID)
+		lineReqs := suex.LineExampleRequests(pageID)
 		requests = append(requests, lineReqs...)
 	}
 
@@ -358,10 +358,10 @@ func main() {
 	if 1 == 1 {
 		for i := 0; i < 5; i++ {
 			locX := float64(i) * 100
-			lineId := fmt.Sprintf("MYVertLine%03d", i)
+			lineID := fmt.Sprintf("MYVertLine%03d", i)
 			lineInfo := CreateLineRequestInfo{
-				PageId:        pageId,
-				LineId:        lineId,
+				PageID:        pageID,
+				LineID:        lineID,
 				ColorHex:      "#6f6f6f",
 				LineCategory:  "STRAIGHT",
 				Height:        500.0,

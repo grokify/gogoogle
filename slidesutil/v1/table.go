@@ -14,7 +14,7 @@ func IsOdd(i int) bool {
 	return !IsEven(i)
 }
 
-func AlternateRowBgColor(objectId string, rowCount, columnCount int64, evenColorHex, oddColorHex string) ([]*slides.Request, error) {
+func AlternateRowBgColor(objectID string, rowCount, columnCount int64, evenColorHex, oddColorHex string) ([]*slides.Request, error) {
 	reqs := []*slides.Request{}
 
 	colorizeEven := false
@@ -43,13 +43,13 @@ func AlternateRowBgColor(objectId string, rowCount, columnCount int64, evenColor
 		if IsEven(i) && colorizeEven {
 			reqs = append(reqs,
 				&slides.Request{
-					UpdateTableCellProperties: UpdateTableCellPropertiesRequestTableCellBackgroundFill(objectId, int64(i), columnCount, evenColor),
+					UpdateTableCellProperties: UpdateTableCellPropertiesRequestTableCellBackgroundFill(objectID, int64(i), columnCount, evenColor),
 				},
 			)
 		} else if IsOdd(i) && colorizeOdd {
 			reqs = append(reqs,
 				&slides.Request{
-					UpdateTableCellProperties: UpdateTableCellPropertiesRequestTableCellBackgroundFill(objectId, int64(i), columnCount, oddColor),
+					UpdateTableCellProperties: UpdateTableCellPropertiesRequestTableCellBackgroundFill(objectID, int64(i), columnCount, oddColor),
 				},
 			)
 		}
@@ -57,9 +57,9 @@ func AlternateRowBgColor(objectId string, rowCount, columnCount int64, evenColor
 	return reqs, nil
 }
 
-func UpdateTableCellPropertiesRequestTableCellBackgroundFill(objectId string, rowIndex, columnSpan int64, bgColor *slides.RgbColor) *slides.UpdateTableCellPropertiesRequest {
+func UpdateTableCellPropertiesRequestTableCellBackgroundFill(objectID string, rowIndex, columnSpan int64, bgColor *slides.RgbColor) *slides.UpdateTableCellPropertiesRequest {
 	return &slides.UpdateTableCellPropertiesRequest{
-		ObjectId: objectId,
+		ObjectId: objectID,
 		Fields:   "*",
 		TableRange: &slides.TableRange{
 			Location: &slides.TableCellLocation{
@@ -84,7 +84,7 @@ func UpdateTableCellPropertiesRequestTableCellBackgroundFill(objectId string, ro
 // https://developers.google.com/slides/samples/tables#format_a_table_header_row
 
 type UpdateTextStyle struct {
-	ObjectId           string
+	ObjectID           string
 	RowIndex           int64
 	ColumnIndex        int64
 	ForegroundColorHex string
@@ -112,7 +112,7 @@ func (item *UpdateTextStyle) RequestsColumnSpan(columnSpan int64) ([]*slides.Req
 func (item *UpdateTextStyle) Request() (*slides.Request, error) {
 	fields := []string{"bold"}
 	req := &slides.UpdateTextStyleRequest{
-		ObjectId: item.ObjectId,
+		ObjectId: item.ObjectID,
 		CellLocation: &slides.TableCellLocation{
 			ColumnIndex: item.ColumnIndex,
 			RowIndex:    item.RowIndex,

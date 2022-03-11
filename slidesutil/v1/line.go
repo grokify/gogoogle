@@ -5,8 +5,8 @@ import (
 )
 
 type CreateLineRequestInfo struct {
-	LineId        string
-	PageId        string
+	LineID        string
+	PageID        string
 	LineCategory  string // STRAIGHT
 	Height        float64
 	Width         float64
@@ -22,10 +22,10 @@ func (info *CreateLineRequestInfo) Requests() ([]*slides.Request, error) {
 	reqs := []*slides.Request{
 		{
 			CreateLine: &slides.CreateLineRequest{
-				ObjectId:     info.LineId,
+				ObjectId:     info.LineID,
 				LineCategory: info.LineCategory,
 				ElementProperties: &slides.PageElementProperties{
-					PageObjectId: info.PageId,
+					PageObjectId: info.PageID,
 					Size: &slides.Size{
 						Height: &slides.Dimension{Magnitude: info.Height, Unit: info.DimensionUnit},
 						Width:  &slides.Dimension{Magnitude: info.Width, Unit: info.DimensionUnit},
@@ -44,7 +44,7 @@ func (info *CreateLineRequestInfo) Requests() ([]*slides.Request, error) {
 	if len(info.ColorHex) > 0 || len(info.DashStyle) > 0 || info.Weight > 0 {
 		req := &slides.Request{
 			UpdateLineProperties: &slides.UpdateLinePropertiesRequest{
-				ObjectId:       info.LineId,
+				ObjectId:       info.LineID,
 				Fields:         "*",
 				LineProperties: &slides.LineProperties{},
 			},

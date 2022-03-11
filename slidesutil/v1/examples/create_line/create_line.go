@@ -53,7 +53,7 @@ func main() {
 
 	srv, err := slides.New(client)
 	if err != nil {
-		log.Fatalf("Unable to retrieve Slides Client %v", err)
+		log.Fatalf("unable to retrieve Slides Client %v", err)
 	}
 
 	psv := slides.NewPresentationsService(srv)
@@ -64,7 +64,7 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Printf("CREATED Presentation with Id %v\n", res.PresentationId)
+	fmt.Printf("created Presentation with Id %v\n", res.PresentationId)
 
 	for i, slide := range res.Slides {
 		fmt.Printf("- Slide #%d id %v contains %d elements.\n", (i + 1),
@@ -72,21 +72,21 @@ func main() {
 			len(slide.PageElements))
 	}
 
-	pageId := res.Slides[0].ObjectId
+	pageID := res.Slides[0].ObjectId
 
 	requests := []*slides.Request{}
 
 	// Single line
 	if 1 == 0 {
-		lineReqs := suex.LineExampleRequests(pageId)
+		lineReqs := suex.LineExampleRequests(pageID)
 		requests = append(requests, lineReqs...)
 	}
 
 	// Simple for loop
 	if 1 == 0 {
 		lineInfo := su.CreateLineRequestInfo{
-			PageId:        pageId,
-			LineId:        "",
+			PageID:        pageID,
+			LineID:        "",
 			ColorHex:      "#6f6f6f",
 			LineCategory:  "STRAIGHT",
 			Height:        300.0,
@@ -98,7 +98,7 @@ func main() {
 			Weight:        1.0,
 		}
 		for i := 0; i < 5; i++ {
-			lineInfo.LineId = fmt.Sprintf("MYVertLine%03d", i)
+			lineInfo.LineID = fmt.Sprintf("MYVertLine%03d", i)
 			lineInfo.LocationX = float64(i) * 100
 			lineReqs, err := lineInfo.Requests()
 			if err != nil {
@@ -117,8 +117,8 @@ func main() {
 		}
 		linePrefix := "VertLines"
 		lineInfo := su.CreateLineRequestInfo{
-			PageId:        pageId,
-			LineId:        "",
+			PageID:        pageID,
+			LineID:        "",
 			ColorHex:      "#6f6f6f",
 			LineCategory:  "STRAIGHT",
 			Height:        300.0,
@@ -136,7 +136,7 @@ func main() {
 			}
 			fmt.Printf("IDX %v MIN %v MAX %v\n", i, min, max)
 			if i == 0 {
-				lineInfo.LineId = fmt.Sprintf("%v%03d%v", linePrefix, i, "start")
+				lineInfo.LineID = fmt.Sprintf("%v%03d%v", linePrefix, i, "start")
 				lineInfo.LocationX = min
 				lineReqs, err := lineInfo.Requests()
 				if err != nil {
@@ -144,7 +144,7 @@ func main() {
 				}
 				requests = append(requests, lineReqs...)
 			}
-			lineInfo.LineId = fmt.Sprintf("%v%03d%v", linePrefix, i, "end")
+			lineInfo.LineID = fmt.Sprintf("%v%03d%v", linePrefix, i, "end")
 			lineInfo.LocationX = max
 			lineReqs, err := lineInfo.Requests()
 			if err != nil {

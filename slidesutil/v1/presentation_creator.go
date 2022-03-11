@@ -15,9 +15,9 @@ type PresentationCreator struct {
 	PresentationID string
 }
 
-func NewPresentationCreator(googHttpClient *http.Client) (*PresentationCreator, error) {
+func NewPresentationCreator(googHTTPClient *http.Client) (*PresentationCreator, error) {
 	pc := &PresentationCreator{}
-	slidesClient, err := NewSlidesClient(googHttpClient)
+	slidesClient, err := NewSlidesClient(googHTTPClient)
 	if err != nil {
 		return pc, err
 	}
