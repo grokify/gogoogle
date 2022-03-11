@@ -44,5 +44,5 @@ func RecognizeResponseTextFirst(resp *speechpb.RecognizeResponse, threshold floa
 			}
 		}
 	}
-	return "", fmt.Errorf("No responses found")
+	return "", fmt.Errorf("no responses found")
 }

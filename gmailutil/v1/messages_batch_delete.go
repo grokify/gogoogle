@@ -8,19 +8,19 @@ import (
 	"google.golang.org/api/gmail/v1"
 )
 
-func BatchDeleteMessages(gs *GmailService, userId string, messageIds []string) error {
+func BatchDeleteMessages(gs *GmailService, userID string, messageIDs []string) error {
 	if gs == nil {
-		return errors.New("E_NIL_GMAIL_SERVICE")
+		return errors.New("nil `GmailService`")
 	}
 
-	userId = strings.TrimSpace(userId)
-	if len(userId) == 0 {
-		userId = "me"
+	userID = strings.TrimSpace(userID)
+	if len(userID) == 0 {
+		userID = "me"
 	}
 
 	return gs.UsersService.Messages.BatchDelete(
-		userId,
-		&gmail.BatchDeleteMessagesRequest{Ids: messageIds}).
+		userID,
+		&gmail.BatchDeleteMessagesRequest{Ids: messageIDs}).
 		Do(gs.APICallOptions...)
 }
 

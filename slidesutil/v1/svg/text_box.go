@@ -58,8 +58,8 @@ func SVGAddTextBox(canvas *svg.SVG, tbox CreateShapeTextBoxRequestInfo) {
 }
 
 type CreateShapeTextBoxRequestInfo struct {
-	PageId             string
-	ObjectId           string
+	PageID             string
+	ObjectID           string
 	Width              float64
 	Height             float64
 	DimensionUnit      string

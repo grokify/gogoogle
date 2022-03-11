@@ -12,13 +12,13 @@ func GetLabelNames(client *http.Client) ([]string, error) {
 	labels := []string{}
 	srv, err := gmail.New(client)
 	if err != nil {
-		return labels, fmt.Errorf("Unable to retrieve Gmail client: %v", err)
+		return labels, fmt.Errorf("unable to retrieve gmail client: err [%v]", err)
 	}
 
 	user := "me"
 	r, err := srv.Users.Labels.List(user).Do()
 	if err != nil {
-		return labels, fmt.Errorf("Unable to retrieve labels: %v", err)
+		return labels, fmt.Errorf("unable to retrieve labels: err [%v]", err)
 	}
 	for _, l := range r.Labels {
 		labels = append(labels, l.Name)
