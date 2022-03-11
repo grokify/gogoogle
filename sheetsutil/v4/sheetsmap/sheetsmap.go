@@ -451,7 +451,7 @@ func (sm *SheetsMap) UpdateItem(item Item, key, val string, synchronize bool) (s
 	keyLc := TrimSpaceToLower(key)
 	col, ok := sm.ColumnMapKeyLc[keyLc]
 	if !ok {
-		return "", fmt.Errorf("Key Not Found: %v", key)
+		return "", fmt.Errorf("key Not Found [%v]", key)
 	}
 
 	// Process value
