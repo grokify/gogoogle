@@ -10,11 +10,11 @@ require (
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/grokify/goauth v0.13.1
 	github.com/grokify/gocharts v1.18.0
-	github.com/grokify/mogo v0.37.4
+	github.com/grokify/mogo v0.37.15
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/joho/godotenv v1.4.0
 	github.com/lucasb-eyer/go-colorful v1.2.0
-	golang.org/x/net v0.0.0-20220225172249-27dd8689420f
+	golang.org/x/net v0.0.0-20220325170049-de3da57026de
 	google.golang.org/api v0.71.0
 	google.golang.org/genproto v0.0.0-20220310185008-1973136f34c6
 )
