@@ -3,7 +3,7 @@ package slidesutil
 import (
 	"fmt"
 
-	"github.com/grokify/gocharts/data/roadmap"
+	"github.com/grokify/gocharts/v2/data/roadmap"
 	"google.golang.org/api/slides/v1"
 )
 
