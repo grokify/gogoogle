@@ -8,7 +8,7 @@ require (
 	cloud.google.com/go/speech v1.4.0
 	github.com/Iwark/spreadsheet v0.0.0-20220228050401-3cb9c630d9f1
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
-	github.com/grokify/goauth v0.13.6
+	github.com/grokify/goauth v0.14.3
 	github.com/grokify/gocharts/v2 v2.7.3
 	github.com/grokify/mogo v0.39.6
 	github.com/jessevdk/go-flags v1.5.0
