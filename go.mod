@@ -9,7 +9,7 @@ require (
 	github.com/Iwark/spreadsheet v0.0.0-20220412131121-41eea1483964
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/grokify/goauth v0.15.2
-	github.com/grokify/gocharts/v2 v2.7.3
+	github.com/grokify/gocharts/v2 v2.7.4
 	github.com/grokify/mogo v0.39.8
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/joho/godotenv v1.4.0
