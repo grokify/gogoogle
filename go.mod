@@ -14,7 +14,7 @@ require (
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/joho/godotenv v1.4.0
 	github.com/lucasb-eyer/go-colorful v1.2.0
-	golang.org/x/net v0.0.0-20220607020251-c690dde0001d
-	google.golang.org/api v0.84.0
-	google.golang.org/genproto v0.0.0-20220608133413-ed9918b62aac
+	golang.org/x/net v0.0.0-20220617184016-355a448f1bc9
+	google.golang.org/api v0.85.0
+	google.golang.org/genproto v0.0.0-20220617124728-180714bec0ad
 )
