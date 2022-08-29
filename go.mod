@@ -3,7 +3,7 @@ module github.com/grokify/googleutil
 go 1.18
 
 require (
-	cloud.google.com/go/bigquery v1.38.0
+	cloud.google.com/go/bigquery v1.39.0
 	cloud.google.com/go/dlp v1.4.0
 	cloud.google.com/go/speech v1.5.0
 	github.com/Iwark/spreadsheet v0.0.0-20220412131121-41eea1483964
