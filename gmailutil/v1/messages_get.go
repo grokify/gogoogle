@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	"google.golang.org/api/gmail/v1"
+	gmail "google.golang.org/api/gmail/v1"
 )
 
 func GetMessage(gs *GmailService, userId, messageId string) (*gmail.Message, error) {

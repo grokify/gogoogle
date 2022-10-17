@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"strings"
 
-	"google.golang.org/api/slides/v1"
+	slides "google.golang.org/api/slides/v1"
 )
 
 type CommonMarkData struct {

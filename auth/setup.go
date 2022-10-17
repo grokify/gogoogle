@@ -13,8 +13,8 @@ import (
 	"github.com/grokify/goauth/google"
 	"github.com/grokify/mogo/config"
 	"github.com/grokify/mogo/type/stringsutil"
-	"github.com/jessevdk/go-flags"
-	"google.golang.org/api/slides/v1"
+	flags "github.com/jessevdk/go-flags"
+	slides "google.golang.org/api/slides/v1"
 	//"github.com/google/google-api-go-client/slides/v1"
 )
 

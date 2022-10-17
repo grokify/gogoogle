@@ -1,7 +1,7 @@
 package slidesutil
 
 import (
-	"google.golang.org/api/slides/v1"
+	slides "google.golang.org/api/slides/v1"
 )
 
 // CreateSlideTitleOnly creates a slide using Markdown

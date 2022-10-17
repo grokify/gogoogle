@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"google.golang.org/api/gmail/v1"
+	gmail "google.golang.org/api/gmail/v1"
 	"google.golang.org/api/googleapi"
 	"google.golang.org/api/option"
 )

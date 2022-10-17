@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"google.golang.org/api/gmail/v1"
+	gmail "google.golang.org/api/gmail/v1"
 )
 
 func BatchDeleteMessages(gs *GmailService, userID string, messageIDs []string) error {

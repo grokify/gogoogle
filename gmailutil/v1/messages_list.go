@@ -6,7 +6,7 @@ import (
 
 	"github.com/grokify/mogo/time/timeutil"
 	"github.com/grokify/mogo/type/stringsutil"
-	"google.golang.org/api/gmail/v1"
+	gmail "google.golang.org/api/gmail/v1"
 	"google.golang.org/api/googleapi"
 )
 

@@ -8,13 +8,13 @@ import (
 	"strings"
 
 	omg "github.com/grokify/goauth/google"
-	"github.com/grokify/googleutil/gmailutil/v1"
+	gmailutil "github.com/grokify/googleutil/gmailutil/v1"
 	"github.com/grokify/mogo/config"
 	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/grokify/mogo/type/stringsutil"
 	"github.com/jessevdk/go-flags"
-	"google.golang.org/api/gmail/v1"
+	gmail "google.golang.org/api/gmail/v1"
 )
 
 type Options struct {

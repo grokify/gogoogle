@@ -7,7 +7,7 @@ import (
 
 	"github.com/grokify/mogo/errors/errorsutil"
 	"google.golang.org/api/option"
-	"google.golang.org/api/slides/v1"
+	slides "google.golang.org/api/slides/v1"
 )
 
 type GoogleSlidesService struct {

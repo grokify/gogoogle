@@ -1,8 +1,8 @@
 package slidesutil
 
 import (
-	"github.com/lucasb-eyer/go-colorful"
-	"google.golang.org/api/slides/v1"
+	colorful "github.com/lucasb-eyer/go-colorful"
+	slides "google.golang.org/api/slides/v1"
 )
 
 func OptionalColorParseHex(hexColorStr string) (*slides.OptionalColor, error) {
