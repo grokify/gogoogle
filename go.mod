@@ -8,15 +8,15 @@ require (
 	cloud.google.com/go/speech v1.7.0
 	github.com/Iwark/spreadsheet v0.0.0-20220412131121-41eea1483964
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
-	github.com/grokify/goauth v0.16.2
-	github.com/grokify/gocharts/v2 v2.8.1
+	github.com/grokify/goauth v0.16.3
+	github.com/grokify/gocharts/v2 v2.8.2
 	github.com/grokify/mogo v0.40.5
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/joho/godotenv v1.4.0
 	github.com/lucasb-eyer/go-colorful v1.2.0
 	golang.org/x/net v0.0.0-20221014081412-f15817d10f9b
 	google.golang.org/api v0.99.0
-	google.golang.org/genproto v0.0.0-20221014213838-99cd37c6964a
+	google.golang.org/genproto v0.0.0-20221010155953-15ba04fc1c0e
 )
 
 require (
@@ -40,7 +40,7 @@ require (
 	github.com/pquerna/ffjson v0.0.0-20190930134022-aa0246cd15f7 // indirect
 	github.com/valyala/fastjson v1.6.3 // indirect
 	go.opencensus.io v0.23.0 // indirect
-	golang.org/x/oauth2 v0.0.0-20221006150949-b44042a4b9c1 // indirect
+	golang.org/x/oauth2 v0.0.0-20221014153046-6fdb5e3db783 // indirect
 	golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10 // indirect
 	golang.org/x/text v0.3.8 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
