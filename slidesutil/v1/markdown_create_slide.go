@@ -3,7 +3,7 @@ package slidesutil
 import (
 	"log"
 
-	"google.golang.org/api/slides/v1"
+	slides "google.golang.org/api/slides/v1"
 )
 
 // CreateSlideMarkdown creates a slide using Markdown

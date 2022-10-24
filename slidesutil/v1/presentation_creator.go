@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/grokify/mogo/errors/errorsutil"
-	"google.golang.org/api/slides/v1"
+	slides "google.golang.org/api/slides/v1"
 )
 
 type PresentationCreator struct {

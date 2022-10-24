@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/grokify/gocharts/v2/data/roadmap"
-	"google.golang.org/api/slides/v1"
+	slides "google.golang.org/api/slides/v1"
 )
 
 type SlideCanvasInfo struct {

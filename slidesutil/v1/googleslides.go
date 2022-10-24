@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/lucasb-eyer/go-colorful"
-	"google.golang.org/api/slides/v1"
+	slides "google.golang.org/api/slides/v1"
 )
 
 var (

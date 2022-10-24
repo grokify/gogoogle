@@ -6,7 +6,7 @@ import (
 
 	"github.com/grokify/mogo/crypto/md5"
 	"github.com/grokify/mogo/errors/errorsutil"
-	"google.golang.org/api/slides/v1"
+	slides "google.golang.org/api/slides/v1"
 )
 
 // CreateSlideImageRequestsSidebarRight creates API batch requests to
