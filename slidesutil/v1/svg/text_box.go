@@ -8,7 +8,7 @@ import (
 
 	svg "github.com/ajstarks/svgo"
 	// ahaslides "github.com/grokify/go-aha/ahaslides"
-	"google.golang.org/api/slides/v1"
+	slides "google.golang.org/api/slides/v1"
 )
 
 /*
