@@ -77,14 +77,15 @@ func UpdateParagraphStyleRequestLineSpacing(objectID string, lineSpacing float64
 }
 
 /*
-func OptionalColorHex() {
-	c := &slides.OptionalColor{
-		OpaqueColor: &slides.OpaqueColor{
-			RgbColor: &slides.RgbColor{},
-		},
+	func OptionalColorHex() {
+		c := &slides.OptionalColor{
+			OpaqueColor: {
+				RgbColor: &slides.RgbColor{},
+			},
+		}
 	}
-}
 */
+
 func UpdateTextStyleRequestLinkURL(objectID, url string, textRange *slides.Range, underlineLinks bool) *slides.Request {
 	optionalColor, err := OptionalColorParseHex("#666666")
 	if err != nil {

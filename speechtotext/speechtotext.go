@@ -2,7 +2,7 @@ package speechtotext
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 	"strings"
 
 	speechpb "google.golang.org/genproto/googleapis/cloud/speech/v1"
@@ -23,7 +23,7 @@ func NewRecognitionAudio(data []byte) *speechpb.RecognitionAudio {
 }
 
 func NewRecognitionAudioFile(file string) (*speechpb.RecognitionAudio, error) {
-	data, err := ioutil.ReadFile(file)
+	data, err := os.ReadFile(file)
 	if err != nil {
 		return nil, err
 	}
