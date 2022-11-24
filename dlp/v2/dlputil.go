@@ -1,7 +1,8 @@
 package dlp
 
 import (
-	dlppb "google.golang.org/genproto/googleapis/privacy/dlp/v2"
+	// dlppb "google.golang.org/genproto/googleapis/privacy/dlp/v2"
+	"cloud.google.com/go/dlp/apiv2/dlppb"
 )
 
 // For all InvoTypes, see: https://cloud.google.com/dlp/docs/infotypes-reference
