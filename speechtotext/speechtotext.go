@@ -5,7 +5,8 @@ import (
 	"os"
 	"strings"
 
-	speechpb "google.golang.org/genproto/googleapis/cloud/speech/v1"
+	// speechpb "google.golang.org/genproto/googleapis/cloud/speech/v1"
+	"cloud.google.com/go/speech/apiv1/speechpb"
 )
 
 /*
