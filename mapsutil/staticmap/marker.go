@@ -28,12 +28,6 @@ const (
 	// black, brown, green, purple, yellow, blue, gray, orange, red, white
 )
 
-func MarkersLatLngs(latlngs ...latlng.LatLng) Markers {
-	m := Markers{
-		LatLngs: latlngs}
-	return m
-}
-
 type Markers struct {
 	Size    string
 	Color   string
