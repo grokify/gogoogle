@@ -2,7 +2,6 @@
 package staticmap
 
 import (
-	"errors"
 	"net/http"
 	"net/url"
 	"os"
@@ -92,8 +91,6 @@ func (sm *StaticMap) URL(key string) string {
 	return u
 }
 
-var ErrUnknownMediaType = errors.New("unknown media type")
-
 func (sm *StaticMap) WriteFilePNG(filename, key string) error {
 	u := sm.URL(key)
 	r, err := http.Get(u)
@@ -102,7 +99,7 @@ func (sm *StaticMap) WriteFilePNG(filename, key string) error {
 	}
 	ct := r.Header.Get(httputilmore.HeaderContentType)
 	if !mimeutil.IsType(ct, httputilmore.ContentTypeImagePNG) {
-		return errorsutil.Wrapf(ErrUnknownMediaType, "mediaType [%s]", ct)
+		return errorsutil.Wrapf(mimeutil.ErrUnknownMediaType, "mediaType [%s]", ct)
 	}
 	f, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE, 0600)
 	if err != nil {
