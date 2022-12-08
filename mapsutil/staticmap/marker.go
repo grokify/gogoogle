@@ -35,21 +35,23 @@ func MarkersLatLngs(latlngs ...latlng.LatLng) Markers {
 }
 
 type Markers struct {
-	Size            string
-	Color           string
-	Label           string
-	LatLngPrecision uint
-	LatLngs         []latlng.LatLng
+	Size    string
+	Color   string
+	Label   string // if not empty, must be `^[0-9A=Z]$/
+	LatLngs []latlng.LatLng
 }
 
 func (m *Markers) String(latLngPrecision uint) string {
 	m.trimSpace()
 	parts := []string{}
+	if len(m.Color) > 0 {
+		parts = append(parts, "color:"+m.Color)
+	}
 	if len(m.Size) > 0 {
 		parts = append(parts, "size:"+m.Size)
 	}
-	if len(m.Color) > 0 {
-		parts = append(parts, "color:"+m.Color)
+	if len(m.Label) > 0 {
+		parts = append(parts, "label:"+m.Label)
 	}
 	for _, ll := range m.LatLngs {
 		parts = append(parts, location.LatLngString(&ll, ",", latLngPrecision))
