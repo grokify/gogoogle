@@ -11,6 +11,7 @@ import (
 
 	"github.com/grokify/mogo/data/location"
 	"github.com/grokify/mogo/errors/errorsutil"
+	"github.com/grokify/mogo/mime/mimeutil"
 	"github.com/grokify/mogo/net/httputilmore"
 	"google.golang.org/genproto/googleapis/type/latlng"
 )
@@ -100,7 +101,7 @@ func (sm *StaticMap) WriteFilePNG(filename, key string) error {
 		return err
 	}
 	ct := r.Header.Get(httputilmore.HeaderContentType)
-	if strings.ToLower(strings.TrimSpace(ct)) != httputilmore.ContentTypeImagePNG {
+	if !mimeutil.IsType(ct, httputilmore.ContentTypeImagePNG) {
 		return errorsutil.Wrapf(ErrUnknownMediaType, "mediaType [%s]", ct)
 	}
 	f, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE, 0600)
