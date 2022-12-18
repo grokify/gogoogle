@@ -20,7 +20,7 @@ func CreateSlideImageRequestsSidebarRight(slideID, imageID, imageURL, sidebarTex
 	requests := []*slides.Request{}
 	if len(imageURL) > 0 {
 		if len(imageID) == 0 {
-			imageID = md5util.MD5Base62(slideID + "." + imageURL + "." + time.Now().Format(time.RFC3339))
+			imageID = md5util.MD5Base62([]byte(slideID + "." + imageURL + "." + time.Now().Format(time.RFC3339)))
 		}
 		emu4M := slides.Dimension{Magnitude: 6000000, Unit: "EMU"}
 		requests = append(requests, &slides.Request{

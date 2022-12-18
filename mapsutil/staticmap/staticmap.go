@@ -73,7 +73,7 @@ func (sm *StaticMap) Size() string {
 
 func (sm *StaticMap) URL(key string) string {
 	params := url.Values{}
-	params.Add(ParamCenter, location.LatLngString(&sm.Center, ",", sm.LatLngPrecision))
+	params.Add(ParamCenter, location.LatLngString(&sm.Center, ",", int(sm.LatLngPrecision)))
 	params.Add(ParamSize, sm.Size())
 	if sm.Zoom > 0 {
 		params.Add(ParamZoom, strconv.Itoa(int(sm.Zoom)))

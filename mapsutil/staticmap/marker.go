@@ -48,7 +48,7 @@ func (m *Markers) String(latLngPrecision uint) string {
 		parts = append(parts, "label:"+m.Label)
 	}
 	for _, ll := range m.LatLngs {
-		parts = append(parts, location.LatLngString(&ll, ",", latLngPrecision))
+		parts = append(parts, location.LatLngString(&ll, ",", int(latLngPrecision)))
 	}
 	return strings.Join(parts, "|")
 }
