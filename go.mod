@@ -8,9 +8,9 @@ require (
 	cloud.google.com/go/speech v1.10.0
 	github.com/Iwark/spreadsheet v0.0.0-20220412131121-41eea1483964
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
-	github.com/grokify/goauth v0.17.1
-	github.com/grokify/gocharts/v2 v2.8.6
-	github.com/grokify/mogo v0.43.0
+	github.com/grokify/goauth v0.17.2
+	github.com/grokify/gocharts/v2 v2.8.7
+	github.com/grokify/mogo v0.44.0
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/joho/godotenv v1.4.0
 	github.com/lucasb-eyer/go-colorful v1.2.0
