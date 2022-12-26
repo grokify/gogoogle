@@ -80,8 +80,8 @@ github.com/googleapis/enterprise-certificate-proxy v0.2.1/go.mod h1:AwSRAtLfXpU5
 github.com/googleapis/gax-go/v2 v2.7.0 h1:IcsPKeInNvYi7eqSaDjiZqDDKu5rsmunY0Y1YupQSSQ=
 github.com/googleapis/gax-go/v2 v2.7.0/go.mod h1:TEop28CZZQ2y+c0VxMUmu1lV+fQx57QpBWsYpwqHJx8=
 github.com/grokify/base36 v1.0.5 h1:iUgnt40hrPtn3M2gjU4Darow5ikf8xWXrTuMWTLziCk=
-github.com/grokify/goauth v0.16.7 h1:KuNfve4duERHENkyv5FNzKR6DzXzMaw0eeRJv4tWEis=
-github.com/grokify/goauth v0.16.7/go.mod h1:2odXPbG4GK0SNuK2vayhmSC5YlYx4cFAxjx/Hp7KVXA=
+github.com/grokify/goauth v0.17.1 h1:weNvWmz8QYTQ+2sAQlVbi6145DJ3utaK+shwCkMmi4w=
+github.com/grokify/goauth v0.17.1/go.mod h1:2odXPbG4GK0SNuK2vayhmSC5YlYx4cFAxjx/Hp7KVXA=
 github.com/grokify/gocharts/v2 v2.8.6 h1:50LsLxYAOhR6d6BUMmbBGyiTcEuL771F9cdrBF/OJpM=
 github.com/grokify/gocharts/v2 v2.8.6/go.mod h1:M8Td3PKNeyMm3i4NBJ1JQUvGqn4HUHbfIrRSXwRXRBk=
 github.com/grokify/mogo v0.43.0 h1:0wowSgR0k4+RT5+3Xr4WHTJFOs4AutjpM76VNuCBGWE=
