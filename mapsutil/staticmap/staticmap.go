@@ -11,7 +11,7 @@ import (
 	"github.com/grokify/mogo/data/location"
 	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/mime/mimeutil"
-	"github.com/grokify/mogo/net/httputilmore"
+	"github.com/grokify/mogo/net/http/httputilmore"
 	"google.golang.org/genproto/googleapis/type/latlng"
 )
 
