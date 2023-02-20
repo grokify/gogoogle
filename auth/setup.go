@@ -39,7 +39,7 @@ func Setup() (*http.Client, error) {
 		return nil, err
 	}
 
-	err = config.LoadDotEnvFirst(opts.EnvFile, os.Getenv("ENV_PATH"))
+	_, err = config.LoadDotEnv([]string{opts.EnvFile, os.Getenv("ENV_PATH")}, 1)
 	if err != nil {
 		return nil, err
 	}

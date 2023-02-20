@@ -106,10 +106,10 @@ func (opts *MessagesListQueryOpts) Encode() string {
 	if len(opts.NewerThan) > 0 {
 		parts = append(parts, "newer_than:"+opts.NewerThan)
 	}
-	if !timeutil.TimeIsZeroAny(opts.After) {
+	if !timeutil.NewTimeMore(opts.After, 0).IsZeroAny() {
 		parts = append(parts, "after:"+opts.After.Format(GmailDateFormat))
 	}
-	if !timeutil.TimeIsZeroAny(opts.Before) {
+	if !timeutil.NewTimeMore(opts.Before, 0).IsZeroAny() {
 		parts = append(parts, "before:"+opts.Before.Format(GmailDateFormat))
 	}
 	return strings.TrimSpace(strings.Join(parts, " "))

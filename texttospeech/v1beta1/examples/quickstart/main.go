@@ -74,7 +74,7 @@ func GetVoicesList(ctx context.Context, ttsService *texttospeech.Service) error 
 }
 
 func main() {
-	if err := config.LoadDotEnvSkipEmpty(os.Getenv("ENV_PATH"), "./.env"); err != nil {
+	if _, err := config.LoadDotEnv([]string{os.Getenv("ENV_PATH"), "./.env"}, 1); err != nil {
 		log.Fatal(err)
 	}
 
