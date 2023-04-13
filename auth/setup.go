@@ -9,7 +9,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/grokify/goauth"
+	"github.com/grokify/goauth/authutil"
 	"github.com/grokify/goauth/google"
 	"github.com/grokify/mogo/config"
 	"github.com/grokify/mogo/type/stringsutil"
@@ -58,12 +58,12 @@ func NewGoogleHTTPClient(forceNewToken bool) (*http.Client, error) {
 	}
 
 	tokenFile := "slides.googleapis.com-go-quickstart.json"
-	tokenStore, err := goauth.NewTokenStoreFileDefault(tokenFile, true, 0700)
+	tokenStore, err := authutil.NewTokenStoreFileDefault(tokenFile, true, 0700)
 	if err != nil {
 		return nil, err
 	}
 
-	client, err := goauth.NewClientWebTokenStore(
+	client, err := authutil.NewClientWebTokenStore(
 		context.Background(), conf,
 		tokenStore, forceNewToken, "mystate")
 	if err != nil {

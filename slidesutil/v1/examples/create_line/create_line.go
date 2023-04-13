@@ -11,7 +11,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/grokify/goauth"
+	"github.com/grokify/goauth/authutil"
 	"github.com/grokify/goauth/google"
 	"github.com/grokify/mogo/math/mathutil"
 	"github.com/joho/godotenv"
@@ -30,12 +30,12 @@ func NewClient(forceNewToken bool) (*http.Client, error) {
 	}
 
 	tokenFile := "slides.googleapis.com-go-quickstart.json"
-	tokenStore, err := goauth.NewTokenStoreFileDefault(tokenFile, true, 0700)
+	tokenStore, err := authutil.NewTokenStoreFileDefault(tokenFile, true, 0700)
 	if err != nil {
 		return nil, err
 	}
 
-	return goauth.NewClientWebTokenStore(context.Background(), conf, tokenStore, forceNewToken, "mystate")
+	return authutil.NewClientWebTokenStore(context.Background(), conf, tokenStore, forceNewToken, "mystate")
 }
 
 func main() {
