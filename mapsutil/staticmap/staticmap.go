@@ -28,7 +28,7 @@ const (
 )
 
 type StaticMap struct {
-	Center          latlng.LatLng
+	Center          *latlng.LatLng
 	Zoom            uint
 	Height          uint
 	Width           uint
@@ -37,28 +37,28 @@ type StaticMap struct {
 }
 
 func (sm *StaticMap) SetDefaultUSAKHI() {
-	sm.Center = location.USCenterAKHI
+	sm.Center = &location.USCenterAKHI
 	sm.Height = 400
 	sm.Width = 800
 	sm.Zoom = 3
 }
 
 func (sm *StaticMap) SetDefaultUSContiguous() {
-	sm.Center = location.USCenterContiguous
+	sm.Center = &location.USCenterContiguous
 	sm.Height = 400
 	sm.Width = 800
 	sm.Zoom = 4
 }
 
 func (sm *StaticMap) SetDefaultWorld() {
-	sm.Center = location.USHIEUCenter
+	sm.Center = &location.USHIEUCenter
 	sm.Height = 400
 	sm.Width = 800
 	sm.Zoom = 1
 }
 
 func (sm *StaticMap) SetDefaultEU() {
-	sm.Center = location.EUCenter2020
+	sm.Center = &location.EUCenter2020
 	sm.Height = 600
 	sm.Width = 800
 	sm.Zoom = 4
@@ -73,7 +73,7 @@ func (sm *StaticMap) Size() string {
 
 func (sm *StaticMap) URL(key string) string {
 	params := url.Values{}
-	params.Add(ParamCenter, location.LatLngString(&sm.Center, ",", int(sm.LatLngPrecision)))
+	params.Add(ParamCenter, location.LatLngString(sm.Center, ",", int(sm.LatLngPrecision)))
 	params.Add(ParamSize, sm.Size())
 	if sm.Zoom > 0 {
 		params.Add(ParamZoom, strconv.Itoa(int(sm.Zoom)))
@@ -93,7 +93,7 @@ func (sm *StaticMap) URL(key string) string {
 
 func (sm *StaticMap) WriteFilePNG(filename, key string) error {
 	u := sm.URL(key)
-	r, err := http.Get(u)
+	r, err := http.Get(u) // #nosec G107
 	if err != nil {
 		return err
 	}
