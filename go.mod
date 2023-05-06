@@ -3,7 +3,7 @@ module github.com/grokify/googleutil
 go 1.18
 
 require (
-	cloud.google.com/go/bigquery v1.51.0
+	cloud.google.com/go/bigquery v1.51.1
 	cloud.google.com/go/dlp v1.9.0
 	cloud.google.com/go/speech v1.15.0
 	github.com/Iwark/spreadsheet v0.0.0-20220412131121-41eea1483964
@@ -26,7 +26,7 @@ require (
 	cloud.google.com/go/iam v1.0.0 // indirect
 	cloud.google.com/go/longrunning v0.4.1 // indirect
 	github.com/andybalholm/brotli v1.0.5 // indirect
-	github.com/apache/arrow/go/v11 v11.0.0 // indirect
+	github.com/apache/arrow/go/v12 v12.0.0 // indirect
 	github.com/apache/thrift v0.18.1 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/caarlos0/env/v6 v6.10.1 // indirect
