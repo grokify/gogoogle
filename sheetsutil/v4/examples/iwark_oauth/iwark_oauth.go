@@ -17,7 +17,7 @@ import (
 	omg "github.com/grokify/goauth/google"
 	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/joho/godotenv"
-	"google.golang.org/api/sheets/v4"
+	sheets "google.golang.org/api/sheets/v4"
 
 	"github.com/Iwark/spreadsheet"
 )
@@ -45,15 +45,15 @@ func main() {
 		}
 	}
 
-	clientConfig := omg.ClientOauthCliTokenStoreConfig{
-		Context:       context.TODO(),
+	clientConfig := omg.ClientOAuthCLITokenStoreConfig{
+		Context:       context.Background(),
 		AppConfig:     []byte(os.Getenv(omg.ClientSecretEnv)),
 		Scopes:        []string{sheets.DriveScope, sheets.SpreadsheetsScope},
 		TokenFile:     "sheets.googleapis.com-go-quickstart.json",
 		ForceNewToken: forceNewToken,
 	}
 
-	googleClient, err := omg.NewClientOauthCliTokenStore(clientConfig)
+	hclient, err := omg.NewClientOAuthCLITokenStore(clientConfig)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -61,7 +61,7 @@ func main() {
 	useIwark := true
 	useGoog := false
 	if useIwark {
-		service := spreadsheet.NewServiceWithClient(googleClient)
+		service := spreadsheet.NewServiceWithClient(hclient)
 		ss, err := service.CreateSpreadsheet(spreadsheet.Spreadsheet{
 			Properties: spreadsheet.Properties{
 				Title: "spreadsheet title X",
@@ -69,7 +69,7 @@ func main() {
 		})
 
 		if err != nil {
-			panic(err)
+			log.Fatal(err)
 		}
 
 		sheet, err := ss.SheetByIndex(0)
@@ -79,18 +79,18 @@ func main() {
 
 		err = service.ExpandSheet(sheet, 20, 10)
 		if err != nil {
-			panic(err)
 			log.Fatal(err)
 		}
 
 		sheet.Update(3, 2, "Woza2")
 		err = sheet.Synchronize()
 		if err != nil {
-			panic(err)
+			log.Fatal(err)
 		}
 	}
+
 	if useGoog {
-		svc, err := sheets.New(googleClient)
+		svc, err := sheets.New(hclient)
 		if err != nil {
 			log.Fatal(err)
 		}
