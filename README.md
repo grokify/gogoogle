@@ -5,7 +5,7 @@
 [![Docs][docs-godoc-svg]][docs-godoc-url]
 [![License][license-svg]][license-url]
 
- [build-status-svg]: https://github.com/grokify/googleutil/workflows/build/badge.svg
+ [build-status-svg]: https://github.com/grokify/googleutil/workflows/test/badge.svg?branch=master
  [build-status-url]: https://github.com/grokify/googleutil/actions
  [goreport-svg]: https://goreportcard.com/badge/github.com/grokify/googleutil
  [goreport-url]: https://goreportcard.com/report/github.com/grokify/googleutil
