@@ -119,8 +119,8 @@ func main() {
 				},
 				TextRange: &slides.Range{
 					Type:       "FIXED_RANGE",
-					StartIndex: pointer.Int64(int64(1)),
-					EndIndex:   pointer.Int64(int64(5)),
+					StartIndex: pointer.Pointer(int64(1)),
+					EndIndex:   pointer.Pointer(int64(5)),
 				},
 				Fields: "bold",
 			},
@@ -133,8 +133,8 @@ func main() {
 				},
 				TextRange: &slides.Range{
 					Type:       "FIXED_RANGE",
-					StartIndex: pointer.Int64(int64(8)),
-					EndIndex:   pointer.Int64(int64(12)),
+					StartIndex: pointer.Pointer(int64(8)),
+					EndIndex:   pointer.Pointer(int64(12)),
 				},
 				Fields: "italic",
 			},
@@ -147,8 +147,8 @@ func main() {
 				},
 				TextRange: &slides.Range{
 					Type:       "FIXED_RANGE",
-					StartIndex: pointer.Int64(int64(36)),
-					EndIndex:   pointer.Int64(int64(40)),
+					StartIndex: pointer.Pointer(int64(36)),
+					EndIndex:   pointer.Pointer(int64(40)),
 				},
 				Fields: "fontFamily",
 			},
@@ -158,8 +158,8 @@ func main() {
 				ObjectId: textboxID,
 				TextRange: &slides.Range{
 					Type:       "FIXED_RANGE",
-					StartIndex: pointer.Int64(int64(1)),
-					EndIndex:   pointer.Int64(int64(42)),
+					StartIndex: pointer.Pointer(int64(1)),
+					EndIndex:   pointer.Pointer(int64(42)),
 				},
 			},
 		},
