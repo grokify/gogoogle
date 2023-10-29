@@ -118,7 +118,7 @@ func main() {
 					Bold: true,
 				},
 				TextRange: &slides.Range{
-					Type:       "FIXED_RANGE",
+					Type:       slidesutil.RangeTypeFixedRange,
 					StartIndex: pointer.Pointer(int64(1)),
 					EndIndex:   pointer.Pointer(int64(5)),
 				},
@@ -132,7 +132,7 @@ func main() {
 					Italic: true,
 				},
 				TextRange: &slides.Range{
-					Type:       "FIXED_RANGE",
+					Type:       slidesutil.RangeTypeFixedRange,
 					StartIndex: pointer.Pointer(int64(8)),
 					EndIndex:   pointer.Pointer(int64(12)),
 				},
@@ -146,7 +146,7 @@ func main() {
 					FontFamily: "Courier New",
 				},
 				TextRange: &slides.Range{
-					Type:       "FIXED_RANGE",
+					Type:       slidesutil.RangeTypeFixedRange,
 					StartIndex: pointer.Pointer(int64(36)),
 					EndIndex:   pointer.Pointer(int64(40)),
 				},
@@ -157,7 +157,7 @@ func main() {
 			CreateParagraphBullets: &slides.CreateParagraphBulletsRequest{
 				ObjectId: textboxID,
 				TextRange: &slides.Range{
-					Type:       "FIXED_RANGE",
+					Type:       slidesutil.RangeTypeFixedRange,
 					StartIndex: pointer.Pointer(int64(1)),
 					EndIndex:   pointer.Pointer(int64(42)),
 				},
