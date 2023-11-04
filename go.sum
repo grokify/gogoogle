@@ -50,8 +50,6 @@ github.com/envoyproxy/go-control-plane v0.9.0/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymF
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/go-control-plane v0.9.4/go.mod h1:6rpuAdCZL397s3pYoYcLgu1mIlRU8Am5FuJP05cCM98=
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
-github.com/go-logfmt/logfmt v0.6.0 h1:wGYYu3uicYdqXVgoYbvnkrPVXkuLM1p1ifugDMEdRi4=
-github.com/go-logfmt/logfmt v0.6.0/go.mod h1:WYhtIu8zTZfxdn5+rREduYbwxfcBr/Vr6KEVveWlfTs=
 github.com/goccy/go-json v0.10.2 h1:CrxCmQqYDkv1z7lO7Wbh2HN93uovUHgrECaO5ZrCXAU=
 github.com/goccy/go-json v0.10.2/go.mod h1:6MelG93GURQebXPDq3khkgXZkazVtN9CRI+MGFi0w8I=
 github.com/golang-jwt/jwt/v5 v5.0.0 h1:1n1XNM9hk7O9mnQoNBGolZvzebBQ7p93ULHRc28XJUE=
@@ -108,8 +106,8 @@ github.com/grokify/goauth v0.20.4 h1:zbQEJxVj2lgVF5BQU+CetGq7GkOdOTPnQdrK9mIVyxY
 github.com/grokify/goauth v0.20.4/go.mod h1:SHLbaktIjM8GgdA58/3zZvo7+PAtYx1OgRz5R8+KeQM=
 github.com/grokify/gocharts/v2 v2.14.1 h1:r4xB4qTZKyapWzkBGBta0iYv5De8HMwGbpqxHKBcjS4=
 github.com/grokify/gocharts/v2 v2.14.1/go.mod h1:LqFyaGgBBvsqxHNfS0Nc/LggHEXOrmZ9hQf9dfDOFow=
-github.com/grokify/mogo v0.59.0 h1:NkB+CPNs6goj486E7Q+hjY2UELqWtRIA/EVKNZUCKsk=
-github.com/grokify/mogo v0.59.0/go.mod h1:4d3z1044eMA/LJpj6+Vn19Ozh921yOk5tyTqSgYKnbg=
+github.com/grokify/mogo v0.60.0 h1:LTtSO8Nr6AAJT6KGEEJczsxWBAmarYLt4B1p0fcfWd8=
+github.com/grokify/mogo v0.60.0/go.mod h1:4d3z1044eMA/LJpj6+Vn19Ozh921yOk5tyTqSgYKnbg=
 github.com/huandu/xstrings v1.4.0 h1:D17IlohoQq4UcpqD7fDk80P7l+lwAmlFaBHgOipl2FU=
 github.com/huandu/xstrings v1.4.0/go.mod h1:y5/lhBue+AyNmUVz9RLU9xbLR0o4KIIExikq4ovT0aE=
 github.com/jessevdk/go-flags v1.5.0 h1:1jKYvbxEjfUl0fmqTCOfonvskHHXMjBySTLW4y9LFvc=
