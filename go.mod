@@ -7,7 +7,7 @@ go 1.21
 require (
 	cloud.google.com/go/bigquery v1.57.1
 	cloud.google.com/go/dlp v1.11.1
-	cloud.google.com/go/speech v1.20.1
+	cloud.google.com/go/speech v1.21.0
 	github.com/Iwark/spreadsheet v0.0.0-20230915040305-7677e8164883
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/grokify/goauth v0.20.4
