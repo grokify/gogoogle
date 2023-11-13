@@ -17,7 +17,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.2.0
 	golang.org/x/net v0.17.0
-	google.golang.org/api v0.149.0
+	google.golang.org/api v0.150.0
 	google.golang.org/genproto v0.0.0-20231030173426-d783a09b4405
 )
 
@@ -63,6 +63,7 @@ require (
 	golang.org/x/sync v0.5.0 // indirect
 	golang.org/x/sys v0.14.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
+	golang.org/x/time v0.3.0 // indirect
 	golang.org/x/tools v0.14.0 // indirect
 	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
