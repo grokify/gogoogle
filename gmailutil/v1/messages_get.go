@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/grokify/mogo/fmt/fmtutil"
 	gmail "google.golang.org/api/gmail/v1"
 )
 
@@ -33,10 +32,6 @@ func (mapi *MessagesAPI) GetMessagesByCategory(userID, categoryName string, getA
 	if err != nil {
 		fmt.Printf("ERR [%s]", err.Error())
 		return []*gmail.Message{}, err
-	}
-	for _, msg := range listRes.Messages {
-		fmtutil.PrintJSON(msg)
-		break
 	}
 
 	return mapi.InflateMessages(userID, listRes.Messages)
