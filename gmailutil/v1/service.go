@@ -2,11 +2,19 @@ package gmailutil
 
 import (
 	"context"
+	"errors"
 	"net/http"
 
 	gmail "google.golang.org/api/gmail/v1"
 	"google.golang.org/api/googleapi"
 	"google.golang.org/api/option"
+)
+
+const UserIDMe = "me"
+
+var (
+	ErrGmailServiceCannotBeNil  = errors.New("gmail service cannot be nil")
+	ErrGmailUserIDCannotBeEmpty = errors.New("gmail userid cannot be empty")
 )
 
 func NewUsersService(client *http.Client) (*gmail.UsersService, error) {
@@ -19,9 +27,10 @@ func NewUsersService(client *http.Client) (*gmail.UsersService, error) {
 
 type GmailService struct {
 	httpClient     *http.Client
+	APICallOptions []googleapi.CallOption
 	Service        *gmail.Service
 	UsersService   *gmail.UsersService
-	APICallOptions []googleapi.CallOption
+	MessagesAPI    MessagesAPI
 }
 
 func NewGmailService(client *http.Client) (*GmailService, error) {
@@ -34,5 +43,10 @@ func NewGmailService(client *http.Client) (*GmailService, error) {
 	}
 	gs.Service = service
 	gs.UsersService = gmail.NewUsersService(service)
+	gs.MessagesAPI = MessagesAPI{GmailService: gs}
 	return gs, nil
+}
+
+type MessagesAPI struct {
+	GmailService *GmailService
 }

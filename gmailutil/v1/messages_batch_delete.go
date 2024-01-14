@@ -1,35 +1,38 @@
 package gmailutil
 
 import (
-	"errors"
 	"fmt"
 	"strings"
 
 	gmail "google.golang.org/api/gmail/v1"
 )
 
-func BatchDeleteMessages(gs *GmailService, userID string, messageIDs []string) error {
-	if gs == nil {
-		return errors.New("nil `GmailService`")
+func (mapi *MessagesAPI) BatchDeleteMessages(userID string, messageIDs []string) error {
+	if mapi.GmailService == nil {
+		return ErrGmailServiceCannotBeNil
 	}
 
 	userID = strings.TrimSpace(userID)
 	if len(userID) == 0 {
-		userID = "me"
+		return ErrGmailUserIDCannotBeEmpty
 	}
 
-	return gs.UsersService.Messages.BatchDelete(
+	return mapi.GmailService.UsersService.Messages.BatchDelete(
 		userID,
 		&gmail.BatchDeleteMessagesRequest{Ids: messageIDs}).
-		Do(gs.APICallOptions...)
+		Do(mapi.GmailService.APICallOptions...)
 }
 
-func DeleteMessagesFrom(gs *GmailService, rfc822s []string) (int, int, error) {
+func (mapi *MessagesAPI) DeleteMessagesFrom(rfc822s []string) (int, int, error) {
+	if mapi.GmailService == nil {
+		return -1, -1, ErrGmailServiceCannotBeNil
+	}
+
 	deletedCount := 0
 	gte100Count := 0
 	rfc822Count := len(rfc822s)
 	for i, rfc822 := range rfc822s {
-		ids, err := deleteMessagesFromSingle(gs, rfc822)
+		ids, err := mapi.deleteMessagesFromSingle(rfc822)
 		if err != nil {
 			return deletedCount, gte100Count, err
 		}
@@ -40,7 +43,7 @@ func DeleteMessagesFrom(gs *GmailService, rfc822s []string) (int, int, error) {
 			gte100Count++
 		}
 		for numDeleted >= 100 {
-			ids, err := deleteMessagesFromSingle(gs, rfc822)
+			ids, err := mapi.deleteMessagesFromSingle(rfc822)
 			if err != nil {
 				return deletedCount, gte100Count, err
 			}
@@ -57,9 +60,9 @@ func DeleteMessagesFrom(gs *GmailService, rfc822s []string) (int, int, error) {
 	return deletedCount, gte100Count, nil
 }
 
-func deleteMessagesFromSingle(gs *GmailService, rfc822 string) ([]string, error) {
+func (mapi *MessagesAPI) deleteMessagesFromSingle(rfc822 string) ([]string, error) {
 	ids := []string{}
-	listRes, err := GetMessagesFrom(gs, rfc822)
+	listRes, err := mapi.GetMessagesFrom(rfc822)
 	if err != nil {
 		return ids, err
 	}
@@ -71,5 +74,5 @@ func deleteMessagesFromSingle(gs *GmailService, rfc822 string) ([]string, error)
 	if len(ids) == 0 {
 		return ids, nil
 	}
-	return ids, BatchDeleteMessages(gs, "", ids)
+	return ids, mapi.BatchDeleteMessages(UserIDMe, ids)
 }

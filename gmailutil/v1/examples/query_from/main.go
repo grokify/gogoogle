@@ -14,7 +14,6 @@ import (
 	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/grokify/mogo/type/stringsutil"
 	"github.com/jessevdk/go-flags"
-	gmail "google.golang.org/api/gmail/v1"
 )
 
 type Options struct {
@@ -76,7 +75,7 @@ func main() {
 			fmt.Printf("EMAILS: %s\n", strings.Join(rfc822s, ","))
 		}
 
-		deletedCount, gte100Count, err := gmailutil.DeleteMessagesFrom(gs, rfc822s)
+		deletedCount, gte100Count, err := gs.MessagesAPI.DeleteMessagesFrom(rfc822s)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -85,8 +84,8 @@ func main() {
 	}
 
 	if 1 == 0 {
-		msgs, err := GetMessagesByCategory(
-			gs, "me", gmailutil.CategoryForums, true)
+		msgs, err := gs.MessagesAPI.GetMessagesByCategory(
+			gmailutil.UserIDMe, gmailutil.CategoryForums, true)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -105,6 +104,7 @@ func GetClient(cfgJson []byte, scopes []string, forceNewToken bool) *http.Client
 	return googleClient
 }
 
+/*
 func GetMessagesByCategory(gs *gmailutil.GmailService, userId, categoryName string, getAll bool) ([]*gmail.Message, error) {
 	qOpts := gmailutil.MessagesListQueryOpts{
 		Category: categoryName,
@@ -125,3 +125,4 @@ func GetMessagesByCategory(gs *gmailutil.GmailService, userId, categoryName stri
 
 	return gmailutil.InflateMessages(gs, userId, listRes.Messages)
 }
+*/

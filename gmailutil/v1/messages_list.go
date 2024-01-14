@@ -115,10 +115,13 @@ func (opts *MessagesListQueryOpts) Encode() string {
 	return strings.TrimSpace(strings.Join(parts, " "))
 }
 
-func GetMessagesList(gs *GmailService, opts MessagesListOpts) (*gmail.ListMessagesResponse, error) {
+func (mapi *MessagesAPI) GetMessagesList(opts MessagesListOpts) (*gmail.ListMessagesResponse, error) {
+	if mapi.GmailService == nil {
+		return nil, ErrGmailServiceCannotBeNil
+	}
 	opts.Inflate()
 
-	userMessagesListCall := gs.UsersService.Messages.List(opts.UserId)
+	userMessagesListCall := mapi.GmailService.UsersService.Messages.List(opts.UserId)
 	userMessagesListCall.IncludeSpamTrash(opts.IncludeSpamTrash)
 	if len(opts.LabelIds) > 0 {
 		userMessagesListCall.LabelIds(opts.LabelIds...)
@@ -136,22 +139,26 @@ func GetMessagesList(gs *GmailService, opts MessagesListOpts) (*gmail.ListMessag
 	if len(opts.Fields) > 0 {
 		userMessagesListCall.Fields(opts.Fields...)
 	}
-	return userMessagesListCall.Do(gs.APICallOptions...)
+	return userMessagesListCall.Do(mapi.GmailService.APICallOptions...)
 }
 
-func GetMessagesFrom(gs *GmailService, rfc822 string) (*gmail.ListMessagesResponse, error) {
+func (mapi *MessagesAPI) GetMessagesFrom(rfc822 string) (*gmail.ListMessagesResponse, error) {
 	opts := MessagesListOpts{
 		Query: MessagesListQueryOpts{
 			From: rfc822},
 	}
 
-	return GetMessagesList(gs, opts)
+	return mapi.GetMessagesList(opts)
 }
 
-func InflateMessages(gs *GmailService, userId string, msgMetas []*gmail.Message) ([]*gmail.Message, error) {
+func (mapi *MessagesAPI) InflateMessages(userID string, msgMetas []*gmail.Message) ([]*gmail.Message, error) {
+	if mapi.GmailService == nil {
+		return nil, ErrGmailServiceCannotBeNil
+	}
+
 	msgs := []*gmail.Message{}
 	for _, msgMeta := range msgMetas {
-		msg, err := GetMessage(gs, userId, msgMeta.Id)
+		msg, err := mapi.GetMessage(userID, msgMeta.Id)
 		if err != nil {
 			return msgs, err
 		}
