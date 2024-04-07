@@ -5,7 +5,7 @@ go 1.22
 toolchain go1.22.1
 
 require (
-	cloud.google.com/go/bigquery v1.59.1
+	cloud.google.com/go/bigquery v1.60.0
 	cloud.google.com/go/dlp v1.12.1
 	cloud.google.com/go/speech v1.22.1
 	github.com/Iwark/spreadsheet v0.0.0-20230915040305-7677e8164883
