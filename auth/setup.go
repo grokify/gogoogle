@@ -32,7 +32,7 @@ func (opt *Options) NewToken() bool {
 	return len(opt.NewTokenRaw) > 0
 }
 
-func Setup() (*http.Client, error) {
+func Setup(ctx context.Context) (*http.Client, error) {
 	opts := Options{}
 	_, err := flags.Parse(&opts)
 	if err != nil {
@@ -45,6 +45,7 @@ func Setup() (*http.Client, error) {
 	}
 
 	return google.NewClientFileStoreWithDefaults(
+		ctx,
 		[]byte(os.Getenv(google.EnvGoogleAppCredentials)),
 		stringsutil.SplitCondenseSpace(os.Getenv(google.EnvGoogleAppScopes), ","),
 		opts.NewToken())

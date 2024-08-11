@@ -8,6 +8,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"time"
@@ -24,7 +25,7 @@ func main() {
 	imageID := "MyImageId_01"
 
 	// Requires Drive and Presentations Scopes
-	googHttpClient, err := auth.Setup()
+	googHttpClient, err := auth.Setup(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}

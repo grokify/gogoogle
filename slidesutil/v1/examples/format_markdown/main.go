@@ -3,6 +3,7 @@
 package main
 
 import (
+	"context"
 	"log"
 
 	"github.com/grokify/googleutil/auth"
@@ -12,7 +13,7 @@ import (
 const Markdown = "Foo\n* [**Foo**](https://example.com/foo)\n* [**Bar**](http://example.com/bar)\nBar\n* **Foo**\n* **Bar**\n    * Baz"
 
 func main() {
-	googHttpClient, err := auth.Setup()
+	googHttpClient, err := auth.Setup(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}

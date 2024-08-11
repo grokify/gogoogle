@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
@@ -44,6 +45,7 @@ func main() {
 	fmt.Printf("%v\n", query)
 
 	client, err := omg.NewClientFileStoreWithDefaults(
+		context.Background(),
 		[]byte(os.Getenv(omg.EnvGoogleAppCredentials)),
 		[]string{},
 		opts.NewToken())
@@ -97,7 +99,7 @@ func main() {
 
 func GetClient(cfgJson []byte, scopes []string, forceNewToken bool) *http.Client {
 	googleClient, err := omg.NewClientFileStoreWithDefaults(
-		cfgJson, scopes, forceNewToken)
+		context.Background(), cfgJson, scopes, forceNewToken)
 	if err != nil {
 		log.Fatal(errorsutil.Wrap(err, "NewClientFileStoreWithDefaults"))
 	}

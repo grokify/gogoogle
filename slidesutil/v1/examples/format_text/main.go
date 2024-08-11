@@ -7,6 +7,7 @@
 package main
 
 import (
+	"context"
 	"log"
 
 	"github.com/grokify/mogo/fmt/fmtutil"
@@ -18,7 +19,7 @@ import (
 )
 
 func main() {
-	googHttpClient, err := auth.Setup()
+	googHttpClient, err := auth.Setup(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
