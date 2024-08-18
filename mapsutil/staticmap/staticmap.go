@@ -109,7 +109,7 @@ func (sm *StaticMap) WriteFilePNG(filename, key string) error {
 	if err != nil {
 		errClose := f.Close()
 		if errClose != nil {
-			return errorsutil.Wrapf(err, errClose.Error())
+			return errorsutil.Wrapf(err, "error on file close (%s)", errClose.Error())
 		}
 		return err
 	}
