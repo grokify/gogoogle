@@ -7,7 +7,7 @@ toolchain go1.22.2
 require (
 	cloud.google.com/go/bigquery v1.62.0
 	cloud.google.com/go/dlp v1.17.0
-	cloud.google.com/go/speech v1.24.1
+	cloud.google.com/go/speech v1.25.0
 	github.com/Iwark/spreadsheet v0.0.0-20230915040305-7677e8164883
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/grokify/goauth v0.21.10
@@ -17,13 +17,13 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.2.0
 	golang.org/x/net v0.28.0
-	google.golang.org/api v0.192.0
+	google.golang.org/api v0.193.0
 	google.golang.org/genproto v0.0.0-20240814211410-ddb44dafa142
 )
 
 require (
 	cloud.google.com/go v0.115.1 // indirect
-	cloud.google.com/go/auth v0.8.1 // indirect
+	cloud.google.com/go/auth v0.9.0 // indirect
 	cloud.google.com/go/auth/oauth2adapt v0.2.4 // indirect
 	cloud.google.com/go/compute/metadata v0.5.0 // indirect
 	cloud.google.com/go/iam v1.1.13 // indirect
