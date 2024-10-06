@@ -1,4 +1,4 @@
-module github.com/grokify/googleutil
+module github.com/grokify/gogoogle
 
 go 1.22.6
 

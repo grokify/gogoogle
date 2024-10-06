@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	omg "github.com/grokify/goauth/google"
-	gmailutil "github.com/grokify/googleutil/gmailutil/v1"
+	gmailutil "github.com/grokify/gogoogle/gmailutil/v1"
 	"github.com/grokify/mogo/config"
 	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/fmt/fmtutil"

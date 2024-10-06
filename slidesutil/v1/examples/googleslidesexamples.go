@@ -3,7 +3,7 @@ package slidesutilexamples
 import (
 	"google.golang.org/api/slides/v1"
 
-	su "github.com/grokify/googleutil/slidesutil/v1"
+	su "github.com/grokify/gogoogle/slidesutil/v1"
 )
 
 func LineExampleRequests(pageId string) []*slides.Request {

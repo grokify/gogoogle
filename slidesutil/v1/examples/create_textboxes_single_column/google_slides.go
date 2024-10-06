@@ -14,7 +14,7 @@ import (
 
 	"github.com/grokify/goauth/authutil"
 	"github.com/grokify/goauth/google"
-	"github.com/grokify/googleutil/slidesutil/v1"
+	"github.com/grokify/gogoogle/slidesutil/v1"
 	"github.com/joho/godotenv"
 	"golang.org/x/net/context"
 	"google.golang.org/api/slides/v1"

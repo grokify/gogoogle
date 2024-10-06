@@ -1,7 +1,7 @@
 // Formatting text with the Google Slides API
 // Video: https://www.youtube.com/watch?v=_O2aUCJyCoQ
 // This intentially does not use any of the helpers
-// in https://github.com/grokify/googleutil/slidesutil/v1/
+// in https://github.com/grokify/gogoogle/slidesutil/v1/
 // See the `examples/format_markdown` for how to use
 // the slidesutil request helpers.
 package main
@@ -14,8 +14,8 @@ import (
 	"github.com/grokify/mogo/pointer"
 	"google.golang.org/api/slides/v1"
 
-	"github.com/grokify/googleutil/auth"
-	"github.com/grokify/googleutil/slidesutil/v1"
+	"github.com/grokify/gogoogle/auth"
+	"github.com/grokify/gogoogle/slidesutil/v1"
 )
 
 func main() {

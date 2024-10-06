@@ -13,8 +13,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/grokify/googleutil/auth"
-	"github.com/grokify/googleutil/slidesutil/v1"
+	"github.com/grokify/gogoogle/auth"
+	"github.com/grokify/gogoogle/slidesutil/v1"
 	"google.golang.org/api/slides/v1"
 )
 

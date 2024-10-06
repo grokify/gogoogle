@@ -12,7 +12,7 @@ import (
 
 	//dlp "cloud.google.com/go/dlp/v2"
 	gu "github.com/grokify/goauth/google"
-	dlpu "github.com/grokify/googleutil/dlp/v2"
+	dlpu "github.com/grokify/gogoogle/dlp/v2"
 
 	//dlp "google.golang.org/api/dlp/v2"
 	dlppb "google.golang.org/genproto/googleapis/privacy/dlp/v2"

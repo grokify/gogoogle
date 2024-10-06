@@ -18,8 +18,8 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/api/slides/v1"
 
-	su "github.com/grokify/googleutil/slidesutil/v1"
-	suex "github.com/grokify/googleutil/slidesutil/v1/examples"
+	su "github.com/grokify/gogoogle/slidesutil/v1"
+	suex "github.com/grokify/gogoogle/slidesutil/v1/examples"
 )
 
 func NewClient(forceNewToken bool) (*http.Client, error) {

@@ -6,8 +6,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/grokify/googleutil/auth"
-	"github.com/grokify/googleutil/slidesutil/v1"
+	"github.com/grokify/gogoogle/auth"
+	"github.com/grokify/gogoogle/slidesutil/v1"
 )
 
 const Markdown = "Foo\n* [**Foo**](https://example.com/foo)\n* [**Bar**](http://example.com/bar)\nBar\n* **Foo**\n* **Bar**\n    * Baz"

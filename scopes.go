@@ -1,4 +1,4 @@
-package googleutil
+package gogoogle
 
 import (
 	sheets "google.golang.org/api/sheets/v4"

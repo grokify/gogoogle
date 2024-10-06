@@ -9,7 +9,7 @@ import (
 	"github.com/jessevdk/go-flags"
 	"google.golang.org/api/option"
 
-	"github.com/grokify/googleutil/speechtotext"
+	"github.com/grokify/gogoogle/speechtotext"
 	//gu "github.com/grokify/goauth/google"
 
 	speech "cloud.google.com/go/speech/apiv1"

@@ -11,7 +11,6 @@ import (
 	"google.golang.org/api/option"
 
 	dlp "cloud.google.com/go/dlp/apiv2"
-	//dlp "github.com/grokify/googleutil/dlp/v2"
 	dlppb "google.golang.org/genproto/googleapis/privacy/dlp/v2"
 )
 

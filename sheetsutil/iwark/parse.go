@@ -7,7 +7,7 @@ import (
 
 	"github.com/Iwark/spreadsheet"
 	"github.com/grokify/gocharts/v2/data/table"
-	"github.com/grokify/googleutil/docsutil"
+	"github.com/grokify/gogoogle/docsutil"
 	"github.com/grokify/mogo/type/stringsutil"
 )
 
