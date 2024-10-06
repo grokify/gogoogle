@@ -36,11 +36,11 @@ func ParseTableFromSpreadsheet(ss spreadsheet.Spreadsheet, sheetIdx, headerRows 
 	if s, err := ss.SheetByIndex(sheetIdx); err != nil {
 		return nil, err
 	} else {
-		return PraseTableFromSheet(s, headerRows), nil
+		return ParseTableFromSheet(s, headerRows), nil
 	}
 }
 
-func PraseTableFromSheet(s *spreadsheet.Sheet, headerRows uint) *table.Table {
+func ParseTableFromSheet(s *spreadsheet.Sheet, headerRows uint) *table.Table {
 	cols, rows := ParseDataFromSheet(s, headerRows)
 	tbl := table.NewTable("")
 	tbl.Columns = cols
