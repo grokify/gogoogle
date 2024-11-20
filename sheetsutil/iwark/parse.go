@@ -1,11 +1,13 @@
 package iwark
 
 import (
+	"context"
 	"errors"
 	"net/http"
 	"strings"
 
 	"github.com/Iwark/spreadsheet"
+	"github.com/grokify/goauth"
 	"github.com/grokify/gocharts/v2/data/table"
 	"github.com/grokify/gogoogle/docsutil"
 	"github.com/grokify/mogo/type/stringsutil"
@@ -13,7 +15,17 @@ import (
 
 var ErrSheetIDRequired = errors.New("sheet id is required")
 
-func ParseTableFromSheetID(client *http.Client, sheetID string, sheetIdx, headerRows uint) (*table.Table, error) {
+func ParseTableFromSheetIDCredentials(ctx context.Context, creds *goauth.CredentialsSet, credsKey string, sheetID string, sheetIdx, headerRows uint) (*table.Table, error) {
+	if c, err := creds.Get(credsKey); err != nil {
+		return nil, err
+	} else if clt, err := c.NewClient(ctx); err != nil {
+		return nil, err
+	} else {
+		return ParseTableFromSheetIDClient(clt, sheetID, 0, 1)
+	}
+}
+
+func ParseTableFromSheetIDClient(client *http.Client, sheetID string, sheetIdx, headerRows uint) (*table.Table, error) {
 	if strings.Contains(sheetID, "/") {
 		id, _, err := docsutil.ParseDocsURL(sheetID, docsutil.DocSlugSpreadsheet)
 		if err == nil && id != "" {
