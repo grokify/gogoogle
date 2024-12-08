@@ -8,8 +8,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/grokify/mogo/data/location"
 	"github.com/grokify/mogo/errors/errorsutil"
+	"github.com/grokify/mogo/location"
+	"github.com/grokify/mogo/location/locations"
 	"github.com/grokify/mogo/mime/mimeutil"
 	"github.com/grokify/mogo/net/http/httputilmore"
 	"google.golang.org/genproto/googleapis/type/latlng"
@@ -37,28 +38,28 @@ type StaticMap struct {
 }
 
 func (sm *StaticMap) SetDefaultUSAKHI() {
-	sm.Center = &location.USCenterAKHI
+	sm.Center = &locations.USCenterAKHI
 	sm.Height = 400
 	sm.Width = 800
 	sm.Zoom = 3
 }
 
 func (sm *StaticMap) SetDefaultUSContiguous() {
-	sm.Center = &location.USCenterContiguous
+	sm.Center = &locations.USCenterContiguous
 	sm.Height = 400
 	sm.Width = 800
 	sm.Zoom = 4
 }
 
 func (sm *StaticMap) SetDefaultWorld() {
-	sm.Center = &location.USHIEUCenter
+	sm.Center = &locations.USHIEUCenter
 	sm.Height = 400
 	sm.Width = 800
 	sm.Zoom = 1
 }
 
 func (sm *StaticMap) SetDefaultEU() {
-	sm.Center = &location.EUCenter2020
+	sm.Center = &locations.EUCenter2020
 	sm.Height = 600
 	sm.Width = 800
 	sm.Zoom = 4
