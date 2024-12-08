@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/grokify/mogo/data/location"
 	"github.com/grokify/mogo/errors/errorsutil"
+	"github.com/grokify/mogo/location"
 	"google.golang.org/genproto/googleapis/type/latlng"
 )
 
