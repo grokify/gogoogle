@@ -4,6 +4,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/time/timeutil"
 	"github.com/grokify/mogo/type/stringsutil"
 	gmail "google.golang.org/api/gmail/v1"
@@ -139,7 +140,11 @@ func (mapi *MessagesAPI) GetMessagesList(opts MessagesListOpts) (*gmail.ListMess
 	if len(opts.Fields) > 0 {
 		userMessagesListCall.Fields(opts.Fields...)
 	}
-	return userMessagesListCall.Do(mapi.GmailService.APICallOptions...)
+	if resp, err := userMessagesListCall.Do(mapi.GmailService.APICallOptions...); err != nil {
+		return resp, errorsutil.Wrap(err, "func GetMessagesList() call to userMessagesListCall.Do()")
+	} else {
+		return resp, nil
+	}
 }
 
 func (mapi *MessagesAPI) GetMessagesFrom(rfc822 string) (*gmail.ListMessagesResponse, error) {
@@ -147,8 +152,11 @@ func (mapi *MessagesAPI) GetMessagesFrom(rfc822 string) (*gmail.ListMessagesResp
 		Query: MessagesListQueryOpts{
 			From: rfc822},
 	}
-
-	return mapi.GetMessagesList(opts)
+	if resp, err := mapi.GetMessagesList(opts); err != nil {
+		return resp, errorsutil.Wrap(err, "func GetMessagesFrom() call to mapi.GetMessagesList()")
+	} else {
+		return resp, nil
+	}
 }
 
 func (mapi *MessagesAPI) InflateMessages(userID string, msgMetas []*gmail.Message) ([]*gmail.Message, error) {
