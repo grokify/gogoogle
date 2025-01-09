@@ -468,12 +468,12 @@ func (sm *SheetsMap) SynchronizeItem(item Item) error {
 	rowIdx := item.Row
 	for colIdx, col := range sm.Columns {
 		if val, ok := item.Data[col.Name]; ok {
-			sm.Sheet.Update(int(rowIdx), colIdx, val)
+			sm.Sheet.Update(rowIdx, colIdx, val)
 		} else {
-			sm.Sheet.Update(int(rowIdx), colIdx, "")
+			sm.Sheet.Update(rowIdx, colIdx, "")
 		}
 	}
-	sm.Sheet.Update(int(rowIdx), 1, item.Display)
+	sm.Sheet.Update(rowIdx, 1, item.Display)
 	return sm.Sheet.Synchronize()
 }
 
