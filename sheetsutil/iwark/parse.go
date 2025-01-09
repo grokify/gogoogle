@@ -25,7 +25,7 @@ func ParseTableFromSheetIDCredentials(ctx context.Context, creds *goauth.Credent
 	}
 }
 
-func ParseTableFromSheetIDClient(client *http.Client, sheetID string, sheetIdx, headerRows uint64) (*table.Table, error) {
+func ParseTableFromSheetIDClient(client *http.Client, sheetID string, sheetIdx, headerRows int) (*table.Table, error) {
 	if strings.Contains(sheetID, "/") {
 		id, _, err := docsutil.ParseDocsURL(sheetID, docsutil.DocSlugSpreadsheet)
 		if err == nil && id != "" {
@@ -44,7 +44,7 @@ func ParseTableFromSheetIDClient(client *http.Client, sheetID string, sheetIdx, 
 	}
 }
 
-func ParseTableFromSpreadsheet(ss spreadsheet.Spreadsheet, sheetIdx, headerRows uint64) (*table.Table, error) {
+func ParseTableFromSpreadsheet(ss spreadsheet.Spreadsheet, sheetIdx, headerRows int) (*table.Table, error) {
 	if s, err := ss.SheetByIndex(uint(sheetIdx)); err != nil {
 		return nil, err
 	} else {
@@ -52,7 +52,7 @@ func ParseTableFromSpreadsheet(ss spreadsheet.Spreadsheet, sheetIdx, headerRows 
 	}
 }
 
-func ParseTableFromSheet(s *spreadsheet.Sheet, headerRows uint64) *table.Table {
+func ParseTableFromSheet(s *spreadsheet.Sheet, headerRows int) *table.Table {
 	cols, rows := ParseDataFromSheet(s, headerRows)
 	tbl := table.NewTable("")
 	tbl.Columns = cols
@@ -60,7 +60,7 @@ func ParseTableFromSheet(s *spreadsheet.Sheet, headerRows uint64) *table.Table {
 	return &tbl
 }
 
-func ParseDataFromSheet(s *spreadsheet.Sheet, headerRows uint64) ([]string, [][]string) {
+func ParseDataFromSheet(s *spreadsheet.Sheet, headerRows int) ([]string, [][]string) {
 	var cols []string
 	var rows [][]string
 	for i, srow := range s.Rows {
@@ -68,7 +68,7 @@ func ParseDataFromSheet(s *spreadsheet.Sheet, headerRows uint64) ([]string, [][]
 		for _, scell := range srow {
 			row = append(row, scell.Value)
 		}
-		if headerRows > 0 && uint64(i) < headerRows {
+		if headerRows > 0 && i < headerRows {
 			if i == 0 {
 				cols = row
 			}

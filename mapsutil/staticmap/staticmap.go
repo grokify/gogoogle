@@ -2,6 +2,7 @@
 package staticmap
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
 	"os"
@@ -77,7 +78,7 @@ func (sm *StaticMap) URL(key string) string {
 	params.Add(ParamCenter, location.LatLngString(sm.Center, ",", sm.LatLngPrecision))
 	params.Add(ParamSize, sm.Size())
 	if sm.Zoom > 0 {
-		params.Add(ParamZoom, strconv.Itoa(int(sm.Zoom)))
+		params.Add(ParamZoom, fmt.Sprintf("%d", sm.Zoom))
 	} else {
 		params.Add(ParamZoom, strconv.Itoa(DefaultZoom))
 	}
