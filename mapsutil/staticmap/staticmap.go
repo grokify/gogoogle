@@ -67,7 +67,7 @@ func (sm *StaticMap) SetDefaultEU() {
 
 func (sm *StaticMap) Size() string {
 	if sm.Height > 0 && sm.Width > 0 {
-		return strconv.Itoa(int(sm.Width)) + "x" + strconv.Itoa(int(sm.Height))
+		return strconv.Itoa(sm.Width) + "x" + strconv.Itoa(sm.Height)
 	}
 	return DefaultSize
 }
