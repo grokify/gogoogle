@@ -109,7 +109,7 @@ func NewSheetsMapTitle(googleClient *http.Client, spreadsheetId string, sheetTit
 type Item struct {
 	Key     string
 	Display string
-	Row     uint
+	Row     int
 	Data    map[string]string
 }
 
@@ -305,7 +305,7 @@ func (sm *SheetsMap) ReadItems() error {
 			continue
 		}
 		item := Item{
-			Row:  uint(i),
+			Row:  i,
 			Data: map[string]string{},
 		}
 		for j, cell := range row {
@@ -398,7 +398,7 @@ func (sm *SheetsMap) GetOrCreateItemWithName(itemKey, itemName string) (Item, er
 
 		itemCount := len(sm.ItemMap)
 		nextRowIdx := itemCount + 1
-		item.Row = uint(nextRowIdx)
+		item.Row = nextRowIdx
 
 		sm.Sheet.Update(nextRowIdx, 0, itemKey)
 		sm.Sheet.Update(nextRowIdx, 1, itemName)
@@ -433,7 +433,7 @@ func (sm *SheetsMap) GetOrCreateItem(itemKey string) (Item, error) {
 
 		itemCount := len(sm.ItemMap)
 		nextRowIdx := itemCount + 1
-		item.Row = uint(nextRowIdx)
+		item.Row = nextRowIdx
 
 		sm.Sheet.Update(nextRowIdx, 0, itemKey)
 		err := sm.Sheet.Synchronize()
