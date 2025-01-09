@@ -52,7 +52,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	gs, err := gmailutil.NewGmailService(client)
+	gs, err := gmailutil.NewGmailService(context.Background(), client)
 	if err != nil {
 		log.Fatal(err)
 	}
