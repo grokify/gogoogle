@@ -44,7 +44,7 @@ type MessagesListOpts struct {
 	UserId               string
 	IncludeSpamTrash     bool
 	LabelIds             []string
-	MaxResults           uint64
+	MaxResults           int
 	PageToken            string
 	Query                MessagesListQueryOpts
 	Fields               []googleapi.Field

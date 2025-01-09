@@ -31,8 +31,8 @@ const (
 type StaticMap struct {
 	Center          *latlng.LatLng
 	Zoom            uint
-	Height          uint
-	Width           uint
+	Height          int
+	Width           int
 	MarkersList     []Markers
 	LatLngPrecision int
 }
