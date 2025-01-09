@@ -125,7 +125,7 @@ type Column struct {
 	Name               string
 	NameAliases        []string
 	Abbreviation       string
-	Index              uint64
+	Index              int
 	Enums              []Enum
 	AliasLcToCanonical map[string]string
 	InfoURLs           []InfoURL
@@ -280,7 +280,7 @@ func (sm *SheetsMap) ReadColumns() error {
 			if err != nil {
 				return err
 			}
-			col.Index = uint64(j)
+			col.Index = j
 			colKeyParsedLc := strings.ToLower(col.Name)
 
 			colsArr = append(colsArr, col)
