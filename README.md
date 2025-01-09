@@ -1,4 +1,4 @@
-# Google Utilities
+# Go Google
 
 [![Build Status][build-status-svg]][build-status-url]
 [![Lint Status][lint-status-svg]][lint-status-url]
@@ -17,7 +17,7 @@
  [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
  [license-url]: https://github.com/grokify/gogoogle/blob/master/LICENSE
 
-GoogleUtil is a set of generic, higher-level libraries for interacting with the Google API using Go. It is based on the Google API Go Client. [`google-api-go-client`](https://github.com/google/google-api-go-client).
+`gogoogle` is a set of generic, higher-level libraries for interacting with the Google API using Go. It is based on the Google API Go Client. [`google-api-go-client`](https://github.com/google/google-api-go-client).
 
 ## Author
 
