@@ -35,7 +35,10 @@ type Markers struct {
 	LatLngs []latlng.LatLng
 }
 
-func (m *Markers) String(latLngPrecision uint) string {
+func (m *Markers) String(latLngPrecision int) string {
+	if latLngPrecision < 0 {
+		latLngPrecision *= -1
+	}
 	m.trimSpace()
 	parts := []string{}
 	if len(m.Color) > 0 {
@@ -48,7 +51,7 @@ func (m *Markers) String(latLngPrecision uint) string {
 		parts = append(parts, "label:"+m.Label)
 	}
 	for i := range m.LatLngs {
-		parts = append(parts, location.LatLngString(&m.LatLngs[i], ",", int(latLngPrecision)))
+		parts = append(parts, location.LatLngString(&m.LatLngs[i], ",", latLngPrecision))
 	}
 	return strings.Join(parts, "|")
 }
