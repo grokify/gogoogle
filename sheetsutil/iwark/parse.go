@@ -25,7 +25,7 @@ func ParseTableFromSheetIDCredentials(ctx context.Context, creds *goauth.Credent
 	}
 }
 
-func ParseTableFromSheetIDClient(client *http.Client, sheetID string, sheetIdx, headerRows int) (*table.Table, error) {
+func ParseTableFromSheetIDClient(client *http.Client, sheetID string, sheetIdx uint, headerRows int) (*table.Table, error) {
 	if strings.Contains(sheetID, "/") {
 		id, _, err := docsutil.ParseDocsURL(sheetID, docsutil.DocSlugSpreadsheet)
 		if err == nil && id != "" {
@@ -44,8 +44,8 @@ func ParseTableFromSheetIDClient(client *http.Client, sheetID string, sheetIdx, 
 	}
 }
 
-func ParseTableFromSpreadsheet(ss spreadsheet.Spreadsheet, sheetIdx, headerRows int) (*table.Table, error) {
-	if s, err := ss.SheetByIndex(uint(sheetIdx)); err != nil {
+func ParseTableFromSpreadsheet(ss spreadsheet.Spreadsheet, sheetIdx uint, headerRows int) (*table.Table, error) {
+	if s, err := ss.SheetByIndex(sheetIdx); err != nil {
 		return nil, err
 	} else {
 		return ParseTableFromSheet(s, headerRows), nil
