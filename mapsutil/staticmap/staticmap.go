@@ -34,7 +34,7 @@ type StaticMap struct {
 	Height          uint
 	Width           uint
 	MarkersList     []Markers
-	LatLngPrecision uint
+	LatLngPrecision int
 }
 
 func (sm *StaticMap) SetDefaultUSAKHI() {
