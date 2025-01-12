@@ -78,8 +78,12 @@ func (gs GmailService) Send(ctx context.Context, from string, msg mailutil.Messa
 	if err := gs.validateConfig(); err != nil {
 		return nil, err
 	}
+	msgBytes, err := msg.Bytes()
+	if err != nil {
+		return nil, err
+	}
 	gmsg := &gmail.Message{
-		Raw: base64.URLEncoding.EncodeToString([]byte(msg.String()))}
+		Raw: base64.URLEncoding.EncodeToString(msgBytes)}
 	call := gs.UsersService.Messages.Send(from, gmsg)
 	call = call.Context(ctx)
 	return call.Do(opts...)
