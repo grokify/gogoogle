@@ -5,9 +5,9 @@ import (
 )
 
 const (
-	ScopeDrive          = sheets.DriveScope
-	ScopeDriveFile      = sheets.DriveFileScope
-	ScopeDriveReadonly  = sheets.DriveReadonlyScope
-	ScopeSlides         = sheets.SpreadsheetsScope
-	ScopeSlidesReadonly = sheets.SpreadsheetsReadonlyScope
+	ScopeDrive                = sheets.DriveScope
+	ScopeDriveFile            = sheets.DriveFileScope
+	ScopeDriveReadonly        = sheets.DriveReadonlyScope
+	ScopeSpreadsheets         = sheets.SpreadsheetsScope
+	ScopeSpreadsheetsReadonly = sheets.SpreadsheetsReadonlyScope // "https://www.googleapis.com/auth/spreadsheets.readonly"
 )
