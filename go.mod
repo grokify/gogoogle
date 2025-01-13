@@ -9,8 +9,8 @@ require (
 	github.com/Iwark/spreadsheet v0.0.0-20230915040305-7677e8164883
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/grokify/goauth v0.23.0
-	github.com/grokify/gocharts/v2 v2.21.10
-	github.com/grokify/mogo v0.67.2
+	github.com/grokify/gocharts/v2 v2.21.11
+	github.com/grokify/mogo v0.67.4
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.2.0
@@ -53,7 +53,7 @@ require (
 	github.com/valyala/quicktemplate v1.8.0 // indirect
 	github.com/xuri/efp v0.0.0-20241211021726-c4e992084aa6 // indirect
 	github.com/xuri/excelize/v2 v2.9.0 // indirect
-	github.com/xuri/nfp v0.0.0-20240318013403-ab9948c2c4a7 // indirect
+	github.com/xuri/nfp v0.0.0-20250111060730-82a408b9aa71 // indirect
 	github.com/zeebo/xxh3 v1.0.2 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.58.0 // indirect
