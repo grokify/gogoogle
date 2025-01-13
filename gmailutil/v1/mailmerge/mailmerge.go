@@ -196,7 +196,7 @@ func (mm *MailMerge) Messages() ([]mailutil.MessageWriter, error) {
 }
 
 func (mm *MailMerge) Send(ctx context.Context, userID string) error {
-	if userID = strings.TrimSpace(userID); userID != "" {
+	if userID = strings.TrimSpace(userID); userID == "" {
 		userID = gmailutil.UserIDMe
 	}
 
