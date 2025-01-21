@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"net/textproto"
+	"path/filepath"
 	"strings"
 
 	"github.com/grokify/gocharts/v2/data/table"
@@ -12,6 +14,7 @@ import (
 	"github.com/grokify/gogoogle/sheetsutil/iwark"
 	"github.com/grokify/mogo/encoding/jsonutil"
 	"github.com/grokify/mogo/mime/multipartutil"
+	"github.com/grokify/mogo/net/http/httputilmore"
 	"github.com/grokify/mogo/net/mailutil"
 	"github.com/grokify/mogo/type/stringsutil"
 	"github.com/grokify/sogo/text/mustacheutil"
@@ -31,14 +34,19 @@ const (
 var ErrMailMergeOptsCannotBeNil = errors.New("parameter MailMergeOpts cannot be nil")
 
 type MailMergeOpts struct {
-	GoogleClient                    *http.Client
-	RecipientsGoogleSheetID         string
-	RecipientsGoogleSheetIndex      uint
-	RecipientsGoogleSheetHeaderRows int
-	SubjectTemplateTextFilename     string
-	BodyTemplateHTMLFilename        string
-	BodyTemplateTextFilename        string
-	BodyCommonPartsSet              multipartutil.PartsSet
+	GoauthCredsFile                 string   `short:"c" long:"goauth-credentials-file" description:"The Google Sheet ID" required:"true"`
+	GoauthAccountKey                string   `short:"k" long:"goauth-account-key" description:"The Google Sheet ID"`
+	RecipientsGoogleSheetID         string   `short:"s" long:"sheet-id" description:"The Google Sheet ID"`
+	RecipientsGoogleSheetIndex      uint     `short:"x" long:"sheet-index" description:"The Google Sheet Index"`
+	RecipientsGoogleSheetHeaderRows int      `short:"r" long:"sheet-header-row-count" description:"The Google Sheet header row count"`
+	SubjectTemplateTextFilename     string   `short:"j" long:"subject-template" description:"Subject template"`
+	BodyTemplateHTMLFilename        string   `long:"html-template" description:"Body tmeplate for HTML"`
+	BodyTemplateTextFilename        string   `short:"t" long:"text-template" description:"Body template for text"`
+	InlineFilenames                 []string `short:"i" long:"inline-filename" description:"Inline filenames"`
+	AttachmentsFilenames            []string `short:"a" long:"attachment-filename" description:"Filenames as attachments"`
+
+	GoogleClient       *http.Client
+	BodyCommonPartsSet multipartutil.PartsSet
 }
 
 func (opts MailMergeOpts) Validate() error {
@@ -88,9 +96,15 @@ func NewMailMerge(ctx context.Context, opts *MailMergeOpts) (*MailMerge, error) 
 		},
 		CommonPartsSet: opts.BodyCommonPartsSet.Clone(),
 	}
+
 	if err := mm.BodyTemplateSet.ReadTemplates(); err != nil {
 		return nil, err
+	} else if err := mm.loadFilesInline(opts.InlineFilenames); err != nil {
+		return nil, err
+	} else if err := mm.loadFilesAttachment(opts.AttachmentsFilenames); err != nil {
+		return nil, err
 	}
+
 	if strings.TrimSpace(opts.RecipientsGoogleSheetID) != "" {
 		if opts.GoogleClient == nil {
 			return nil, errors.New("google client cannot be nil with google sheet id")
@@ -114,6 +128,36 @@ func NewMailMerge(ctx context.Context, opts *MailMergeOpts) (*MailMerge, error) 
 	}
 
 	return &mm, nil
+}
+
+func (mm *MailMerge) loadFilesAttachment(filenames []string) error {
+	return mm.loadFiles(httputilmore.ContentDispositionAttachment, filenames)
+}
+
+func (mm *MailMerge) loadFilesInline(filenames []string) error {
+	return mm.loadFiles(httputilmore.ContentDispositionInline, filenames)
+}
+
+func (mm *MailMerge) loadFiles(disposition string, filenames []string) error {
+	seen := map[string]bool{}
+	for _, filename := range filenames {
+		_, filenameonly := filepath.Split(filename)
+		if _, ok := seen[filenameonly]; ok {
+			return errors.New("duplicate inline filename")
+		} else {
+			seen[filenameonly] = true
+		}
+		mm.CommonPartsSet.Parts = append(mm.CommonPartsSet.Parts, multipartutil.Part{
+			Type:               multipartutil.PartTypeFilepath,
+			BodyEncodeBase64:   true,
+			BodyDataFilepath:   filenameonly,
+			ContentDisposition: disposition,
+			HeaderRaw: textproto.MIMEHeader{
+				httputilmore.HeaderContentID: []string{filenameonly},
+			},
+		})
+	}
+	return nil
 }
 
 func (mm *MailMerge) Messages() ([]mailutil.MessageWriter, error) {
@@ -195,20 +239,20 @@ func (mm *MailMerge) Messages() ([]mailutil.MessageWriter, error) {
 	return msgs, nil
 }
 
-func (mm *MailMerge) Send(ctx context.Context, userID string) error {
+func (mm *MailMerge) Send(ctx context.Context, userID string) (int, error) {
 	if userID = strings.TrimSpace(userID); userID == "" {
 		userID = gmailutil.UserIDMe
 	}
 
 	msgs, err := mm.Messages()
 	if err != nil {
-		return err
+		return -1, err
 	}
 
 	for _, msg := range msgs {
 		if _, err := mm.GmailService.Send(ctx, userID, msg); err != nil {
-			return err
+			return -1, err
 		}
 	}
-	return nil
+	return len(msgs), nil
 }
