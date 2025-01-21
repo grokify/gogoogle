@@ -10,14 +10,14 @@ require (
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/grokify/goauth v0.23.2
 	github.com/grokify/gocharts/v2 v2.21.12
-	github.com/grokify/mogo v0.67.5
-	github.com/grokify/sogo v0.9.1
+	github.com/grokify/mogo v0.67.6
+	github.com/grokify/sogo v0.10.0
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.2.0
 	golang.org/x/net v0.34.0
 	google.golang.org/api v0.217.0
-	google.golang.org/genproto v0.0.0-20250106144421-5f5ef82da422
+	google.golang.org/genproto v0.0.0-20250115164207-1a7da9e5054f
 )
 
 require (
@@ -77,5 +77,5 @@ require (
 	google.golang.org/genproto/googleapis/api v0.0.0-20250106144421-5f5ef82da422 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250106144421-5f5ef82da422 // indirect
 	google.golang.org/grpc v1.69.4 // indirect
-	google.golang.org/protobuf v1.36.2 // indirect
+	google.golang.org/protobuf v1.36.3 // indirect
 )
