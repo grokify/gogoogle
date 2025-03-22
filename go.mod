@@ -4,14 +4,14 @@ go 1.23.2
 
 require (
 	cloud.google.com/go/bigquery v1.67.0
-	cloud.google.com/go/dlp v1.21.1
+	cloud.google.com/go/dlp v1.22.0
 	cloud.google.com/go/speech v1.26.1
 	github.com/Iwark/spreadsheet v0.0.0-20230915040305-7677e8164883
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
-	github.com/grokify/goauth v0.23.6
-	github.com/grokify/gocharts/v2 v2.22.3
-	github.com/grokify/mogo v0.68.1
-	github.com/grokify/sogo v0.10.3
+	github.com/grokify/goauth v0.23.7
+	github.com/grokify/gocharts/v2 v2.22.4
+	github.com/grokify/mogo v0.68.2
+	github.com/grokify/sogo v0.10.4
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.2.0
@@ -21,9 +21,9 @@ require (
 )
 
 require (
-	cloud.google.com/go v0.119.0 // indirect
+	cloud.google.com/go v0.120.0 // indirect
 	cloud.google.com/go/auth v0.15.0 // indirect
-	cloud.google.com/go/auth/oauth2adapt v0.2.7 // indirect
+	cloud.google.com/go/auth/oauth2adapt v0.2.8 // indirect
 	cloud.google.com/go/compute/metadata v0.6.0 // indirect
 	cloud.google.com/go/iam v1.4.2 // indirect
 	cloud.google.com/go/longrunning v0.6.6 // indirect
