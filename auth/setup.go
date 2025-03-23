@@ -47,7 +47,7 @@ func Setup(ctx context.Context) (*http.Client, error) {
 	return google.NewClientFileStoreWithDefaults(
 		ctx,
 		[]byte(os.Getenv(google.EnvGoogleAppCredentials)),
-		stringsutil.SplitCondenseSpace(os.Getenv(google.EnvGoogleAppScopes), ","),
+		stringsutil.SplitTrimSpace(os.Getenv(google.EnvGoogleAppScopes), ",", true),
 		opts.NewToken())
 }
 
