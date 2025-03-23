@@ -197,7 +197,7 @@ func ParseColumn(input string) (Column, error) {
 	}
 
 	if len(parts) >= 1 {
-		colNames := stringsutil.SplitCondenseSpace(parts[0], "|")
+		colNames := stringsutil.SplitTrimSpace(parts[0], "|", true)
 		if len(colNames) > 0 {
 			col.Name = colNames[0]
 		}
@@ -213,9 +213,9 @@ func ParseColumn(input string) (Column, error) {
 	}
 
 	if len(parts) >= 3 { // Have enum values
-		enums := stringsutil.SplitCondenseSpace(parts[2], ",")
+		enums := stringsutil.SplitTrimSpace(parts[2], ",", true)
 		for _, enumPlus := range enums {
-			enumVariations := stringsutil.SplitCondenseSpace(enumPlus, "|")
+			enumVariations := stringsutil.SplitTrimSpace(enumPlus, "|", true)
 			if len(enumVariations) > 0 {
 				enum := Enum{Canonical: enumVariations[0]}
 				if len(enumVariations) > 1 { // Have aliases
@@ -228,7 +228,7 @@ func ParseColumn(input string) (Column, error) {
 	if len(parts) >= 4 { // URL
 		urls := strings.Split(parts[3], " ~ ")
 		for _, urlInfoRaw := range urls {
-			urlInfoParts := stringsutil.SplitCondenseSpace(urlInfoRaw, "|")
+			urlInfoParts := stringsutil.SplitTrimSpace(urlInfoRaw, "|", true)
 			if len(urlInfoParts) == 2 {
 				col.InfoURLs = append(col.InfoURLs, InfoURL{
 					Text: urlInfoParts[0],
