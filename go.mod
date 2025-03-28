@@ -2,6 +2,8 @@ module github.com/grokify/gogoogle
 
 go 1.23.2
 
+toolchain go1.24.1
+
 require (
 	cloud.google.com/go/bigquery v1.67.0
 	cloud.google.com/go/dlp v1.22.0
@@ -15,7 +17,7 @@ require (
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.2.0
-	golang.org/x/net v0.37.0
+	golang.org/x/net v0.38.0
 	google.golang.org/api v0.227.0
 	google.golang.org/genproto v0.0.0-20250313205543-e70fdf4c4cb4
 )
