@@ -17,6 +17,7 @@ import (
 	omg "github.com/grokify/goauth/google"
 	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/joho/godotenv"
+	"google.golang.org/api/option"
 	sheets "google.golang.org/api/sheets/v4"
 
 	"github.com/Iwark/spreadsheet"
@@ -39,7 +40,7 @@ func main() {
 	err := loadEnv()
 	if err != nil {
 		if strings.Index(err.Error(), "token expired and refresh token is not set") > 0 {
-			log.Fatal(fmt.Sprintf("%v - Use option `-newtoken true` to refresh", err.Error()))
+			log.Fatalf("%v - Use option `-newtoken true` to refresh", err.Error())
 		} else {
 			log.Fatal(err)
 		}
@@ -90,7 +91,7 @@ func main() {
 	}
 
 	if useGoog {
-		svc, err := sheets.New(hclient)
+		svc, err := sheets.NewService(context.Background(), option.WithHTTPClient(hclient))
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -108,7 +109,7 @@ func main() {
 			log.Fatal(err)
 		}
 
-		fmtutil.PrintJSON(resp)
+		fmtutil.MustPrintJSON(resp)
 	}
 	fmt.Println("DONE")
 }

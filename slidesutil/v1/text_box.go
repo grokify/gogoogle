@@ -7,8 +7,8 @@ import (
 )
 
 type CreateShapeTextBoxRequestInfo struct {
-	PageId             string
-	ObjectId           string
+	PageID             string
+	ObjectID           string
 	Width              float64
 	Height             float64
 	DimensionUnit      string
@@ -46,10 +46,10 @@ func (info *CreateShapeTextBoxRequestInfo) Requests() ([]*slides.Request, error)
 	requests := []*slides.Request{
 		{
 			CreateShape: &slides.CreateShapeRequest{
-				ObjectId:  info.ObjectId,
+				ObjectId:  info.ObjectID,
 				ShapeType: "TEXT_BOX",
 				ElementProperties: &slides.PageElementProperties{
-					PageObjectId: info.PageId,
+					PageObjectId: info.PageID,
 					Size: &slides.Size{
 						Width:  &slides.Dimension{Magnitude: info.Width, Unit: info.DimensionUnit},
 						Height: &slides.Dimension{Magnitude: info.Height, Unit: info.DimensionUnit},
@@ -68,7 +68,7 @@ func (info *CreateShapeTextBoxRequestInfo) Requests() ([]*slides.Request, error)
 	if len(info.Text) > 0 {
 		requests = append(requests, &slides.Request{
 			InsertText: &slides.InsertTextRequest{
-				ObjectId:       info.ObjectId,
+				ObjectId:       info.ObjectID,
 				InsertionIndex: 0,
 				Text:           info.Text,
 			},
@@ -81,7 +81,7 @@ func (info *CreateShapeTextBoxRequestInfo) Requests() ([]*slides.Request, error)
 		info.FontBold || info.FontItalic {
 		req := &slides.Request{
 			UpdateTextStyle: &slides.UpdateTextStyleRequest{
-				ObjectId: info.ObjectId,
+				ObjectId: info.ObjectID,
 				Fields:   "*",
 				Style:    &slides.TextStyle{},
 			},
@@ -122,7 +122,7 @@ func (info *CreateShapeTextBoxRequestInfo) Requests() ([]*slides.Request, error)
 	if len(info.ParagraphAlignment) > 0 {
 		req := &slides.Request{
 			UpdateParagraphStyle: &slides.UpdateParagraphStyleRequest{
-				ObjectId: info.ObjectId,
+				ObjectId: info.ObjectID,
 				Fields:   "*",
 				Style: &slides.ParagraphStyle{
 					Alignment: info.ParagraphAlignment,
@@ -133,7 +133,7 @@ func (info *CreateShapeTextBoxRequestInfo) Requests() ([]*slides.Request, error)
 	}
 
 	if info.NeedsUpdateShapeProperties() {
-		shapeUtil := NewUpdateShapePropertiesRequestUtil(info.ObjectId)
+		shapeUtil := NewUpdateShapePropertiesRequestUtil(info.ObjectID)
 
 		if info.BackgroundColorRgb != nil {
 			shapeUtil.AddBackgroundSolidFill(info.BackgroundColorRgb)
@@ -153,14 +153,14 @@ func (info *CreateShapeTextBoxRequestInfo) Requests() ([]*slides.Request, error)
 	if 1 == 0 {
 		if info.BackgroundColorRgb != nil {
 			requests = append(requests,
-				ShapePropertiesBackgroundFillSimple(info.ObjectId, info.BackgroundColorRgb))
+				ShapePropertiesBackgroundFillSimple(info.ObjectID, info.BackgroundColorRgb))
 		} else if len(info.BackgroundColorHex) > 0 {
 			c, err := ParseRgbColorHex(info.BackgroundColorHex)
 			if err != nil {
 				return requests, err
 			}
 			requests = append(requests,
-				ShapePropertiesBackgroundFillSimple(info.ObjectId, c))
+				ShapePropertiesBackgroundFillSimple(info.ObjectID, c))
 		}
 	}
 	/*
@@ -190,11 +190,11 @@ type UpdateShapePropertiesRequestUtil struct {
 	UpdateShapePropertiesRequest *slides.UpdateShapePropertiesRequest
 }
 
-func NewUpdateShapePropertiesRequestUtil(objectId string) UpdateShapePropertiesRequestUtil {
+func NewUpdateShapePropertiesRequestUtil(objectID string) UpdateShapePropertiesRequestUtil {
 	return UpdateShapePropertiesRequestUtil{
 		Fields: []string{},
 		UpdateShapePropertiesRequest: &slides.UpdateShapePropertiesRequest{
-			ObjectId: objectId,
+			ObjectId: objectID,
 		},
 	}
 }
@@ -232,10 +232,10 @@ func (util *UpdateShapePropertiesRequestUtil) Request() *slides.Request {
 
 // ShapePropertiesBackgroundFillSimple is a simple shape properties request
 // creator. For more complex uses, use UpdateShapePropertiesRequestUtil
-func ShapePropertiesBackgroundFillSimple(objectId string, rgbColor *slides.RgbColor) *slides.Request {
+func ShapePropertiesBackgroundFillSimple(objectID string, rgbColor *slides.RgbColor) *slides.Request {
 	return &slides.Request{
 		UpdateShapeProperties: &slides.UpdateShapePropertiesRequest{
-			ObjectId: objectId,
+			ObjectId: objectID,
 			Fields:   "shapeBackgroundFill.solidFill.color",
 			ShapeProperties: &slides.ShapeProperties{
 				ShapeBackgroundFill: &slides.ShapeBackgroundFill{
@@ -250,14 +250,14 @@ func ShapePropertiesBackgroundFillSimple(objectId string, rgbColor *slides.RgbCo
 	}
 }
 
-func TextBoxRequestsSimple(pageId, elementId, text string, fgColor, bgColor *slides.RgbColor, width, height, locX, locY float64) []*slides.Request {
+func TextBoxRequestsSimple(pageID, elementID, text string, fgColor, bgColor *slides.RgbColor, width, height, locX, locY float64) []*slides.Request {
 	return []*slides.Request{
 		{
 			CreateShape: &slides.CreateShapeRequest{
-				ObjectId:  elementId,
+				ObjectId:  elementID,
 				ShapeType: "TEXT_BOX",
 				ElementProperties: &slides.PageElementProperties{
-					PageObjectId: pageId,
+					PageObjectId: pageID,
 					Size: &slides.Size{
 						Width:  &slides.Dimension{Magnitude: width, Unit: GoogleSlideUnitPoint},
 						Height: &slides.Dimension{Magnitude: height, Unit: GoogleSlideUnitPoint},
@@ -274,14 +274,14 @@ func TextBoxRequestsSimple(pageId, elementId, text string, fgColor, bgColor *sli
 		},
 		{
 			InsertText: &slides.InsertTextRequest{
-				ObjectId:       elementId,
+				ObjectId:       elementID,
 				InsertionIndex: 0,
 				Text:           text,
 			},
 		},
 		{
 			UpdateTextStyle: &slides.UpdateTextStyleRequest{
-				ObjectId: elementId,
+				ObjectId: elementID,
 				Fields:   "*",
 				Style: &slides.TextStyle{
 					FontSize: &slides.Dimension{
@@ -298,7 +298,7 @@ func TextBoxRequestsSimple(pageId, elementId, text string, fgColor, bgColor *sli
 		},
 		{
 			UpdateShapeProperties: &slides.UpdateShapePropertiesRequest{
-				ObjectId: elementId,
+				ObjectId: elementID,
 				Fields:   "shapeBackgroundFill.solidFill.color",
 				ShapeProperties: &slides.ShapeProperties{
 					ShapeBackgroundFill: &slides.ShapeBackgroundFill{

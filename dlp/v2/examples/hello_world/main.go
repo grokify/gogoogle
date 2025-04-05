@@ -5,17 +5,15 @@ import (
 	"fmt"
 	"log"
 
-	dlp "cloud.google.com/go/dlp/apiv2"
 	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/jessevdk/go-flags"
 	"google.golang.org/api/option"
 
-	//dlp "cloud.google.com/go/dlp/v2"
 	gu "github.com/grokify/goauth/google"
 	dlpu "github.com/grokify/gogoogle/dlp/v2"
 
-	//dlp "google.golang.org/api/dlp/v2"
-	dlppb "google.golang.org/genproto/googleapis/privacy/dlp/v2"
+	dlp "cloud.google.com/go/dlp/apiv2"   // formerly: dlp "google.golang.org/api/dlp/v2"
+	"cloud.google.com/go/dlp/apiv2/dlppb" // formerly: dlppb "google.golang.org/genproto/googleapis/privacy/dlp/v2"
 )
 
 /*
@@ -75,7 +73,7 @@ func main() {
 		InspectConfig: inspectConfig,
 		Item:          dlpu.NewContentDataItemSimple(input)}
 
-	fmtutil.PrintJSON(req)
+	fmtutil.MustPrintJSON(req)
 
 	// Run request.
 	resp, err := client.InspectContent(ctx, req)

@@ -7,18 +7,18 @@ import (
 	"log"
 
 	"github.com/grokify/gogoogle/auth"
-	"github.com/grokify/gogoogle/slidesutil/v1"
+	slidesutil "github.com/grokify/gogoogle/slidesutil/v1"
 )
 
 const Markdown = "Foo\n* [**Foo**](https://example.com/foo)\n* [**Bar**](http://example.com/bar)\nBar\n* **Foo**\n* **Bar**\n    * Baz"
 
 func main() {
-	googHttpClient, err := auth.Setup(context.Background())
+	googHTTPClient, err := auth.Setup(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	slidesClient, err := slidesutil.NewSlidesClient(googHttpClient)
+	slidesClient, err := slidesutil.NewSlidesClient(googHTTPClient)
 	if err != nil {
 		log.Fatal(err)
 	}

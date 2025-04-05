@@ -6,16 +6,16 @@ import (
 	su "github.com/grokify/gogoogle/slidesutil/v1"
 )
 
-func LineExampleRequests(pageId string) []*slides.Request {
-	lineId := "lineId"
+func LineExampleRequests(pageID string) []*slides.Request {
+	lineID := "lineId"
 
 	return []*slides.Request{
 		{
 			CreateLine: &slides.CreateLineRequest{
-				ObjectId:     lineId,
+				ObjectId:     lineID,
 				LineCategory: "STRAIGHT",
 				ElementProperties: &slides.PageElementProperties{
-					PageObjectId: pageId,
+					PageObjectId: pageID,
 					Size: &slides.Size{
 						Height: &slides.Dimension{Magnitude: 500.0, Unit: "PT"},
 						Width:  &slides.Dimension{Magnitude: 1.0, Unit: "PT"},
@@ -32,7 +32,7 @@ func LineExampleRequests(pageId string) []*slides.Request {
 		},
 		{
 			UpdateLineProperties: &slides.UpdateLinePropertiesRequest{
-				ObjectId: lineId,
+				ObjectId: lineID,
 				Fields:   "*",
 				LineProperties: &slides.LineProperties{
 					DashStyle: "DASH",
@@ -56,17 +56,16 @@ func LineExampleRequests(pageId string) []*slides.Request {
 // ExampleRequests provides Go code for JSON examples provided by Google
 // at https://developers.google.com/slides/samples/tables
 func TableExampleRequests() []*slides.Request {
-
-	tableId := "tableId"
-	pageId := "pageId"
+	tableID := "tableId"
+	pageID := "pageId"
 
 	return []*slides.Request{
 		// Create a table
 		{
 			CreateTable: &slides.CreateTableRequest{
-				ObjectId: tableId,
+				ObjectId: tableID,
 				ElementProperties: &slides.PageElementProperties{
-					PageObjectId: pageId,
+					PageObjectId: pageID,
 				},
 				Rows:    8,
 				Columns: 5,
@@ -75,7 +74,7 @@ func TableExampleRequests() []*slides.Request {
 		// Delete table rows or columns
 		{
 			DeleteTableRow: &slides.DeleteTableRowRequest{
-				TableObjectId: tableId,
+				TableObjectId: tableID,
 				CellLocation: &slides.TableCellLocation{
 					RowIndex: 5,
 				},
@@ -83,7 +82,7 @@ func TableExampleRequests() []*slides.Request {
 		},
 		{
 			DeleteTableColumn: &slides.DeleteTableColumnRequest{
-				TableObjectId: tableId,
+				TableObjectId: tableID,
 				CellLocation: &slides.TableCellLocation{
 					ColumnIndex: 3,
 				},
@@ -92,7 +91,7 @@ func TableExampleRequests() []*slides.Request {
 		// Edit table data
 		{
 			DeleteText: &slides.DeleteTextRequest{
-				ObjectId: tableId,
+				ObjectId: tableID,
 				CellLocation: &slides.TableCellLocation{
 					ColumnIndex: 4,
 					RowIndex:    2,
@@ -104,7 +103,7 @@ func TableExampleRequests() []*slides.Request {
 		},
 		{
 			InsertText: &slides.InsertTextRequest{
-				ObjectId: tableId,
+				ObjectId: tableID,
 				CellLocation: &slides.TableCellLocation{
 					ColumnIndex: 4,
 					RowIndex:    2,
@@ -116,7 +115,7 @@ func TableExampleRequests() []*slides.Request {
 		// Format a table header row
 		{
 			UpdateTableCellProperties: &slides.UpdateTableCellPropertiesRequest{
-				ObjectId: tableId,
+				ObjectId: tableID,
 				TableRange: &slides.TableRange{
 					Location: &slides.TableCellLocation{
 						RowIndex:    0,
@@ -143,7 +142,7 @@ func TableExampleRequests() []*slides.Request {
 		},
 		{
 			UpdateTextStyle: &slides.UpdateTextStyleRequest{
-				ObjectId: tableId,
+				ObjectId: tableID,
 				CellLocation: &slides.TableCellLocation{
 					RowIndex:    0,
 					ColumnIndex: 0,
@@ -174,7 +173,7 @@ func TableExampleRequests() []*slides.Request {
 		// Insert table rows or columns
 		{
 			InsertTableRows: &slides.InsertTableRowsRequest{
-				TableObjectId: tableId,
+				TableObjectId: tableID,
 				CellLocation: &slides.TableCellLocation{
 					RowIndex: 5,
 				},
@@ -184,7 +183,7 @@ func TableExampleRequests() []*slides.Request {
 		},
 		{
 			InsertTableColumns: &slides.InsertTableColumnsRequest{
-				TableObjectId: tableId,
+				TableObjectId: tableID,
 				CellLocation: &slides.TableCellLocation{
 					ColumnIndex: 3,
 				},

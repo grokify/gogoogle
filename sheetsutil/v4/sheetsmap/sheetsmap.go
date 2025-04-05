@@ -19,7 +19,7 @@ const (
 type SheetsMap struct {
 	GoogleClient   *http.Client
 	Service        *spreadsheet.Service
-	sheetsId       string
+	sheetsID       string
 	Spreadsheet    spreadsheet.Spreadsheet
 	Sheet          *spreadsheet.Sheet
 	sheetIndex     uint
@@ -57,7 +57,7 @@ func NewSheetsMap() SheetsMap {
 	return SheetsMap{
 		GoogleClient:   nil,
 		Service:        nil,
-		sheetsId:       "",
+		sheetsID:       "",
 		Columns:        []Column{},
 		ColumnMapKeyLc: map[string]Column{},
 		ItemMap:        map[string]Item{},
@@ -85,12 +85,12 @@ func NewSheetsMapIndex(googleClient *http.Client, spreadsheetID string, sheetInd
 	return sm, nil
 }
 
-func NewSheetsMapTitle(googleClient *http.Client, spreadsheetId string, sheetTitle string) (SheetsMap, error) {
+func NewSheetsMapTitle(googleClient *http.Client, spreadsheetID string, sheetTitle string) (SheetsMap, error) {
 	sm := NewSheetsMap()
 	sm.GoogleClient = googleClient
 	sm.Service = spreadsheet.NewServiceWithClient(googleClient)
 
-	spreadsheet, err := sm.Service.FetchSpreadsheet(spreadsheetId)
+	spreadsheet, err := sm.Service.FetchSpreadsheet(spreadsheetID)
 	if err != nil {
 		return sm, err
 	}
@@ -314,9 +314,10 @@ func (sm *SheetsMap) ReadItems() error {
 			}
 
 			val := cell.Value
-			if j == 0 {
+			switch j {
+			case 0:
 				item.Key = val
-			} else if j == 1 {
+			case 1:
 				item.Display = val
 			}
 			col := sm.Columns[j]

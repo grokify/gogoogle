@@ -13,7 +13,7 @@ import (
 	//gu "github.com/grokify/goauth/google"
 
 	speech "cloud.google.com/go/speech/apiv1"
-	speechpb "google.golang.org/genproto/googleapis/cloud/speech/v1"
+	"cloud.google.com/go/speech/apiv1/speechpb" // deprecated: speechpb "google.golang.org/genproto/googleapis/cloud/speech/v1"
 )
 
 /*
@@ -72,12 +72,12 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Println("S4")
-	fmtutil.PrintJSON(resp)
+	fmtutil.MustPrintJSON(resp)
 
 	// Prints the results.
 	for i, result := range resp.Results {
 		fmt.Printf("RES [%v]\n", i)
-		fmtutil.PrintJSON(result)
+		fmtutil.MustPrintJSON(result)
 		for _, alt := range result.Alternatives {
 			fmt.Printf("\"%v\" (confidence=%3f)\n", alt.Transcript, alt.Confidence)
 		}

@@ -14,7 +14,7 @@ import (
 	"time"
 
 	"github.com/grokify/gogoogle/auth"
-	"github.com/grokify/gogoogle/slidesutil/v1"
+	slidesutil "github.com/grokify/gogoogle/slidesutil/v1"
 	"google.golang.org/api/slides/v1"
 )
 
@@ -25,12 +25,12 @@ func main() {
 	imageID := "MyImageId_01"
 
 	// Requires Drive and Presentations Scopes
-	googHttpClient, err := auth.Setup(context.Background())
+	googHTTPClient, err := auth.Setup(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	slidesClient, err := slidesutil.NewSlidesClient(googHttpClient)
+	slidesClient, err := slidesutil.NewSlidesClient(googHTTPClient)
 	if err != nil {
 		log.Fatal(err)
 	}

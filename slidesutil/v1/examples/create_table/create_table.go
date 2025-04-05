@@ -16,6 +16,7 @@ import (
 	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/joho/godotenv"
 	"golang.org/x/net/context"
+	"google.golang.org/api/option"
 	"google.golang.org/api/slides/v1"
 
 	su "github.com/grokify/gogoogle/slidesutil/v1"
@@ -110,15 +111,15 @@ func (info *CreateLineRequestInfo) Requests() ([]*slides.Request, error) {
 	return reqs, nil
 }
 
-func CreateLineRequest(pageId string) []*slides.Request {
-	lineId := "myLineId"
+func CreateLineRequest(pageID string) []*slides.Request {
+	lineID := "myLineId"
 	reqs := []*slides.Request{
 		{
 			CreateLine: &slides.CreateLineRequest{
-				ObjectId:     lineId,
+				ObjectId:     lineID,
 				LineCategory: "STRAIGHT",
 				ElementProperties: &slides.PageElementProperties{
-					PageObjectId: pageId,
+					PageObjectId: pageID,
 					Size: &slides.Size{
 						Height: &slides.Dimension{Magnitude: 500.0, Unit: "PT"},
 						Width:  &slides.Dimension{Magnitude: 1.0, Unit: "PT"},
@@ -135,7 +136,7 @@ func CreateLineRequest(pageId string) []*slides.Request {
 		},
 		{
 			UpdateLineProperties: &slides.UpdateLinePropertiesRequest{
-				ObjectId: lineId,
+				ObjectId: lineID,
 				Fields:   "*",
 				LineProperties: &slides.LineProperties{
 					DashStyle: "DASH",
@@ -157,7 +158,7 @@ func CreateLineRequest(pageId string) []*slides.Request {
 	req := &slides.Request{
 		UpdatePageElementTransform: &slides.UpdatePageElementTransformRequest{
 			ApplyMode: "ABSOLUTE",
-			ObjectId:  lineId,
+			ObjectId:  lineID,
 			Transform: &slides.AffineTransform{
 				TranslateX: 10,
 				TranslateY: 10,
@@ -165,7 +166,7 @@ func CreateLineRequest(pageId string) []*slides.Request {
 			},
 		},
 	}
-	fmtutil.PrintJSON(req)
+	fmtutil.MustPrintJSON(req)
 	return reqs
 }
 
@@ -174,10 +175,10 @@ func CreateLineRequest(pageId string) []*slides.Request {
 */
 
 // https://productforums.google.com/forum/#!topic/docs/QWeGY_k9hJw
-func BorderRequests(objectId string) []*slides.Request {
+func BorderRequests(objectID string) []*slides.Request {
 	req := &slides.Request{
 		UpdateTableBorderProperties: &slides.UpdateTableBorderPropertiesRequest{
-			ObjectId: objectId,
+			ObjectId: objectID,
 			Fields:   "*", // "tableBorderFill.solidFill.color"
 			TableRange: &slides.TableRange{
 				ColumnSpan: 5,
@@ -217,7 +218,7 @@ func main() {
 		log.Fatal("Unable to get Client")
 	}
 
-	srv, err := slides.New(client)
+	srv, err := slides.NewService(context.Background(), option.WithHTTPClient(client))
 	if err != nil {
 		log.Fatalf("Unable to retrieve Slides Client %v", err)
 	}

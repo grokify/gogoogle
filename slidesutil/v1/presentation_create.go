@@ -58,11 +58,11 @@ func CreateEmptyPresentation(psv *slides.PresentationsService, filename string) 
 		}
 	}
 
-	pageId := res.Slides[0].ObjectId
+	pageID := res.Slides[0].ObjectId
 
 	requests := []*slides.Request{
 		{
-			DeleteObject: &slides.DeleteObjectRequest{ObjectId: pageId},
+			DeleteObject: &slides.DeleteObjectRequest{ObjectId: pageID},
 		},
 	}
 	breq := &slides.BatchUpdatePresentationRequest{

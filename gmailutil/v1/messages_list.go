@@ -15,8 +15,8 @@ const (
 	GmailDateFormat  = "2006/01/02"
 	ReferenceURL     = "https://developers.google.com/gmail/api/v1/reference"
 	TutorialURLGO    = "https://developers.google.com/gmail/api/quickstart/go"
-	ListApiReference = "https://developers.google.com/gmail/api/v1/reference/users/messages/list"
-	ListApiExample   = "https://stackoverflow.com/questions/43057478/google-api-go-client-listing-messages-w-label-and-fetching-header-fields"
+	ListAPIReference = "https://developers.google.com/gmail/api/v1/reference/users/messages/list"
+	ListAPIExample   = "https://stackoverflow.com/questions/43057478/google-api-go-client-listing-messages-w-label-and-fetching-header-fields"
 	FilteringExample = "https://developers.google.com/gmail/api/guides/filtering"
 	FilterRules      = "https://support.google.com/mail/answer/7190"
 
@@ -41,9 +41,9 @@ Warning: All dates used in the search query are interpretted as midnight on that
 */
 
 type MessagesListOpts struct {
-	UserId               string
+	UserID               string
 	IncludeSpamTrash     bool
-	LabelIds             []string
+	LabelIDs             []string
 	MaxResults           int
 	PageToken            string
 	Query                MessagesListQueryOpts
@@ -52,15 +52,15 @@ type MessagesListOpts struct {
 }
 
 func (opts *MessagesListOpts) Condense() {
-	opts.UserId = strings.TrimSpace(opts.UserId)
-	opts.LabelIds = stringsutil.SliceCondenseSpace(opts.LabelIds, true, false)
+	opts.UserID = strings.TrimSpace(opts.UserID)
+	opts.LabelIDs = stringsutil.SliceCondenseSpace(opts.LabelIDs, true, false)
 	opts.PageToken = strings.TrimSpace(opts.PageToken)
 }
 
 func (opts *MessagesListOpts) Inflate() {
 	opts.Condense()
-	if len(opts.UserId) == 0 {
-		opts.UserId = "me"
+	if len(opts.UserID) == 0 {
+		opts.UserID = "me"
 	}
 }
 
@@ -122,10 +122,10 @@ func (mapi *MessagesAPI) GetMessagesList(opts MessagesListOpts) (*gmail.ListMess
 	}
 	opts.Inflate()
 
-	userMessagesListCall := mapi.GmailService.UsersService.Messages.List(opts.UserId)
+	userMessagesListCall := mapi.GmailService.UsersService.Messages.List(opts.UserID)
 	userMessagesListCall.IncludeSpamTrash(opts.IncludeSpamTrash)
-	if len(opts.LabelIds) > 0 {
-		userMessagesListCall.LabelIds(opts.LabelIds...)
+	if len(opts.LabelIDs) > 0 {
+		userMessagesListCall.LabelIds(opts.LabelIDs...)
 	}
 	if opts.MaxResults > 0 {
 		userMessagesListCall.MaxResults(int64(opts.MaxResults))

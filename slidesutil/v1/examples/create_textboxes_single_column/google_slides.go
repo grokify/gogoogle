@@ -14,9 +14,10 @@ import (
 
 	"github.com/grokify/goauth/authutil"
 	"github.com/grokify/goauth/google"
-	"github.com/grokify/gogoogle/slidesutil/v1"
+	slidesutil "github.com/grokify/gogoogle/slidesutil/v1"
 	"github.com/joho/godotenv"
 	"golang.org/x/net/context"
+	"google.golang.org/api/option"
 	"google.golang.org/api/slides/v1"
 )
 
@@ -41,8 +42,8 @@ func NewClient(forceNewToken bool) (*http.Client, error) {
 }
 
 type CreateShapeTextBoxRequestInfo struct {
-	PageId             string
-	ObjectId           string
+	PageID             string
+	ObjectID           string
 	Width              float64
 	Height             float64
 	DimensionUnits     string
@@ -58,10 +59,10 @@ func (info *CreateShapeTextBoxRequestInfo) Requests() ([]*slides.Request, error)
 	requests := []*slides.Request{
 		{
 			CreateShape: &slides.CreateShapeRequest{
-				ObjectId:  info.ObjectId,
+				ObjectId:  info.ObjectID,
 				ShapeType: "TEXT_BOX",
 				ElementProperties: &slides.PageElementProperties{
-					PageObjectId: info.PageId,
+					PageObjectId: info.PageID,
 					Size: &slides.Size{
 						Width:  &slides.Dimension{Magnitude: info.Width, Unit: info.DimensionUnits},
 						Height: &slides.Dimension{Magnitude: info.Height, Unit: info.DimensionUnits},
@@ -80,46 +81,45 @@ func (info *CreateShapeTextBoxRequestInfo) Requests() ([]*slides.Request, error)
 	if len(info.Text) > 0 {
 		requests = append(requests, &slides.Request{
 			InsertText: &slides.InsertTextRequest{
-				ObjectId:       info.ObjectId,
+				ObjectId:       info.ObjectID,
 				InsertionIndex: 0,
 				Text:           info.Text,
 			},
 		})
 	}
 
-	if len(info.ForegroundColorHex) > 0 {
+	/*	if len(info.ForegroundColorHex) > 0 {
 
-	}
-	/*
-		{
-		UpdateTextStyle: &slides.UpdateTextStyleRequest{
-			ObjectId: elementId,
-			Fields:   "*",
-			Style: &slides.TextStyle{
-				FontSize: &slides.Dimension{
-					Magnitude: 10.0,
-					Unit:      GoogleSlideUnitPoint,
-				},
-				ForegroundColor: &slides.OptionalColor{
-					OpaqueColor: &slides.OpaqueColor{
-						RgbColor: fgColor,
+		}
+			{
+			UpdateTextStyle: &slides.UpdateTextStyleRequest{
+				ObjectId: elementId,
+				Fields:   "*",
+				Style: &slides.TextStyle{
+					FontSize: &slides.Dimension{
+						Magnitude: 10.0,
+						Unit:      GoogleSlideUnitPoint,
+					},
+					ForegroundColor: &slides.OptionalColor{
+						OpaqueColor: &slides.OpaqueColor{
+							RgbColor: fgColor,
+						},
 					},
 				},
 			},
-		},
-	},*/
+		},*/
 
 	return requests, nil
 }
 
-func TextBoxRequests(pageId, elementId, text string, fgColor, bgColor *slides.RgbColor, width, height, locX, locY float64) []*slides.Request {
+func TextBoxRequests(pageID, elementID, text string, fgColor, bgColor *slides.RgbColor, width, height, locX, locY float64) []*slides.Request {
 	return []*slides.Request{
 		{
 			CreateShape: &slides.CreateShapeRequest{
-				ObjectId:  elementId,
+				ObjectId:  elementID,
 				ShapeType: "TEXT_BOX",
 				ElementProperties: &slides.PageElementProperties{
-					PageObjectId: pageId,
+					PageObjectId: pageID,
 					Size: &slides.Size{
 						Width:  &slides.Dimension{Magnitude: width, Unit: GoogleSlideUnitPoint},
 						Height: &slides.Dimension{Magnitude: height, Unit: GoogleSlideUnitPoint},
@@ -136,14 +136,14 @@ func TextBoxRequests(pageId, elementId, text string, fgColor, bgColor *slides.Rg
 		},
 		{
 			InsertText: &slides.InsertTextRequest{
-				ObjectId:       elementId,
+				ObjectId:       elementID,
 				InsertionIndex: 0,
 				Text:           text,
 			},
 		},
 		{
 			UpdateTextStyle: &slides.UpdateTextStyleRequest{
-				ObjectId: elementId,
+				ObjectId: elementID,
 				Fields:   "*",
 				Style: &slides.TextStyle{
 					FontSize: &slides.Dimension{
@@ -160,7 +160,7 @@ func TextBoxRequests(pageId, elementId, text string, fgColor, bgColor *slides.Rg
 		},
 		{
 			UpdateShapeProperties: &slides.UpdateShapePropertiesRequest{
-				ObjectId: elementId,
+				ObjectId: elementID,
 				Fields:   "shapeBackgroundFill.solidFill.color",
 				ShapeProperties: &slides.ShapeProperties{
 					ShapeBackgroundFill: &slides.ShapeBackgroundFill{
@@ -189,7 +189,7 @@ func main() {
 		log.Fatal("Unable to get Client")
 	}
 
-	srv, err := slides.New(client)
+	srv, err := slides.NewService(context.Background(), option.WithHTTPClient(client))
 	if err != nil {
 		log.Fatalf("Unable to retrieve Slides Client %v", err)
 	}
@@ -214,7 +214,7 @@ func main() {
 			len(slide.PageElements))
 	}
 
-	pageId := res.Slides[0].ObjectId
+	pageID := res.Slides[0].ObjectId
 	requests := []*slides.Request{}
 
 	//fgColor, err := colorutil.GoogleSlidesRgbColorParseHex("#ffffff")
@@ -235,10 +235,10 @@ func main() {
 	boxHeight := 25.0
 	locYHeight := boxHeight + 5.0
 	for i, itemText := range items {
-		elementId := fmt.Sprintf("item%v", i)
+		elementID := fmt.Sprintf("item%v", i)
 		locYThis := locY + locYHeight*float64(i)
 		requests = append(requests, TextBoxRequests(
-			pageId, elementId, itemText, fgColor, bgColor,
+			pageID, elementID, itemText, fgColor, bgColor,
 			boxWidth, boxHeight, locX, locYThis)...)
 	}
 
