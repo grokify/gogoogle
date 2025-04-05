@@ -23,10 +23,7 @@ type Options struct {
 }
 
 func (opt *Options) NewToken() bool {
-	if len(opt.NewTokenRaw) > 0 {
-		return true
-	}
-	return false
+	return len(opt.NewTokenRaw) > 0
 }
 
 func main() {
@@ -62,7 +59,7 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmtutil.PrintJSON(labels)
+		fmtutil.MustPrintJSON(labels)
 	}
 
 	if 1 == 1 {
@@ -91,15 +88,15 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmtutil.PrintJSON(msgs)
+		fmtutil.MustPrintJSON(msgs)
 	}
 
 	fmt.Println("DONE")
 }
 
-func GetClient(cfgJson []byte, scopes []string, forceNewToken bool) *http.Client {
+func GetClient(cfgJSON []byte, scopes []string, forceNewToken bool) *http.Client {
 	googleClient, err := omg.NewClientFileStoreWithDefaults(
-		context.Background(), cfgJson, scopes, forceNewToken)
+		context.Background(), cfgJSON, scopes, forceNewToken)
 	if err != nil {
 		log.Fatal(errorsutil.Wrap(err, "NewClientFileStoreWithDefaults"))
 	}

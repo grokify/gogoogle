@@ -16,6 +16,7 @@ import (
 	"github.com/grokify/mogo/math/mathutil"
 	"github.com/joho/godotenv"
 	"golang.org/x/net/context"
+	"google.golang.org/api/option"
 	"google.golang.org/api/slides/v1"
 
 	su "github.com/grokify/gogoogle/slidesutil/v1"
@@ -51,7 +52,7 @@ func main() {
 		log.Fatal("Unable to get Client")
 	}
 
-	srv, err := slides.New(client)
+	srv, err := slides.NewService(context.Background(), option.WithHTTPClient(client))
 	if err != nil {
 		log.Fatalf("unable to retrieve Slides Client %v", err)
 	}
@@ -129,8 +130,8 @@ func main() {
 			DashStyle:     "DASH",
 			Weight:        1.0,
 		}
-		for i := 0; i < int(rng.Cells); i++ {
-			min, max, err := rng.CellMinMax(int32(i))
+		for i := int32(0); i < rng.Cells; i++ {
+			min, max, err := rng.CellMinMax(i)
 			if err != nil {
 				panic(err)
 			}

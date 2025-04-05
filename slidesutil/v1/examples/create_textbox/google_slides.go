@@ -15,7 +15,8 @@ import (
 	"github.com/grokify/goauth/google"
 	"github.com/joho/godotenv"
 	"golang.org/x/net/context"
-	"google.golang.org/api/slides/v1"
+	"google.golang.org/api/option"
+	slides "google.golang.org/api/slides/v1"
 )
 
 func NewClient(forceNewToken bool) (*http.Client, error) {
@@ -48,7 +49,9 @@ func main() {
 		log.Fatal("Unable to get Client")
 	}
 
-	srv, err := slides.New(client)
+	// srv, err := slides.New(client) // deprecated
+	srv, err := slides.NewService(context.Background(), option.WithHTTPClient(client))
+
 	if err != nil {
 		log.Fatalf("Unable to retrieve Slides Client %v", err)
 	}
@@ -69,8 +72,8 @@ func main() {
 			len(slide.PageElements))
 	}
 
-	pageId := res.Slides[0].ObjectId
-	elementId := "MyTextBox_01"
+	pageID := res.Slides[0].ObjectId
+	elementID := "MyTextBox_01"
 
 	pt350 := &slides.Dimension{
 		Magnitude: 350,
@@ -79,10 +82,10 @@ func main() {
 	requests := []*slides.Request{
 		{
 			CreateShape: &slides.CreateShapeRequest{
-				ObjectId:  elementId,
+				ObjectId:  elementID,
 				ShapeType: "TEXT_BOX",
 				ElementProperties: &slides.PageElementProperties{
-					PageObjectId: pageId,
+					PageObjectId: pageID,
 					Size: &slides.Size{
 						Height: pt350,
 						Width:  pt350,
@@ -99,7 +102,7 @@ func main() {
 		},
 		{
 			InsertText: &slides.InsertTextRequest{
-				ObjectId:       elementId,
+				ObjectId:       elementID,
 				InsertionIndex: 0,
 				Text:           "New Box Text Inserted!",
 			},

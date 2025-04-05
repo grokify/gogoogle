@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -15,6 +14,7 @@ import (
 	"github.com/grokify/mogo/errors/errorsutil"
 	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/grokify/mogo/net/urlutil"
+	"google.golang.org/api/option"
 	texttospeech "google.golang.org/api/texttospeech/v1beta1"
 )
 
@@ -45,14 +45,14 @@ func TextSynthesize(ctx context.Context, ttsService *texttospeech.Service) error
 	if err != nil {
 		return errorsutil.Wrap(err, "TextSynthesize")
 	}
-	fmtutil.PrintJSON(synthesizeSpeechResponse)
+	fmtutil.MustPrintJSON(synthesizeSpeechResponse)
 
 	audio, err := base64.StdEncoding.DecodeString(synthesizeSpeechResponse.AudioContent)
 	if err != nil {
 		return errorsutil.Wrap(err, "TextSynthesize")
 	}
 	filename := urlutil.ToSlugLowerString(Text) + "_" + Name + "." + strings.ToLower(MP3)
-	err = ioutil.WriteFile(filepath.Join("output", filename), audio, 0644)
+	err = os.WriteFile(filepath.Join("output", filename), audio, 0600)
 	if err != nil {
 		return errorsutil.Wrap(err, "TextSynthesize")
 	}
@@ -69,7 +69,7 @@ func GetVoicesList(ctx context.Context, ttsService *texttospeech.Service) error 
 	if err != nil {
 		return errorsutil.Wrap(err, "GetVoicesList")
 	}
-	fmtutil.PrintJSON(listVoicesResponse)
+	fmtutil.MustPrintJSON(listVoicesResponse)
 	return nil
 }
 
@@ -87,7 +87,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	ttsService, err := texttospeech.New(httpClient)
+	ttsService, err := texttospeech.NewService(context.Background(), option.WithHTTPClient(httpClient))
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -21,7 +21,7 @@ func GetSheetsMap() (*sheetsmap.SheetsMap, error) {
 
 	jwt := os.Getenv("GOOGLE_SERVICE_ACCOUNT_JWT")
 	if len(jwt) < 1 {
-		return nil, fmt.Errorf("No Google JWT")
+		return nil, fmt.Errorf("no Google JWT")
 	}
 	fmt.Println(jwt)
 
@@ -34,11 +34,11 @@ func GetSheetsMap() (*sheetsmap.SheetsMap, error) {
 		return nil, err
 	}
 
-	spreadsheetId := os.Getenv("GOOGLE_SPREADSHEET_ID")
+	spreadsheetID := os.Getenv("GOOGLE_SPREADSHEET_ID")
 
 	sm, err := sheetsmap.NewSheetsMapIndex(
 		googleClient,
-		spreadsheetId,
+		spreadsheetID,
 		uint(0))
 	return &sm, err
 }
@@ -61,11 +61,11 @@ func main() {
 
 	fmt.Printf("VAL %v\n", smap.Sheet.Rows[1][0].Value)
 
-	fmtutil.PrintJSON(smap.ColumnMapKeyLc)
-	fmtutil.PrintJSON(smap.ItemMap)
+	fmtutil.MustPrintJSON(smap.ColumnMapKeyLc)
+	fmtutil.MustPrintJSON(smap.ItemMap)
 
 	item, _ := smap.GetOrCreateItem("me@example.com")
-	fmtutil.PrintJSON(item)
+	fmtutil.MustPrintJSON(item)
 
 	str, err := smap.UpdateItem(item, "tshirt size", "M", true)
 	if err != nil {

@@ -10,8 +10,8 @@ import (
 	"github.com/jessevdk/go-flags"
 	"google.golang.org/api/option"
 
-	dlp "cloud.google.com/go/dlp/apiv2"
-	dlppb "google.golang.org/genproto/googleapis/privacy/dlp/v2"
+	dlp "cloud.google.com/go/dlp/apiv2"   // formerly: dlp "google.golang.org/api/dlp/v2"
+	"cloud.google.com/go/dlp/apiv2/dlppb" // formerly: dlppb "google.golang.org/genproto/googleapis/privacy/dlp/v2"
 )
 
 /*
@@ -54,7 +54,7 @@ func main() {
 		log.Fatalf("error retrieving InfoTypes: %v", err)
 	}
 
-	fmtutil.PrintJSON(res)
+	fmtutil.MustPrintJSON(res)
 
 	for i, t := range res.InfoTypes {
 		fmt.Printf("%v) %v\n", i+1, t.Name)

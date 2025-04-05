@@ -12,19 +12,19 @@ import (
 
 	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/grokify/mogo/pointer"
-	"google.golang.org/api/slides/v1"
+	slides "google.golang.org/api/slides/v1"
 
 	"github.com/grokify/gogoogle/auth"
-	"github.com/grokify/gogoogle/slidesutil/v1"
+	slidesutil "github.com/grokify/gogoogle/slidesutil/v1"
 )
 
 func main() {
-	googHttpClient, err := auth.Setup(context.Background())
+	googHTTPClient, err := auth.Setup(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	slidesClient, err := slidesutil.NewSlidesClient(googHttpClient)
+	slidesClient, err := slidesutil.NewSlidesClient(googHTTPClient)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -77,14 +77,14 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmtutil.PrintJSON(rsp2)
+	fmtutil.MustPrintJSON(rsp2)
 
 	slideID := rsp2.Replies[0].CreateSlide.ObjectId
 	log.Printf("Created SlideID: %v\n", slideID)
 
 	log.Println(`== Fetch "main point" slide title (textbox) ID`)
 	presentation, err := srv.Presentations.Get(deckID).Do()
-	fmtutil.PrintJSON(presentation)
+	fmtutil.MustPrintJSON(presentation)
 	if err != nil {
 		log.Fatal(err)
 	}

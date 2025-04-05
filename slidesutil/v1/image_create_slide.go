@@ -44,8 +44,8 @@ func CreateSlideImageRequestsSidebarRight(slideID, imageID, imageURL, sidebarTex
 	}
 	if len(sidebarText) > 0 {
 		textboxes := CreateShapeTextBoxRequestInfo{
-			PageId:        slideID,
-			ObjectId:      imageID + ":txt",
+			PageID:        slideID,
+			ObjectID:      imageID + ":txt",
 			Text:          sidebarText,
 			Width:         90,
 			Height:        50,
