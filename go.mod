@@ -10,16 +10,16 @@ require (
 	cloud.google.com/go/speech v1.26.1
 	github.com/Iwark/spreadsheet v0.0.0-20230915040305-7677e8164883
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
-	github.com/grokify/goauth v0.23.8
+	github.com/grokify/goauth v0.23.10
 	github.com/grokify/gocharts/v2 v2.23.2
 	github.com/grokify/mogo v0.68.6
-	github.com/grokify/sogo v0.10.5
+	github.com/grokify/sogo v0.10.7
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.2.0
 	golang.org/x/net v0.39.0
 	google.golang.org/api v0.228.0
-	google.golang.org/genproto v0.0.0-20250407143221-ac9807e6c755
+	google.golang.org/genproto v0.0.0-20250409194420-de1ac958c67a
 )
 
 require (
@@ -75,8 +75,8 @@ require (
 	golang.org/x/time v0.11.0 // indirect
 	golang.org/x/tools v0.32.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20250404141209-ee84b53bf3d0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250404141209-ee84b53bf3d0 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250409194420-de1ac958c67a // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250409194420-de1ac958c67a // indirect
 	google.golang.org/grpc v1.71.1 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 )
