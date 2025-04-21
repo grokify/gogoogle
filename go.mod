@@ -11,15 +11,15 @@ require (
 	github.com/Iwark/spreadsheet v0.0.0-20230915040305-7677e8164883
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/grokify/goauth v0.23.10
-	github.com/grokify/gocharts/v2 v2.23.2
-	github.com/grokify/mogo v0.68.6
+	github.com/grokify/gocharts/v2 v2.23.3
+	github.com/grokify/mogo v0.68.9
 	github.com/grokify/sogo v0.10.7
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.2.0
 	golang.org/x/net v0.39.0
 	google.golang.org/api v0.228.0
-	google.golang.org/genproto v0.0.0-20250409194420-de1ac958c67a
+	google.golang.org/genproto v0.0.0-20250414145226-207652e42e2e
 )
 
 require (
@@ -46,12 +46,15 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.18.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.10 // indirect
+	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826 // indirect
+	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	github.com/pierrec/lz4/v4 v4.1.22 // indirect
 	github.com/richardlehane/mscfb v1.0.4 // indirect
 	github.com/richardlehane/msoleps v1.0.4 // indirect
+	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/quicktemplate v1.8.0 // indirect
 	github.com/xuri/efp v0.0.0-20250227110027-3491fafc2b79 // indirect
