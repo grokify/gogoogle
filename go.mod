@@ -13,7 +13,7 @@ require (
 	github.com/grokify/goauth v0.23.14
 	github.com/grokify/gocharts/v2 v2.24.7
 	github.com/grokify/mogo v0.69.3
-	github.com/grokify/sogo v0.10.14
+	github.com/grokify/sogo v0.11.1
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.2.0
