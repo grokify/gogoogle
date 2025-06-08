@@ -38,7 +38,7 @@ type MailMergeOpts struct {
 	GoauthAccountKey                string   `short:"k" long:"goauth-account-key" description:"The Google Sheet ID"`
 	RecipientsGoogleSheetID         string   `short:"s" long:"sheet-id" description:"The Google Sheet ID"`
 	RecipientsGoogleSheetIndex      uint     `short:"x" long:"sheet-index" description:"The Google Sheet Index"`
-	RecipientsGoogleSheetHeaderRows int      `short:"r" long:"sheet-header-row-count" description:"The Google Sheet header row count"`
+	RecipientsGoogleSheetHeaderRows uint32   `short:"r" long:"sheet-header-row-count" description:"The Google Sheet header row count"`
 	SubjectTemplateTextFilename     string   `short:"j" long:"subject-template" description:"Subject template"`
 	BodyTemplateHTMLFilename        string   `long:"html-template" description:"Body tmeplate for HTML"`
 	BodyTemplateTextFilename        string   `short:"t" long:"text-template" description:"Body template for text"`
@@ -109,7 +109,7 @@ func NewMailMerge(ctx context.Context, opts *MailMergeOpts) (*MailMerge, error) 
 		if opts.GoogleClient == nil {
 			return nil, errors.New("google client cannot be nil with google sheet id")
 		}
-		tbl, err := iwark.ParseTableFromSheetIDClient(
+		tbl, err := iwark.ReadTableFromClient(
 			opts.GoogleClient,
 			opts.RecipientsGoogleSheetID,
 			opts.RecipientsGoogleSheetIndex,
@@ -131,14 +131,14 @@ func NewMailMerge(ctx context.Context, opts *MailMergeOpts) (*MailMerge, error) 
 }
 
 func (mm *MailMerge) loadFilesAttachment(filenames []string) error {
-	return mm.loadFiles(httputilmore.ContentDispositionAttachment, filenames)
+	return mm.loadFiles(httputilmore.DispositionTypeAttachment, filenames)
 }
 
 func (mm *MailMerge) loadFilesInline(filenames []string) error {
-	return mm.loadFiles(httputilmore.ContentDispositionInline, filenames)
+	return mm.loadFiles(httputilmore.DispositionTypeInline, filenames)
 }
 
-func (mm *MailMerge) loadFiles(disposition string, filenames []string) error {
+func (mm *MailMerge) loadFiles(dispositionType string, filenames []string) error {
 	seen := map[string]bool{}
 	for _, filename := range filenames {
 		_, filenameonly := filepath.Split(filename)
@@ -148,10 +148,10 @@ func (mm *MailMerge) loadFiles(disposition string, filenames []string) error {
 			seen[filenameonly] = true
 		}
 		mm.CommonPartsSet.Parts = append(mm.CommonPartsSet.Parts, multipartutil.Part{
-			Type:               multipartutil.PartTypeFilepath,
-			BodyEncodeBase64:   true,
-			BodyDataFilepath:   filenameonly,
-			ContentDisposition: disposition,
+			Type:             multipartutil.PartTypeFilepath,
+			BodyEncodeBase64: true,
+			BodyDataFilepath: filenameonly,
+			DispositionType:  dispositionType,
 			HeaderRaw: textproto.MIMEHeader{
 				httputilmore.HeaderContentID: []string{filenameonly},
 			},
