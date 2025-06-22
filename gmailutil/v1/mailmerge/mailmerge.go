@@ -113,7 +113,10 @@ func NewMailMerge(ctx context.Context, opts *MailMergeOpts) (*MailMerge, error) 
 			opts.GoogleClient,
 			opts.RecipientsGoogleSheetID,
 			opts.RecipientsGoogleSheetIndex,
-			opts.RecipientsGoogleSheetHeaderRows)
+			&iwark.ReadSpreadsheetOpts{
+				SheetHeaderRowCount: opts.RecipientsGoogleSheetHeaderRows,
+			},
+		)
 		if err != nil {
 			return nil, err
 		} else {
