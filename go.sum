@@ -20,8 +20,8 @@ cloud.google.com/go/longrunning v0.6.7 h1:IGtfDWHhQCgCjwQjV9iiLnUta9LBCo8R9QmAFs
 cloud.google.com/go/longrunning v0.6.7/go.mod h1:EAFV3IZAKmM56TyiE6VAP3VoTzhZzySwI/YI1s/nRsY=
 cloud.google.com/go/monitoring v1.24.2 h1:5OTsoJ1dXYIiMiuL+sYscLc9BumrL3CarVLL7dd7lHM=
 cloud.google.com/go/monitoring v1.24.2/go.mod h1:x7yzPWcgDRnPEv3sI+jJGBkwl5qINf+6qY4eq0I9B4U=
-cloud.google.com/go/speech v1.27.1 h1:+OktATNlQc+4WH78OrQadIP4CzXb9mBucdDGCO1NrlI=
-cloud.google.com/go/speech v1.27.1/go.mod h1:efCfklHFL4Flxcdt9gpEMEJh9MupaBzw3QiSOVeJ6ck=
+cloud.google.com/go/speech v1.28.0 h1:9AuiAxDTmh/aeREtw+/0e7aI27T5QN4fK5lhssc9MxA=
+cloud.google.com/go/speech v1.28.0/go.mod h1:hJf6oa+1rzCW/CeDE/qCXedV20B2TXEUje5iaGwW+JI=
 cloud.google.com/go/storage v1.53.0 h1:gg0ERZwL17pJ+Cz3cD2qS60w1WMDnwcm5YPAIQBHUAw=
 cloud.google.com/go/storage v1.53.0/go.mod h1:7/eO2a/srr9ImZW9k5uufcNahT2+fPb8w5it1i5boaA=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
