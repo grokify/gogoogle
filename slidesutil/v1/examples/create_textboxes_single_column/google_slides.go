@@ -55,7 +55,7 @@ type CreateShapeTextBoxRequestInfo struct {
 	BackgroundColorHex string
 }
 
-func (info *CreateShapeTextBoxRequestInfo) Requests() ([]*slides.Request, error) {
+func (info *CreateShapeTextBoxRequestInfo) Requests() []*slides.Request {
 	requests := []*slides.Request{
 		{
 			CreateShape: &slides.CreateShapeRequest{
@@ -89,7 +89,6 @@ func (info *CreateShapeTextBoxRequestInfo) Requests() ([]*slides.Request, error)
 	}
 
 	/*	if len(info.ForegroundColorHex) > 0 {
-
 		}
 			{
 			UpdateTextStyle: &slides.UpdateTextStyleRequest{
@@ -108,8 +107,7 @@ func (info *CreateShapeTextBoxRequestInfo) Requests() ([]*slides.Request, error)
 				},
 			},
 		},*/
-
-	return requests, nil
+	return requests
 }
 
 func TextBoxRequests(pageID, elementID, text string, fgColor, bgColor *slides.RgbColor, width, height, locX, locY float64) []*slides.Request {

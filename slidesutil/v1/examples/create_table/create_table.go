@@ -276,7 +276,7 @@ func main() {
 	rowCount := int64(8)
 	columnCount := int64(5)
 
-	requests = []*slides.Request{
+	requests2 := []*slides.Request{
 		// Create a table
 		{
 			CreateTable: &slides.CreateTableRequest{
@@ -289,6 +289,7 @@ func main() {
 			},
 		},
 	}
+	requests = append(requests, requests2...)
 
 	headings := []string{"foo", "bar", "baz", "qux", "quuz"}
 	for i, heading := range headings {
@@ -356,8 +357,9 @@ func main() {
 	   	ColorHex      string
 	   }
 	*/
-	if 1 == 1 {
-		for i := 0; i < 5; i++ {
+	boolAddVertLine := true
+	if boolAddVertLine {
+		for i := range 5 {
 			locX := float64(i) * 100
 			lineID := fmt.Sprintf("MYVertLine%03d", i)
 			lineInfo := CreateLineRequestInfo{

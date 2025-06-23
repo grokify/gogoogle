@@ -20,7 +20,7 @@ import (
 
 func main() {
 	imageURL := "http://11111111.ngrok.io/logo_google_slides.png"
-	imageURL = "http://11111111.ngrok.io/chart.png"
+	// imageURL = "http://11111111.ngrok.io/chart.png"
 	name := "Test Image " + time.Now().Format(time.RFC3339)
 	imageID := "MyImageId_01"
 
