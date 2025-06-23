@@ -18,8 +18,8 @@ func ParseTableSetFromSpreadsheet(ss spreadsheet.Spreadsheet, opts *ReadSpreadsh
 		}
 		if t, err := ParseTableFromSheet(&sheet, opts); err != nil {
 			return nil, err
-		} else {
-			ts.Add(t)
+		} else if err := ts.Add(t); err != nil {
+			return nil, err
 		}
 	}
 	return ts, nil

@@ -62,7 +62,8 @@ func main() {
 		fmtutil.MustPrintJSON(labels)
 	}
 
-	if 1 == 1 {
+	boolExecListExample := true
+	if boolExecListExample {
 		rfc822s := []string{
 			"list1@example.com",
 			"list2@example.com",

@@ -110,7 +110,8 @@ func main() {
 	}
 
 	// Using a range struct.
-	if 1 == 1 {
+	boolUseRangeStruct := true
+	if boolUseRangeStruct {
 		rng := mathutil.RangeFloat64{
 			Min:   150.0,
 			Max:   700.0,
