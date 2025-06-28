@@ -12,7 +12,7 @@ require (
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/grokify/goauth v0.23.15
 	github.com/grokify/gocharts/v2 v2.24.12
-	github.com/grokify/mogo v0.70.9
+	github.com/grokify/mogo v0.70.10
 	github.com/grokify/sogo v0.11.6
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/joho/godotenv v1.5.1
