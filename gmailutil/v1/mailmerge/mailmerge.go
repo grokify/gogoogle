@@ -229,7 +229,7 @@ func (mm *MailMerge) Messages() ([]mailutil.MessageWriter, error) {
 			BodyPartsSet: msgParts,
 		}
 		if msgout.RecipientCount() <= 0 {
-			if out, err := jsonutil.MarshalSlice(row); err != nil {
+			if out, err := jsonutil.MarshalSlice(row, false); err != nil {
 				return msgs, err
 			} else {
 				return msgs, fmt.Errorf("no recpients on row (%d) with data (%s)", i, string(out))
