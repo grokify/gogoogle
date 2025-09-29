@@ -15,7 +15,7 @@ func ExecMailMergeCLI(ctx context.Context) (int, error) {
 		return -1, err
 	}
 
-	if creds, err := goauth.ReadCredentialsFromSetFile(opts.GoauthCredsFile, opts.GoauthAccountKey, true); err != nil {
+	if creds, err := goauth.NewCredentialsFromSetFile(opts.GoauthCredsFile, opts.GoauthAccountKey, true); err != nil {
 		return -1, err
 	} else if tok, err := creds.NewOrExistingValidToken(ctx); err != nil {
 		return -1, err
