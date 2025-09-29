@@ -19,7 +19,7 @@ var (
 )
 
 func ReadTableFromCredentialsSetFile(ctx context.Context, credsFile, credsKey string, sheetID string, sheetIdx uint, opts *ReadSpreadsheetOpts) (*table.Table, error) {
-	if creds, err := goauth.ReadCredentialsFromSetFile(credsFile, credsKey, true); err != nil {
+	if creds, err := goauth.NewCredentialsFromSetFile(credsFile, credsKey, true); err != nil {
 		return nil, err
 	} else {
 		return ReadTableFromCredentials(ctx, creds, sheetID, sheetIdx, opts)
@@ -67,7 +67,7 @@ func ReadTableFromClient(client *http.Client, sheetID string, sheetIdx uint, opt
 }
 
 func ReadSheetFromCredentialsSetFile(ctx context.Context, credsFile, credsKey string, sheetID string, sheetIdx uint) (*spreadsheet.Sheet, error) {
-	if creds, err := goauth.ReadCredentialsFromSetFile(credsFile, credsKey, true); err != nil {
+	if creds, err := goauth.NewCredentialsFromSetFile(credsFile, credsKey, true); err != nil {
 		return nil, err
 	} else if client, err := creds.NewClient(ctx); err != nil {
 		return nil, err
