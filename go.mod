@@ -17,7 +17,7 @@ require (
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.3.0
-	golang.org/x/net v0.43.0
+	golang.org/x/net v0.44.0
 	google.golang.org/api v0.248.0
 	google.golang.org/genproto v0.0.0-20250826171959-ef028d996bc1
 )
@@ -73,7 +73,7 @@ require (
 	go.opentelemetry.io/otel v1.38.0 // indirect
 	go.opentelemetry.io/otel/metric v1.38.0 // indirect
 	go.opentelemetry.io/otel/trace v1.38.0 // indirect
-	golang.org/x/crypto v0.41.0 // indirect
+	golang.org/x/crypto v0.42.0 // indirect
 	golang.org/x/exp v0.0.0-20250819193227-8b4c13bb791b // indirect
 	golang.org/x/image v0.30.0 // indirect
 	golang.org/x/mod v0.28.0 // indirect
