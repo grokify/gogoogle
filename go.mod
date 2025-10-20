@@ -18,13 +18,13 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.3.0
 	golang.org/x/net v0.46.0
-	google.golang.org/api v0.250.0
+	google.golang.org/api v0.252.0
 	google.golang.org/genproto v0.0.0-20251007200510-49b9836ed3ff
 )
 
 require (
 	cloud.google.com/go v0.123.0 // indirect
-	cloud.google.com/go/auth v0.16.5 // indirect
+	cloud.google.com/go/auth v0.17.0 // indirect
 	cloud.google.com/go/auth/oauth2adapt v0.2.8 // indirect
 	cloud.google.com/go/compute/metadata v0.9.0 // indirect
 	cloud.google.com/go/iam v1.5.2 // indirect
