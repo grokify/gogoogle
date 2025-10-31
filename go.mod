@@ -11,15 +11,15 @@ require (
 	github.com/Iwark/spreadsheet v0.0.0-20230915040305-7677e8164883
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/grokify/goauth v0.23.24
-	github.com/grokify/gocharts/v2 v2.26.0
-	github.com/grokify/mogo v0.71.3
+	github.com/grokify/gocharts/v2 v2.26.1
+	github.com/grokify/mogo v0.71.7
 	github.com/grokify/sogo v0.12.7
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.3.0
 	golang.org/x/net v0.46.0
 	google.golang.org/api v0.252.0
-	google.golang.org/genproto v0.0.0-20251014184007-4626949a642f
+	google.golang.org/genproto v0.0.0-20251022142026-3a174f9686a8
 )
 
 require (
@@ -32,7 +32,8 @@ require (
 	github.com/apache/arrow/go/v15 v15.0.2 // indirect
 	github.com/caarlos0/env/v11 v11.3.1 // indirect
 	github.com/cbroglie/mustache v1.4.0 // indirect
-	github.com/clipperhouse/uax29/v2 v2.2.0 // indirect
+	github.com/clipperhouse/stringish v0.1.1 // indirect
+	github.com/clipperhouse/uax29/v2 v2.3.0 // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
@@ -75,7 +76,7 @@ require (
 	go.opentelemetry.io/otel/metric v1.38.0 // indirect
 	go.opentelemetry.io/otel/trace v1.38.0 // indirect
 	golang.org/x/crypto v0.43.0 // indirect
-	golang.org/x/exp v0.0.0-20251017212417-90e834f514db // indirect
+	golang.org/x/exp v0.0.0-20251023183803-a4bb9ffd2546 // indirect
 	golang.org/x/image v0.32.0 // indirect
 	golang.org/x/mod v0.29.0 // indirect
 	golang.org/x/oauth2 v0.32.0 // indirect
