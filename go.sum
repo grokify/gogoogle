@@ -99,8 +99,8 @@ github.com/grokify/gocharts/v2 v2.26.1 h1:Z7zj0Kvd81vZ75M+t7QhAvHB3+IGorlvxIjI/l
 github.com/grokify/gocharts/v2 v2.26.1/go.mod h1:ec3y6VQ/65gppdss9Niz9XQKDoAlMRIH3ukY5Exf38w=
 github.com/grokify/mogo v0.71.7 h1:y1KrHntBvfFByLzD0/cCsJUHwWaWwpvlPno+G5bczuQ=
 github.com/grokify/mogo v0.71.7/go.mod h1:BNjXVV1WWb0QNgQC+p+brYsJf2Yb05IelFQvbzOoctA=
-github.com/grokify/sogo v0.12.7 h1:26Q17GJmpvtYB8ggzcxU8HdJ9f/fTuz/TLeWjv0GSN4=
-github.com/grokify/sogo v0.12.7/go.mod h1:JjJWqZPLX21G7S9JQtSCyOiP9g8RxTUfsQo6DO7gsxY=
+github.com/grokify/sogo v0.12.9 h1:dJwSB+cNUFAvTAJ5SS2O1cMAbs48axppw5HfzndHsRk=
+github.com/grokify/sogo v0.12.9/go.mod h1:ZuaML7Z9njjyXDESihHCOJ5szWhv+0/y4HOzK9ZT1yQ=
 github.com/huandu/xstrings v1.5.0 h1:2ag3IFq9ZDANvthTwTiqSSZLjDc+BedvHPAp5tJy2TI=
 github.com/huandu/xstrings v1.5.0/go.mod h1:y5/lhBue+AyNmUVz9RLU9xbLR0o4KIIExikq4ovT0aE=
 github.com/jessevdk/go-flags v1.6.1 h1:Cvu5U8UGrLay1rZfv/zP7iLpSHGUZ/Ou68T0iX1bBK4=
@@ -110,8 +110,8 @@ github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwA
 github.com/json-iterator/go v1.1.12 h1:PV8peI4a0ysnczrg+LtxykD8LfKY9ML6u2jnxaEnrnM=
 github.com/json-iterator/go v1.1.12/go.mod h1:e30LSqwooZae/UwlEbR2852Gd8hjQvJoHmT4TnhNGBo=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
-github.com/klauspost/compress v1.18.0 h1:c/Cqfb0r+Yi+JtIEq73FWXVkRonBlf0CRNYc8Zttxdo=
-github.com/klauspost/compress v1.18.0/go.mod h1:2Pp+KzxcywXVXMr50+X0Q/Lsb43OQHYWRCY2AiWywWQ=
+github.com/klauspost/compress v1.18.1 h1:bcSGx7UbpBqMChDtsF28Lw6v/G94LPrrbMbdC3JH2co=
+github.com/klauspost/compress v1.18.1/go.mod h1:ZQFFVG+MdnR0P+l6wpXgIL4NTtwiKIdBnrBd8Nrxr+0=
 github.com/klauspost/cpuid/v2 v2.3.0 h1:S4CRMLnYUhGeDFDqkGriYKdfoFlDnMtqTiI/sFzhA9Y=
 github.com/klauspost/cpuid/v2 v2.3.0/go.mod h1:hqwkgyIinND0mEev00jJYCxPNVRVXFQeu1XKlok6oO0=
 github.com/lucasb-eyer/go-colorful v1.3.0 h1:2/yBRLdWBZKrf7gB40FoiKfAWYQ0lqNcbuQwVHXptag=
