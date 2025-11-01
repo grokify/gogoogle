@@ -13,7 +13,7 @@ require (
 	github.com/grokify/goauth v0.23.24
 	github.com/grokify/gocharts/v2 v2.26.1
 	github.com/grokify/mogo v0.71.7
-	github.com/grokify/sogo v0.12.7
+	github.com/grokify/sogo v0.12.9
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.3.0
@@ -47,7 +47,7 @@ require (
 	github.com/googleapis/gax-go/v2 v2.15.0 // indirect
 	github.com/huandu/xstrings v1.5.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/klauspost/compress v1.18.0 // indirect
+	github.com/klauspost/compress v1.18.1 // indirect
 	github.com/klauspost/cpuid/v2 v2.3.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
