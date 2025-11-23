@@ -7,6 +7,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
@@ -16,7 +17,6 @@ import (
 	"github.com/grokify/goauth/google"
 	slidesutil "github.com/grokify/gogoogle/slidesutil/v1"
 	"github.com/joho/godotenv"
-	"golang.org/x/net/context"
 	"google.golang.org/api/option"
 	"google.golang.org/api/slides/v1"
 )
