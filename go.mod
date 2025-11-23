@@ -10,14 +10,13 @@ require (
 	cloud.google.com/go/speech v1.28.1
 	github.com/Iwark/spreadsheet v0.0.0-20230915040305-7677e8164883
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
-	github.com/grokify/goauth v0.23.26
+	github.com/grokify/goauth v0.23.27
 	github.com/grokify/gocharts/v2 v2.26.5
 	github.com/grokify/mogo v0.71.10
-	github.com/grokify/sogo v0.12.10
+	github.com/grokify/sogo v0.12.11
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.3.0
-	golang.org/x/net v0.47.0
 	google.golang.org/api v0.256.0
 	google.golang.org/genproto v0.0.0-20251111163417-95abcf5c77ba
 )
@@ -79,6 +78,7 @@ require (
 	golang.org/x/exp v0.0.0-20251113190631-e25ba8c21ef6 // indirect
 	golang.org/x/image v0.33.0 // indirect
 	golang.org/x/mod v0.30.0 // indirect
+	golang.org/x/net v0.47.0 // indirect
 	golang.org/x/oauth2 v0.33.0 // indirect
 	golang.org/x/sync v0.18.0 // indirect
 	golang.org/x/sys v0.38.0 // indirect
