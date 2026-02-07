@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/grokify/mogo/fmt/fmtutil"
 
@@ -42,7 +43,11 @@ func main() {
 	}
 
 	ctx := context.Background()
-	opts := option.WithCredentialsFile(args.CredentialsFile)
+	credsJSON, err := os.ReadFile(args.CredentialsFile)
+	if err != nil {
+		log.Fatalf("error reading credentials file: %v", err)
+	}
+	opts := option.WithAuthCredentialsJSON(option.ServiceAccount, credsJSON)
 
 	client, err := dlp.NewClient(ctx, opts)
 	if err != nil {
