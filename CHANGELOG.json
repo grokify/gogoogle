@@ -1,0 +1,101 @@
+{
+  "ir_version": "1.0",
+  "project": "gogoogle",
+  "repository": "https://github.com/grokify/gogoogle",
+  "versioning": "semver",
+  "commit_convention": "conventional",
+  "maintainers": ["grokify", "johncwang@gmail.com"],
+  "bots": ["dependabot[bot]"],
+  "releases": [
+    {
+      "version": "v0.6.0",
+      "date": "2025-01-21",
+      "highlights": [
+        { "description": "Gmail mail merge functionality with Mustache templates and Google Sheets data sources" }
+      ],
+      "added": [
+        { "description": "`gmailutil/v1/mailmerge`: `MailMerge{}` and `MailMergeOpts{}` for template-based email campaigns", "commit": "7205b78" },
+        { "description": "`gmailutil/v1/mailmerge`: `ExecMailMergeCLI()` for CLI usage", "commit": "f375e67" },
+        { "description": "`gmailutil/v1/cmd/gmailmerge`: CLI command for mail merge operations", "commit": "0f80d0c" }
+      ],
+      "changed": [
+        { "description": "`scopes.go`: rename scope constants for consistency", "commit": "87dc9c0" }
+      ],
+      "fixed": [
+        { "description": "`gmailutil/v1/mailmerge`: update conditional logic", "commit": "1601c91" }
+      ]
+    },
+    {
+      "version": "v0.5.0",
+      "date": "2025-01-08",
+      "highlights": [
+        { "description": "Linting improvements and documentation updates" }
+      ],
+      "documentation": [
+        { "description": "`README.md`: add lint status badge", "commit": "024abd2" },
+        { "description": "`README.md`: update project naming", "commit": "763f444" }
+      ],
+      "internal": [
+        { "description": "`sheetsutil`: fix linting issues", "commit": "c2040e5" }
+      ]
+    },
+    {
+      "version": "v0.4.0",
+      "date": "2024-10-06",
+      "highlights": [
+        { "description": "Module renamed from `googleutil` to `gogoogle`" }
+      ],
+      "changed": [
+        { "description": "Module renamed from `github.com/grokify/googleutil` to `github.com/grokify/gogoogle`", "commit": "07c6840", "breaking": true },
+        { "description": "`sheetsutil/iwark`: update function names", "commit": "0787da8" },
+        { "description": "`sheetsutil/iwark`: fix misspelling", "commit": "cf94463" }
+      ],
+      "infrastructure": [
+        { "description": "CI: update Go test versions", "commit": "d824ad9" }
+      ]
+    },
+    {
+      "version": "v0.3.0",
+      "date": "2024-08-18",
+      "highlights": [
+        { "description": "Google Docs URL utilities and docsutil package" }
+      ],
+      "added": [
+        { "description": "`docsutil`: Google Docs and Sheets URL parsing utilities", "commit": "697376d" }
+      ],
+      "changed": [
+        { "description": "`mapsutil`: update `errorsutil.Wrapf()` call signature", "commit": "697376d" }
+      ]
+    },
+    {
+      "version": "v0.2.0",
+      "date": "2024-01-13",
+      "highlights": [
+        { "description": "Gmail API wrapper with message operations, batch delete, and label management" }
+      ],
+      "added": [
+        { "description": "`gmailutil/v1`: `MessagesAPI{}` for Gmail message operations", "commit": "b781e64" },
+        { "description": "`gmailutil/v1`: `GmailService.Send()` for sending emails", "commit": "bd15f94" },
+        { "description": "`gmailutil/v1`: batch delete and message query functions", "commit": "bd15f94" },
+        { "description": "`gmailutil/v1`: `MessagesListOpts{}` and `MessagesListQueryOpts{}` for filtering", "commit": "b781e64" }
+      ]
+    },
+    {
+      "version": "v0.1.0",
+      "date": "2021-12-13",
+      "highlights": [
+        { "description": "Initial stable release with Google Slides, Sheets, Maps, BigQuery, DLP, and Speech utilities" }
+      ],
+      "added": [
+        { "description": "`slidesutil/v1`: Google Slides API wrapper with presentation creation, text boxes, tables, lines, images, and Markdown support", "commit": "be5688b" },
+        { "description": "`sheetsutil`: Google Sheets utilities including `sheetsmap` for typed data mapping and `iwark` for low-level operations", "commit": "a2fd4e6" },
+        { "description": "`mapsutil/staticmap`: Google Static Maps generation with markers and preset regions", "commit": "be5688b" },
+        { "description": "`bigqueryutil`: BigQuery streaming upload utilities with automatic chunking", "commit": "26c2aed" },
+        { "description": "`dlp/v2`: Google DLP API helpers for sensitive data detection", "commit": "0952621" },
+        { "description": "`speechtotext`: Google Speech-to-Text API wrapper", "commit": "62b136d" },
+        { "description": "`texttospeech/v1beta1`: Google Text-to-Speech API wrapper", "commit": "cc2510c" },
+        { "description": "`auth`: OAuth2 authentication setup utilities", "commit": "4f5f5fe" }
+      ]
+    }
+  ]
+}
