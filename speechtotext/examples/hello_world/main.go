@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/grokify/mogo/fmt/fmtutil"
 	"github.com/jessevdk/go-flags"
@@ -42,8 +43,12 @@ func main() {
 
 	ctx := context.Background()
 
+	credsJSON, err := os.ReadFile(args.CredentialsFile)
+	if err != nil {
+		log.Fatal(err)
+	}
 	client, err := speech.NewClient(ctx,
-		option.WithCredentialsFile(args.CredentialsFile))
+		option.WithAuthCredentialsJSON(option.ServiceAccount, credsJSON))
 	if err != nil {
 		log.Fatal(err)
 	}
