@@ -1,12 +1,26 @@
 {
-  "ir_version": "1.0",
+  "irVersion": "1.0",
   "project": "gogoogle",
   "repository": "https://github.com/grokify/gogoogle",
   "versioning": "semver",
-  "commit_convention": "conventional",
+  "commitConvention": "conventional",
   "maintainers": ["grokify", "johncwang@gmail.com"],
   "bots": ["dependabot[bot]"],
   "releases": [
+    {
+      "version": "v0.7.0",
+      "date": "2026-02-09",
+      "highlights": [
+        { "description": "Google Slides presentation reading utilities and CLI for extracting text and image content" }
+      ],
+      "added": [
+        { "description": "`slidesutil/v1`: `ExtractPresentationContent()` for extracting all slides' text and images in one call", "commit": "c47a3da" },
+        { "description": "`slidesutil/v1`: `ExtractSlideTitle()`, `ExtractTextContent()`, `ExtractNotesText()` for slide text extraction", "commit": "c47a3da" },
+        { "description": "`slidesutil/v1`: `ExtractImages()` with `ImageInfo` struct for image URL extraction", "commit": "c47a3da" },
+        { "description": "`slidesutil/v1`: `FindSlide()`, `GetElementType()`, `GetElementDescription()` helper functions", "commit": "c47a3da" },
+        { "description": "`slidesutil/v1/cmd/slides-content`: CLI tool for extracting presentation content as JSON", "commit": "c47a3da" }
+      ]
+    },
     {
       "version": "v0.6.0",
       "date": "2025-01-21",
