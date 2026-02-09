@@ -2,3 +2,4 @@
 .env
 _*
 coverage.txt
+/slides-content
