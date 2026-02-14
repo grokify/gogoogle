@@ -8,6 +8,21 @@
   "bots": ["dependabot[bot]"],
   "releases": [
     {
+      "version": "v0.8.0",
+      "date": "2026-02-14",
+      "highlights": [
+        { "description": "Unified gogoogle CLI for Google API utilities" }
+      ],
+      "added": [
+        { "description": "`cmd/gogoogle`: unified Cobra CLI for Google APIs with slides and gmail subcommands", "commit": "1bfd784" },
+        { "description": "`cmd/gogoogle slides content`: extract text, images, and notes from Google Slides presentations", "commit": "1bfd784" },
+        { "description": "`cmd/gogoogle gmail merge`: send templated emails via mail merge with Google Sheets data", "commit": "1bfd784" },
+        { "description": "`cmd/gogoogle gmail send-markdown`: send emails with markdown body converted to HTML", "commit": "1bfd784" },
+        { "description": "`gmailutil/v1/examples/send_html`: example for sending HTML emails with `GmailService.Send()`", "commit": "1b6e417" },
+        { "description": "`gmailutil/v1/examples/mail_merge`: example with newsletter Mustache templates and inline logo", "commit": "47a6019" }
+      ]
+    },
+    {
       "version": "v0.7.0",
       "date": "2026-02-09",
       "highlights": [
