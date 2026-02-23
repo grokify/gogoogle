@@ -52,6 +52,8 @@ func TextSynthesize(ctx context.Context, ttsService *texttospeech.Service) error
 		return errorsutil.Wrap(err, "TextSynthesize")
 	}
 	filename := urlutil.ToSlugLowerString(Text) + "_" + Name + "." + strings.ToLower(MP3)
+	filename = filepath.Base(filepath.Clean(filename)) // sanitize filename to prevent path traversal
+	//nolint:gosec // G703: filename is sanitized via filepath.Base(filepath.Clean()) above
 	err = os.WriteFile(filepath.Join("output", filename), audio, 0600)
 	if err != nil {
 		return errorsutil.Wrap(err, "TextSynthesize")
