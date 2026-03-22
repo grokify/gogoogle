@@ -1,0 +1,64 @@
+site_name: GoGoogle
+site_url: https://grokify.github.io/gogoogle/
+site_description: Go libraries for Google APIs
+site_author: Grokify
+
+repo_name: grokify/gogoogle
+repo_url: https://github.com/grokify/gogoogle
+
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.suggest
+  palette:
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Gmail:
+      - Overview: gmail/index.md
+      - Sending Emails: gmail/sending.md
+      - Reading Messages: gmail/messages.md
+      - Mail Merge: gmail/mail-merge.md
+  - Sheets:
+      - Overview: sheets/index.md
+  - Slides:
+      - Overview: slides/index.md
+  - Maps:
+      - Static Maps: maps/index.md
+  - Speech:
+      - Speech-to-Text: speech/stt.md
+      - Text-to-Speech: speech/tts.md
+  - CLI:
+      - Overview: cli/index.md
+  - Changelog: changelog.md
+
+markdown_extensions:
+  - tables
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
