@@ -8,6 +8,20 @@
   "bots": ["dependabot[bot]"],
   "releases": [
     {
+      "version": "v0.9.0",
+      "date": "2026-03-22",
+      "highlights": [
+        { "description": "Simplified email sending with SendSimple method" }
+      ],
+      "added": [
+        { "description": "`gmailutil/v1`: `SendSimple()` method for sending emails with minimal configuration", "commit": "253e3ad" },
+        { "description": "`gmailutil/v1`: `SendSimpleOpts{}` struct with To, Subject, BodyText, BodyHTML, and ReplyTo fields", "commit": "253e3ad" }
+      ],
+      "fixed": [
+        { "description": "`gmailutil/v1`: fix typo in `Send()` comment", "commit": "253e3ad" }
+      ]
+    },
+    {
       "version": "v0.8.0",
       "date": "2026-02-14",
       "highlights": [
