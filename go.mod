@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	cloud.google.com/go/bigquery v1.74.0
 	cloud.google.com/go/dlp v1.29.0
-	cloud.google.com/go/speech v1.30.0
+	cloud.google.com/go/speech v1.31.0
 	github.com/Iwark/spreadsheet v0.0.0-20230915040305-7677e8164883
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/grokify/goauth v0.23.29
@@ -16,7 +16,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.4.0
 	github.com/spf13/cobra v1.10.2
-	google.golang.org/api v0.273.0
+	google.golang.org/api v0.273.1
 	google.golang.org/genproto v0.0.0-20260319201613-d00831a3d3e7
 )
 
@@ -88,8 +88,8 @@ require (
 	golang.org/x/time v0.15.0 // indirect
 	golang.org/x/tools v0.43.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20260319201613-d00831a3d3e7 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260319201613-d00831a3d3e7 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20260401001100-f93e5f3e9f0f // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260401001100-f93e5f3e9f0f // indirect
 	google.golang.org/grpc v1.79.3 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 )
