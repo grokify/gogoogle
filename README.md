@@ -101,12 +101,15 @@ Utilities for streaming data uploads to BigQuery.
 - Automatic chunking for large uploads (max 10,000 items per operation)
 - Error handling for batch insert operations
 
-### Google Docs (`docsutil`)
+### Google Docs (`docsutil/v1`)
 
-URL parsing and construction for Google Docs and Sheets.
+Google Docs API utilities for reading and extracting document content.
 
-- Parse document IDs from URLs
-- Build document URLs from IDs
+- Client wrapper for Google Docs API
+- Extract structured content (headings, paragraphs, images, tables)
+- Extract plain text from documents
+- Extract text organized by paragraphs
+- URL parsing for document ID extraction
 
 ### Authentication (`auth`)
 
