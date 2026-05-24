@@ -8,6 +8,21 @@
   "bots": ["dependabot[bot]"],
   "releases": [
     {
+      "version": "v0.10.0",
+      "date": "2026-05-24",
+      "commit": "e1eb06f",
+      "highlights": [
+        { "description": "Google Docs API utilities for document content extraction" }
+      ],
+      "added": [
+        { "description": "`docsutil/v1`: Google Docs API client wrapper", "commit": "e1eb06f" },
+        { "description": "`docsutil/v1`: `ExtractContent()` for extracting headings, paragraphs, images, and tables", "commit": "e1eb06f" },
+        { "description": "`docsutil/v1`: `ExtractText()` for plain text extraction", "commit": "e1eb06f" },
+        { "description": "`docsutil/v1`: `ExtractParagraphs()` for paragraph-by-paragraph text", "commit": "e1eb06f" },
+        { "description": "`docsutil/v1`: URL parsing utilities for document ID extraction", "commit": "e1eb06f" }
+      ]
+    },
+    {
       "version": "v0.9.0",
       "date": "2026-03-22",
       "highlights": [
