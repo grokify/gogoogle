@@ -32,6 +32,8 @@ theme:
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
+  - Docs:
+      - Overview: docs/index.md
   - Gmail:
       - Overview: gmail/index.md
       - Sending Emails: gmail/sending.md
@@ -48,6 +50,8 @@ nav:
       - Text-to-Speech: speech/tts.md
   - CLI:
       - Overview: cli/index.md
+  - Releases:
+      - v0.10.0: releases/v0.10.0.md
   - Changelog: changelog.md
 
 markdown_extensions:
