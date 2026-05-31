@@ -89,6 +89,29 @@ scopes := []string{gmailutil.GmailSendScope}
 | `presentations.readonly` | Read presentations |
 | `presentations` | Read and write presentations |
 
+### Docs
+
+| Scope | Description |
+|-------|-------------|
+| `documents.readonly` | Read documents |
+| `documents` | Read and write documents |
+
+### Forms
+
+| Scope | Description |
+|-------|-------------|
+| `forms.body.readonly` | Read form structure |
+| `forms.body` | Read and write form structure |
+| `forms.responses.readonly` | Read form responses |
+
+```go
+import forms "github.com/grokify/gogoogle/forms/v1"
+
+// Use helper functions for common scope combinations
+scopes := forms.ScopesAll()      // All Forms scopes
+scopes := forms.ScopesReadOnly() // Read-only scopes
+```
+
 ## Create Service Clients
 
 After authentication, create service clients:
@@ -124,6 +147,23 @@ service, err := slides.NewService(ctx, option.WithHTTPClient(httpClient))
 if err != nil {
     log.Fatal(err)
 }
+```
+
+### Docs
+
+```go
+import docsutil "github.com/grokify/gogoogle/docsutil/v1"
+
+client, err := docsutil.NewClient(ctx, httpClient)
+if err != nil {
+    log.Fatal(err)
+}
+
+// Extract document content
+content, err := client.ExtractContent(ctx, docID, docsutil.ExtractOptions{
+    IncludeImages: true,
+    IncludeTables: true,
+})
 ```
 
 ## Environment Variables
