@@ -4,6 +4,12 @@ import (
 	"testing"
 )
 
+// Test cases use Google's official public sample spreadsheet ID:
+// "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
+// This spreadsheet contains sample class roster data and is used in Google's
+// Sheets API documentation and tutorials. It is publicly accessible at:
+// https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms
+
 func TestParseSpreadsheetURL(t *testing.T) {
 	tests := []struct {
 		name    string
