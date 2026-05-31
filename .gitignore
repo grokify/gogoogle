@@ -4,12 +4,8 @@ _*
 coverage.txt
 /slides-content
 
-# Sensitive example data (service account keys, project-specific files)
-sheetsutil/iwark/examples/iwark_goauth_sa/
-*.json
-!go.mod
-!go.sum
-*.csv
-*.xlsx
+# Credentials and keys (prevent accidental commits)
 *.pem
 *.key
+*-credentials.json
+*-service-account.json
