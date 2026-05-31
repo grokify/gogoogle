@@ -9,10 +9,13 @@ GoGoogle provides simplified, production-ready interfaces for common Google API 
 | Package | Description |
 |---------|-------------|
 | [Gmail](gmail/index.md) | Send emails, manage messages, mail merge |
+| [Docs](docs/index.md) | Extract content from Google Docs |
 | [Sheets](sheets/index.md) | Read/write spreadsheet data with typed structs |
 | [Slides](slides/index.md) | Create presentations, add content |
 | [Maps](maps/index.md) | Generate static map images |
 | [Speech](speech/stt.md) | Speech-to-Text and Text-to-Speech |
+| [Forms](#forms) | OAuth scope helpers for Forms API |
+| [YouTube](#youtube) | URL utilities (short URLs) |
 | [CLI](cli/index.md) | Command-line tools for Google APIs |
 
 ## Features
@@ -59,6 +62,39 @@ data, _ := sheetsmap.ReadSheet(ctx, service, spreadsheetID, "Sheet1")
 for _, row := range data.Rows {
     fmt.Println(row["Name"], row["Email"])
 }
+```
+
+## Forms
+
+The `forms/v1` package provides OAuth scope helpers for the Google Forms API.
+
+```go
+import forms "github.com/grokify/gogoogle/forms/v1"
+
+// All Forms scopes (Drive, DriveFile, FormsBody, FormsResponsesReadonly)
+scopes := forms.ScopesAll()
+
+// Read-only scopes
+scopes := forms.ScopesReadOnly()
+
+// As client option for google.golang.org/api
+opt := forms.ClientOptionScopesAll()
+```
+
+## YouTube
+
+The `youtubeutil` package provides URL utilities for YouTube.
+
+```go
+import "github.com/grokify/gogoogle/youtubeutil"
+
+// Convert YouTube URLs to short format
+shortURL, err := youtubeutil.ShortURL("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+// Returns: "https://youtu.be/dQw4w9WgXcQ"
+
+// Also accepts video ID directly
+shortURL, err := youtubeutil.ShortURL("dQw4w9WgXcQ")
+// Returns: "https://youtu.be/dQw4w9WgXcQ"
 ```
 
 ## Related Libraries
