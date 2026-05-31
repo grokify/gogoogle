@@ -49,8 +49,23 @@ Comprehensive Gmail API helper library for message operations, label management,
 
 Utilities for reading and writing Google Sheets data with typed structures.
 
+- **sheetsutil/v4** - Cell value parsing with typed representations (`CellValue`, `TypedCellValue`)
+- **sheetsutil/v4** - URL parsing (`ParseSpreadsheetURL`, `ParseSpreadsheetURLFull`) and building utilities
 - **sheetsutil/v4/sheetsmap** - Maps sheet data to Go types with enum validation and column management
 - **sheetsutil/iwark** - Low-level spreadsheet operations using the [Iwark spreadsheet](https://github.com/Iwark/spreadsheet) library
+
+### Google Forms (`forms/v1`)
+
+OAuth scope helpers for Google Forms API.
+
+- `ScopesAll()` and `ScopesReadOnly()` for Forms API scopes
+- `ClientOptionScopesAll()` and `ClientOptionScopesReadOnly()` for use with `option.WithScopes()`
+
+### YouTube (`youtubeutil`)
+
+YouTube URL utilities.
+
+- `ShortURL()` converts YouTube video URLs to short `youtu.be` format
 
 ### Google Slides (`slidesutil/v1`)
 
