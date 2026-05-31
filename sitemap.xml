@@ -2,58 +2,66 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://grokify.github.io/gogoogle/</loc>
-         <lastmod>2026-05-24</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/changelog/</loc>
-         <lastmod>2026-05-24</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/getting-started/</loc>
-         <lastmod>2026-05-24</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/cli/</loc>
-         <lastmod>2026-05-24</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/docs/</loc>
-         <lastmod>2026-05-24</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/gmail/</loc>
-         <lastmod>2026-05-24</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/gmail/mail-merge/</loc>
-         <lastmod>2026-05-24</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/gmail/messages/</loc>
-         <lastmod>2026-05-24</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/gmail/sending/</loc>
-         <lastmod>2026-05-24</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/maps/</loc>
-         <lastmod>2026-05-24</lastmod>
+         <lastmod>2026-05-31</lastmod>
+    </url>
+    <url>
+         <loc>https://grokify.github.io/gogoogle/releases/v0.10.0/</loc>
+         <lastmod>2026-05-31</lastmod>
+    </url>
+    <url>
+         <loc>https://grokify.github.io/gogoogle/releases/v0.11.0/</loc>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/sheets/</loc>
-         <lastmod>2026-05-24</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/slides/</loc>
-         <lastmod>2026-05-24</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/speech/stt/</loc>
-         <lastmod>2026-05-24</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/speech/tts/</loc>
-         <lastmod>2026-05-24</lastmod>
+         <lastmod>2026-05-31</lastmod>
     </url>
 </urlset>
