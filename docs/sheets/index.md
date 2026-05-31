@@ -6,8 +6,80 @@ The `sheetsutil` package provides utilities for reading and writing Google Sheet
 
 | Package | Description |
 |---------|-------------|
+| `sheetsutil/v4` | Cell value parsing and URL utilities |
 | `sheetsutil/v4/sheetsmap` | Map sheet data to Go types with validation |
 | `sheetsutil/iwark` | Low-level operations using Iwark library |
+
+## Cell Value Parsing
+
+Parse Google Sheets API responses into typed Go structures:
+
+```go
+import sheetsutil "github.com/grokify/gogoogle/sheetsutil/v4"
+
+// Get values from Sheets API
+vr, _ := service.Spreadsheets.Values.Get(spreadsheetID, "Sheet1!A1:D10").Do()
+
+// Parse to typed grid - each cell has type information
+grid := sheetsutil.ParseValueRange(vr)
+for _, row := range grid {
+    for _, cell := range row {
+        fmt.Printf("Type: %s, Value: %s\n", cell.Type, cell.FormattedValue)
+    }
+}
+
+// Or extract as simple strings
+formatted := sheetsutil.ExtractFormattedValues(vr)  // Display values
+raw := sheetsutil.ExtractRawValues(vr)               // Underlying values
+```
+
+### Cell Types
+
+| Type | Description |
+|------|-------------|
+| `CellTypeEmpty` | Empty cell |
+| `CellTypeString` | Text value |
+| `CellTypeNumber` | Numeric value |
+| `CellTypeBool` | Boolean (TRUE/FALSE) |
+| `CellTypeDate` | Date value |
+| `CellTypeTime` | Time value |
+| `CellTypeDateTime` | Date and time |
+| `CellTypeDuration` | Duration |
+| `CellTypeError` | Error value |
+
+## URL Utilities
+
+Parse spreadsheet IDs from URLs and build URLs:
+
+```go
+import sheetsutil "github.com/grokify/gogoogle/sheetsutil/v4"
+
+// Extract spreadsheet ID from URL or plain ID
+id, err := sheetsutil.ParseSpreadsheetURL(
+    "https://docs.google.com/spreadsheets/d/abc123/edit#gid=0",
+)
+// id = "abc123"
+
+// Extract full info including sheet GID and range
+info, err := sheetsutil.ParseSpreadsheetURLFull(
+    "https://docs.google.com/spreadsheets/d/abc123/edit#gid=456&range=A1:D10",
+)
+// info.SpreadsheetID = "abc123"
+// info.SheetGID = 456
+// info.Range = "A1:D10"
+
+// Build URLs from ID
+url := sheetsutil.BuildSpreadsheetURL("abc123")
+// "https://docs.google.com/spreadsheets/d/abc123/edit"
+
+url := sheetsutil.BuildSpreadsheetURLWithSheet("abc123", 456)
+// "https://docs.google.com/spreadsheets/d/abc123/edit#gid=456"
+
+// Check if string is a Sheets URL
+if sheetsutil.IsSpreadsheetURL(input) {
+    // Handle URL
+}
+```
 
 ## Quick Start
 
