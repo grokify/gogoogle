@@ -8,6 +8,31 @@
   "bots": ["dependabot[bot]"],
   "releases": [
     {
+      "version": "v0.11.0",
+      "date": "2026-05-30",
+      "highlights": [
+        { "description": "Google Sheets v4 cell parsing and URL utilities" },
+        { "description": "Google Forms scopes utilities" },
+        { "description": "YouTube short URL conversion" }
+      ],
+      "added": [
+        { "description": "`sheetsutil/v4`: Cell value parsing with `CellValue` and `TypedCellValue` types", "commit": "f09010a" },
+        { "description": "`sheetsutil/v4`: `ParseValueRange()` and `ParseTypedValueRange()` for grid conversion", "commit": "f09010a" },
+        { "description": "`sheetsutil/v4`: `ExtractFormattedValues()` and `ExtractRawValues()` for string extraction", "commit": "f09010a" },
+        { "description": "`sheetsutil/v4`: URL parsing with `ParseSpreadsheetURL()` and `ParseSpreadsheetURLFull()`", "commit": "c9f0be2" },
+        { "description": "`sheetsutil/v4`: URL building with `BuildSpreadsheetURL()` and `BuildSpreadsheetURLWithSheet()`", "commit": "c9f0be2" },
+        { "description": "`forms/v1`: `ScopesAll()` and `ScopesReadOnly()` for Google Forms OAuth scopes", "commit": "ed96e69" },
+        { "description": "`youtubeutil`: `ShortURL()` for converting YouTube URLs to short format", "commit": "38710b4" }
+      ],
+      "documentation": [
+        { "description": "`sheetsutil/v4/sheetsmap`: Enhanced README with comprehensive usage guide", "commit": "996c8de" },
+        { "description": "`sheetsutil/v4/examples`: Added Iwark Spreadsheet instantiation guide", "commit": "09201ab" }
+      ],
+      "removed": [
+        { "description": "`sheetsutil/v4/examples/iwark_hello`: Removed placeholder example", "commit": "996c8de" }
+      ]
+    },
+    {
       "version": "v0.10.0",
       "date": "2026-05-24",
       "commit": "e1eb06f",
