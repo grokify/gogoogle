@@ -6,6 +6,8 @@ See [CHANGELOG.md](https://github.com/grokify/gogoogle/blob/main/CHANGELOG.md) f
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| v0.11.0 | 2026-05-30 | Sheets v4 cell parsing, URL utilities, Forms scopes, YouTube URLs |
+| v0.10.0 | 2026-05-24 | Google Docs content extraction |
 | v0.9.0 | 2026-03-22 | SendSimple for simplified email sending |
 | v0.8.0 | 2026-02-14 | Unified gogoogle CLI |
 | v0.7.0 | 2026-02-09 | Slides content extraction |
@@ -13,7 +15,33 @@ See [CHANGELOG.md](https://github.com/grokify/gogoogle/blob/main/CHANGELOG.md) f
 | v0.5.0 | 2025-01-08 | Linting and documentation |
 | v0.4.0 | 2024-10-06 | Module renamed to gogoogle |
 
-## Latest Release: v0.9.0
+## Latest Release: v0.11.0
+
+### Added
+
+- `sheetsutil/v4`: Cell value parsing with `CellValue` and `TypedCellValue` types
+- `sheetsutil/v4`: `ParseValueRange()` and `ParseTypedValueRange()` for grid conversion
+- `sheetsutil/v4`: `ExtractFormattedValues()` and `ExtractRawValues()` for string extraction
+- `sheetsutil/v4`: URL parsing with `ParseSpreadsheetURL()` and `ParseSpreadsheetURLFull()`
+- `sheetsutil/v4`: URL building with `BuildSpreadsheetURL()` and `BuildSpreadsheetURLWithSheet()`
+- `forms/v1`: `ScopesAll()` and `ScopesReadOnly()` for Google Forms OAuth scopes
+- `youtubeutil`: `ShortURL()` for converting YouTube URLs to short format
+
+### Documentation
+
+- Enhanced `sheetsutil/v4/sheetsmap` README with comprehensive usage guide
+
+## v0.10.0
+
+### Added
+
+- `docsutil/v1`: Google Docs API client wrapper
+- `docsutil/v1`: `ExtractContent()` for extracting headings, paragraphs, images, and tables
+- `docsutil/v1`: `ExtractText()` for plain text extraction
+- `docsutil/v1`: `ExtractParagraphs()` for paragraph-by-paragraph text
+- `docsutil/v1`: URL parsing utilities for document ID extraction
+
+## v0.9.0
 
 ### Added
 
