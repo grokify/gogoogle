@@ -4,7 +4,7 @@ go 1.26.0
 
 require (
 	cloud.google.com/go/bigquery v1.77.0
-	cloud.google.com/go/dlp v1.34.0
+	cloud.google.com/go/dlp v1.36.0
 	cloud.google.com/go/speech v1.35.0
 	github.com/Iwark/spreadsheet v0.0.0-20230915040305-7677e8164883
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
@@ -16,7 +16,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.4.0
 	github.com/spf13/cobra v1.10.2
-	google.golang.org/api v0.282.0
+	google.golang.org/api v0.283.0
 	google.golang.org/genproto v0.0.0-20260526163538-3dc84a4a5aaa
 )
 
