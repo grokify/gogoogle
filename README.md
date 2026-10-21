@@ -42,6 +42,15 @@ Comprehensive Gmail API helper library for message operations, label management,
 - Mail merge with Mustache templates and Google Sheets data sources
 - Label management
 
+### Google Search Console (`searchconsoleutil/v1`)
+
+Read-only access to Search Console with a service account or any authorized client.
+
+- Properties a credential can see, with domain and URL-prefix properties told apart
+- Search performance: totals, daily series, top queries and pages, or any query with dimensions and filters
+- Sitemaps and URL inspection
+- Errors that can be tested with `errors.Is`: unauthorized, forbidden, not found and quota exceeded
+
 ### Google Sheets (`sheetsutil`)
 
 Utilities for reading and writing Google Sheets data with typed structures.

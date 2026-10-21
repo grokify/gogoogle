@@ -41,6 +41,8 @@ nav:
       - Mail Merge: gmail/mail-merge.md
   - Sheets:
       - Overview: sheets/index.md
+  - Search Console:
+      - Overview: searchconsole/index.md
   - Slides:
       - Overview: slides/index.md
   - Maps:
