@@ -6,6 +6,7 @@ See [CHANGELOG.md](https://github.com/grokify/gogoogle/blob/main/CHANGELOG.md) f
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| v0.12.0 | 2026-10-21 | Google Search Console client with service account sign-in |
 | v0.11.0 | 2026-05-30 | Sheets v4 cell parsing, URL utilities, Forms scopes, YouTube URLs |
 | v0.10.0 | 2026-05-24 | Google Docs content extraction |
 | v0.9.0 | 2026-03-22 | SendSimple for simplified email sending |
@@ -15,7 +16,23 @@ See [CHANGELOG.md](https://github.com/grokify/gogoogle/blob/main/CHANGELOG.md) f
 | v0.5.0 | 2025-01-08 | Linting and documentation |
 | v0.4.0 | 2024-10-06 | Module renamed to gogoogle |
 
-## Latest Release: v0.11.0
+## Latest Release: v0.12.0
+
+### Added
+
+- `searchconsoleutil/v1`: read-only Google Search Console client
+- `searchconsoleutil/v1`: service account sign-in with `NewFromServiceAccountKey()` and `ServiceAccountEmail()`
+- `searchconsoleutil/v1`: `Sites()` with domain and URL-prefix properties
+- `searchconsoleutil/v1`: `Query()`, `Totals()`, `Daily()` and `Top()` for search performance
+- `searchconsoleutil/v1`: `Sitemaps()` and `InspectURL()` for indexing
+- `searchconsoleutil/v1`: errors that wrap `ErrUnauthorized`, `ErrForbidden`, `ErrNotFound` or `ErrQuotaExceeded`
+
+### Documentation
+
+- Documentation reorganized into `guides/`, `releases/`, `design/` and `specs/`
+- Added a Search Console guide
+
+## v0.11.0
 
 ### Added
 

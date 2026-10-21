@@ -31,31 +31,39 @@ theme:
 
 nav:
   - Home: index.md
-  - Getting Started: getting-started.md
-  - Docs:
-      - Overview: docs/index.md
-  - Gmail:
-      - Overview: gmail/index.md
-      - Sending Emails: gmail/sending.md
-      - Reading Messages: gmail/messages.md
-      - Mail Merge: gmail/mail-merge.md
-  - Sheets:
-      - Overview: sheets/index.md
-  - Search Console:
-      - Overview: searchconsole/index.md
-  - Slides:
-      - Overview: slides/index.md
-  - Maps:
-      - Static Maps: maps/index.md
-  - Speech:
-      - Speech-to-Text: speech/stt.md
-      - Text-to-Speech: speech/tts.md
-  - CLI:
-      - Overview: cli/index.md
+  - Guides:
+      - Getting Started: guides/getting-started.md
+      - Docs:
+          - Overview: guides/docs/index.md
+      - Gmail:
+          - Overview: guides/gmail/index.md
+          - Sending Emails: guides/gmail/sending.md
+          - Reading Messages: guides/gmail/messages.md
+          - Mail Merge: guides/gmail/mail-merge.md
+      - Sheets:
+          - Overview: guides/sheets/index.md
+      - Search Console:
+          - Overview: guides/searchconsole/index.md
+      - Slides:
+          - Overview: guides/slides/index.md
+      - Maps:
+          - Static Maps: guides/maps/index.md
+      - Speech:
+          - Speech-to-Text: guides/speech/stt.md
+          - Text-to-Speech: guides/speech/tts.md
+      - CLI:
+          - Overview: guides/cli/index.md
+  - Design:
+      - Overview: design/index.md
+      - Architecture: design/architecture/index.md
+      - Architecture Decisions: design/adrs/index.md
+  - Specs: specs/index.md
   - Releases:
+      - Overview: releases/index.md
+      - v0.12.0: releases/v0.12.0.md
       - v0.11.0: releases/v0.11.0.md
       - v0.10.0: releases/v0.10.0.md
-  - Changelog: changelog.md
+      - Changelog: releases/changelog.md
 
 markdown_extensions:
   - tables
