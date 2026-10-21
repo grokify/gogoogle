@@ -16,6 +16,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.4.1
 	github.com/spf13/cobra v1.10.2
+	golang.org/x/oauth2 v0.36.0
 	google.golang.org/api v0.293.0
 	google.golang.org/genproto v0.0.0-20260819154853-08b0e4226688
 )
@@ -77,7 +78,6 @@ require (
 	golang.org/x/image v0.45.0 // indirect
 	golang.org/x/mod v0.40.0 // indirect
 	golang.org/x/net v0.58.0 // indirect
-	golang.org/x/oauth2 v0.36.0 // indirect
 	golang.org/x/sync v0.22.0 // indirect
 	golang.org/x/sys v0.47.0 // indirect
 	golang.org/x/telemetry v0.0.0-20260821201142-16c97dc83219 // indirect
