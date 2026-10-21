@@ -8,15 +8,16 @@ GoGoogle provides simplified, production-ready interfaces for common Google API 
 
 | Package | Description |
 |---------|-------------|
-| [Gmail](gmail/index.md) | Send emails, manage messages, mail merge |
-| [Docs](docs/index.md) | Extract content from Google Docs |
-| [Sheets](sheets/index.md) | Read/write spreadsheet data with typed structs |
-| [Slides](slides/index.md) | Create presentations, add content |
-| [Maps](maps/index.md) | Generate static map images |
-| [Speech](speech/stt.md) | Speech-to-Text and Text-to-Speech |
+| [Gmail](guides/gmail/index.md) | Send emails, manage messages, mail merge |
+| [Docs](guides/docs/index.md) | Extract content from Google Docs |
+| [Sheets](guides/sheets/index.md) | Read/write spreadsheet data with typed structs |
+| [Slides](guides/slides/index.md) | Create presentations, add content |
+| [Search Console](guides/searchconsole/index.md) | Read Search Console properties, search performance, sitemaps and URL inspection |
+| [Maps](guides/maps/index.md) | Generate static map images |
+| [Speech](guides/speech/stt.md) | Speech-to-Text and Text-to-Speech |
 | [Forms](#forms) | OAuth scope helpers for Forms API |
 | [YouTube](#youtube) | URL utilities (short URLs) |
-| [CLI](cli/index.md) | Command-line tools for Google APIs |
+| [CLI](guides/cli/index.md) | Command-line tools for Google APIs |
 
 ## Features
 
