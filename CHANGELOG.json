@@ -8,6 +8,37 @@
   "bots": ["dependabot[bot]"],
   "releases": [
     {
+      "version": "v0.12.0",
+      "date": "2026-10-21",
+      "highlights": [
+        { "description": "Google Search Console client with service account sign-in" },
+        { "description": "Search performance, sitemaps and URL inspection in typed results" }
+      ],
+      "added": [
+        { "description": "`searchconsoleutil/v1`: read-only Google Search Console client", "commit": "a49dbee" },
+        { "description": "`searchconsoleutil/v1`: service account sign-in with `NewFromServiceAccountKey()` and `ServiceAccountEmail()`", "commit": "a49dbee" },
+        { "description": "`searchconsoleutil/v1`: `Sites()` listing domain and URL-prefix properties", "commit": "a49dbee" },
+        { "description": "`searchconsoleutil/v1`: `Query()`, `Totals()`, `Daily()` and `Top()` for search performance", "commit": "a49dbee" },
+        { "description": "`searchconsoleutil/v1`: `Sitemaps()` and `InspectURL()` for indexing", "commit": "a49dbee" },
+        { "description": "`searchconsoleutil/v1`: errors that wrap `ErrUnauthorized`, `ErrForbidden`, `ErrNotFound` or `ErrQuotaExceeded`", "commit": "a49dbee" }
+      ],
+      "tests": [
+        { "description": "`searchconsoleutil/v1`: cover the client against a fake API and token endpoint", "commit": "e05ad48" }
+      ],
+      "documentation": [
+        { "description": "`searchconsoleutil/v1`: add a guide to connecting and querying Search Console", "commit": "d0b273f" },
+        { "description": "Reorganize documentation into `guides/`, `releases/`, `design/` and `specs/`" }
+      ],
+      "dependencies": [
+        { "description": "Bump `google.golang.org/api` to 0.294.0", "commit": "e68f5d4" },
+        { "description": "Bump `google.golang.org/grpc` to 1.83.2", "commit": "dca50b7" },
+        { "description": "Bump `cloud.google.com/go/bigquery` to 1.82.0", "commit": "d838cf4" },
+        { "description": "Bump `github.com/grokify/goauth` to 0.24.0", "commit": "f13f27a" },
+        { "description": "Bump `github.com/grokify/mogo` to 0.74.8", "commit": "89fbe79" },
+        { "description": "Bump `github.com/grokify/gocharts/v2` to 2.27.1", "commit": "a2a42ad" }
+      ]
+    },
+    {
       "version": "v0.11.0",
       "date": "2026-05-30",
       "highlights": [
