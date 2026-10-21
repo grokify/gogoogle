@@ -16,8 +16,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/lucasb-eyer/go-colorful v1.4.1
 	github.com/spf13/cobra v1.10.2
-	golang.org/x/oauth2 v0.36.0
-	google.golang.org/api v0.293.0
+	google.golang.org/api v0.294.0
 	google.golang.org/genproto v0.0.0-20260819154853-08b0e4226688
 )
 
