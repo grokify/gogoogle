@@ -17,7 +17,7 @@ require (
 	github.com/lucasb-eyer/go-colorful v1.4.1
 	github.com/spf13/cobra v1.10.2
 	golang.org/x/oauth2 v0.37.0
-	google.golang.org/api v0.307.0
+	google.golang.org/api v0.308.0
 	google.golang.org/genproto v0.0.0-20261019180522-ce908d29299b
 )
 
