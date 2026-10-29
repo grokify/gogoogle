@@ -57,7 +57,13 @@ nav:
       - Overview: design/index.md
       - Architecture: design/architecture/index.md
       - Architecture Decisions: design/adrs/index.md
-  - Specs: specs/index.md
+  - Specs:
+      - Overview: specs/index.md
+      - INIT-GOGOOGLE-001:
+          - PRD: specs/initiatives/INIT-GOGOOGLE-001/PRD.md
+          - TRD: specs/initiatives/INIT-GOGOOGLE-001/TRD.md
+          - Plan: specs/initiatives/INIT-GOGOOGLE-001/PLAN.md
+          - Roadmap: specs/initiatives/INIT-GOGOOGLE-001/ROADMAP.md
   - Releases:
       - Overview: releases/index.md
       - v0.12.0: releases/v0.12.0.md
