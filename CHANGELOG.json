@@ -8,6 +8,111 @@
   "bots": ["dependabot[bot]"],
   "releases": [
     {
+      "version": "v0.13.0",
+      "date": "2026-10-30",
+      "highlights": [
+        {
+          "description": "Drive upload with conversion to Docs, Sheets, or Slides, and update in place"
+        },
+        {
+          "description": "Comments with quoted text, resolved state, and replies"
+        },
+        {
+          "description": "Suggested edits split into original, inserted, and deleted text"
+        },
+        {
+          "description": "Sheets read as header-keyed records, and CSV published as a Sheet"
+        },
+        {
+          "description": "`gogoogle drive`, `docs suggestions`, and `sheets records` commands"
+        }
+      ],
+      "added": [
+        {
+          "description": "`driveutil/v3`: Drive service with `GetFile` and the `ErrNotFound`, `ErrPermissionDenied`, and `ErrUnsupportedConversion` errors",
+          "commit": "9161f95"
+        },
+        {
+          "description": "`driveutil/v3`: `Upload` and `Update` with conversion to Google Docs, Sheets, or Slides",
+          "commit": "132fbb9"
+        },
+        {
+          "description": "`driveutil/v3`: `ListComments` with quoted text, resolved state, replies, and complete paging",
+          "commit": "ed53951"
+        },
+        {
+          "description": "`docsutil/v1`: `ExtractSuggestionContent` classifies text as original, insertion, or deletion",
+          "commit": "aeec7f5"
+        },
+        {
+          "description": "`sheetsutil/v4`: `NewService` and `GetSpreadsheet` wrap the Sheets API service",
+        "commit": "6a6af52"
+      },
+      {
+        "description": "`sheetsutil/v4`: `GetValues` and `BatchGetValues` read A1 ranges through the Sheets service",
+        "commit": "2a8746c"
+      },
+      {
+        "description": "`slidesutil/v1`: `GetPresentation` on the Slides service",
+        "commit": "464c122"
+      },
+      {
+        "description": "`sheetsutil/v4`: `ReadRecords` reads a sheet keyed by its header row, and `CreateFromCSV` publishes a CSV as a Sheet",
+          "commit": "adae614"
+        },
+        {
+          "description": "`gogoogle drive upload`, `drive update`, `drive comments`, `docs suggestions`, and `sheets records` commands",
+          "commit": "c66fac7"
+        }
+      ],
+      "tests": [
+        {
+          "description": "`docsutil/v1`: cover suggestion extraction and the original/accepted invariant",
+          "commit": "a7662ef"
+        },
+        {
+          "description": "`sheetsutil/v4`: cover records reading and CSV conversion with a fake server",
+          "commit": "aea4e9a"
+        },
+        {
+          "description": "`sheetsutil/v4`: cover the service constructor against a fake server",
+        "commit": "f7fc303"
+      },
+      {
+        "description": "`cmd`: cover usage errors, JSON output, and exit codes with fake servers",
+          "commit": "85f3ec6"
+        }
+      ],
+      "dependencies": [
+        {
+          "description": "Bump `cloud.google.com/go/bigquery` to 1.86.0",
+          "commit": "bd0cb55"
+        },
+        {
+          "description": "Bump `google.golang.org/api` to 0.309.0",
+          "commit": "7b6fe5d"
+        },
+        {
+          "description": "Bump `cloud.google.com/go/dlp` to 1.39.0",
+          "commit": "a19592f"
+        },
+        {
+          "description": "Bump `cloud.google.com/go/speech` to 1.38.0",
+          "commit": "398d86a"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "Add guides for Drive upload and comments, Docs suggestions, Sheets records, and the new CLI commands",
+          "commit": "93ea382"
+        },
+        {
+          "description": "Add the PRD, TRD, plan, and roadmap for document review round-trip support",
+          "commit": "40aaf03"
+        }
+      ]
+    },
+    {
       "version": "v0.12.0",
       "date": "2026-10-21",
       "highlights": [
@@ -15,27 +120,27 @@
         { "description": "Search performance, sitemaps and URL inspection in typed results" }
       ],
       "added": [
-        { "description": "`searchconsoleutil/v1`: read-only Google Search Console client", "commit": "a49dbee" },
-        { "description": "`searchconsoleutil/v1`: service account sign-in with `NewFromServiceAccountKey()` and `ServiceAccountEmail()`", "commit": "a49dbee" },
-        { "description": "`searchconsoleutil/v1`: `Sites()` listing domain and URL-prefix properties", "commit": "a49dbee" },
-        { "description": "`searchconsoleutil/v1`: `Query()`, `Totals()`, `Daily()` and `Top()` for search performance", "commit": "a49dbee" },
-        { "description": "`searchconsoleutil/v1`: `Sitemaps()` and `InspectURL()` for indexing", "commit": "a49dbee" },
-        { "description": "`searchconsoleutil/v1`: errors that wrap `ErrUnauthorized`, `ErrForbidden`, `ErrNotFound` or `ErrQuotaExceeded`", "commit": "a49dbee" }
+        { "description": "`searchconsoleutil/v1`: read-only Google Search Console client", "commit": "882ebe2" },
+        { "description": "`searchconsoleutil/v1`: service account sign-in with `NewFromServiceAccountKey()` and `ServiceAccountEmail()`", "commit": "882ebe2" },
+        { "description": "`searchconsoleutil/v1`: `Sites()` listing domain and URL-prefix properties", "commit": "882ebe2" },
+        { "description": "`searchconsoleutil/v1`: `Query()`, `Totals()`, `Daily()` and `Top()` for search performance", "commit": "882ebe2" },
+        { "description": "`searchconsoleutil/v1`: `Sitemaps()` and `InspectURL()` for indexing", "commit": "882ebe2" },
+        { "description": "`searchconsoleutil/v1`: errors that wrap `ErrUnauthorized`, `ErrForbidden`, `ErrNotFound` or `ErrQuotaExceeded`", "commit": "882ebe2" }
       ],
       "tests": [
-        { "description": "`searchconsoleutil/v1`: cover the client against a fake API and token endpoint", "commit": "e05ad48" }
+        { "description": "`searchconsoleutil/v1`: cover the client against a fake API and token endpoint", "commit": "9c4998a" }
       ],
       "documentation": [
-        { "description": "`searchconsoleutil/v1`: add a guide to connecting and querying Search Console", "commit": "d0b273f" },
+        { "description": "`searchconsoleutil/v1`: add a guide to connecting and querying Search Console", "commit": "89c576a" },
         { "description": "Reorganize documentation into `guides/`, `releases/`, `design/` and `specs/`" }
       ],
       "dependencies": [
-        { "description": "Bump `google.golang.org/api` to 0.294.0", "commit": "e68f5d4" },
-        { "description": "Bump `google.golang.org/grpc` to 1.83.2", "commit": "dca50b7" },
-        { "description": "Bump `cloud.google.com/go/bigquery` to 1.82.0", "commit": "d838cf4" },
-        { "description": "Bump `github.com/grokify/goauth` to 0.24.0", "commit": "f13f27a" },
-        { "description": "Bump `github.com/grokify/mogo` to 0.74.8", "commit": "89fbe79" },
-        { "description": "Bump `github.com/grokify/gocharts/v2` to 2.27.1", "commit": "a2a42ad" }
+        { "description": "Bump `google.golang.org/api` to 0.294.0", "commit": "e6a0652" },
+        { "description": "Bump `google.golang.org/grpc` to 1.83.2", "commit": "8cd9905" },
+        { "description": "Bump `cloud.google.com/go/bigquery` to 1.82.0", "commit": "08907d6" },
+        { "description": "Bump `github.com/grokify/goauth` to 0.24.0", "commit": "f5cfad1" },
+        { "description": "Bump `github.com/grokify/mogo` to 0.74.8", "commit": "5594443" },
+        { "description": "Bump `github.com/grokify/gocharts/v2` to 2.27.1", "commit": "9e68f49" }
       ]
     },
     {
@@ -47,35 +152,35 @@
         { "description": "YouTube short URL conversion" }
       ],
       "added": [
-        { "description": "`sheetsutil/v4`: Cell value parsing with `CellValue` and `TypedCellValue` types", "commit": "f09010a" },
-        { "description": "`sheetsutil/v4`: `ParseValueRange()` and `ParseTypedValueRange()` for grid conversion", "commit": "f09010a" },
-        { "description": "`sheetsutil/v4`: `ExtractFormattedValues()` and `ExtractRawValues()` for string extraction", "commit": "f09010a" },
-        { "description": "`sheetsutil/v4`: URL parsing with `ParseSpreadsheetURL()` and `ParseSpreadsheetURLFull()`", "commit": "c9f0be2" },
-        { "description": "`sheetsutil/v4`: URL building with `BuildSpreadsheetURL()` and `BuildSpreadsheetURLWithSheet()`", "commit": "c9f0be2" },
-        { "description": "`forms/v1`: `ScopesAll()` and `ScopesReadOnly()` for Google Forms OAuth scopes", "commit": "ed96e69" },
-        { "description": "`youtubeutil`: `ShortURL()` for converting YouTube URLs to short format", "commit": "38710b4" }
+        { "description": "`sheetsutil/v4`: Cell value parsing with `CellValue` and `TypedCellValue` types", "commit": "19bed45" },
+        { "description": "`sheetsutil/v4`: `ParseValueRange()` and `ParseTypedValueRange()` for grid conversion", "commit": "19bed45" },
+        { "description": "`sheetsutil/v4`: `ExtractFormattedValues()` and `ExtractRawValues()` for string extraction", "commit": "19bed45" },
+        { "description": "`sheetsutil/v4`: URL parsing with `ParseSpreadsheetURL()` and `ParseSpreadsheetURLFull()`", "commit": "5e8cccb" },
+        { "description": "`sheetsutil/v4`: URL building with `BuildSpreadsheetURL()` and `BuildSpreadsheetURLWithSheet()`", "commit": "5e8cccb" },
+        { "description": "`forms/v1`: `ScopesAll()` and `ScopesReadOnly()` for Google Forms OAuth scopes", "commit": "ca8ae70" },
+        { "description": "`youtubeutil`: `ShortURL()` for converting YouTube URLs to short format", "commit": "a80a152" }
       ],
       "documentation": [
-        { "description": "`sheetsutil/v4/sheetsmap`: Enhanced README with comprehensive usage guide", "commit": "996c8de" },
-        { "description": "`sheetsutil/v4/examples`: Added Iwark Spreadsheet instantiation guide", "commit": "09201ab" }
+        { "description": "`sheetsutil/v4/sheetsmap`: Enhanced README with comprehensive usage guide", "commit": "883ce16" },
+        { "description": "`sheetsutil/v4/examples`: Added Iwark Spreadsheet instantiation guide", "commit": "9a6f3c2" }
       ],
       "removed": [
-        { "description": "`sheetsutil/v4/examples/iwark_hello`: Removed placeholder example", "commit": "996c8de" }
+        { "description": "`sheetsutil/v4/examples/iwark_hello`: Removed placeholder example", "commit": "883ce16" }
       ]
     },
     {
       "version": "v0.10.0",
       "date": "2026-05-24",
-      "commit": "e1eb06f",
+      "commit": "7e76238",
       "highlights": [
         { "description": "Google Docs API utilities for document content extraction" }
       ],
       "added": [
-        { "description": "`docsutil/v1`: Google Docs API client wrapper", "commit": "e1eb06f" },
-        { "description": "`docsutil/v1`: `ExtractContent()` for extracting headings, paragraphs, images, and tables", "commit": "e1eb06f" },
-        { "description": "`docsutil/v1`: `ExtractText()` for plain text extraction", "commit": "e1eb06f" },
-        { "description": "`docsutil/v1`: `ExtractParagraphs()` for paragraph-by-paragraph text", "commit": "e1eb06f" },
-        { "description": "`docsutil/v1`: URL parsing utilities for document ID extraction", "commit": "e1eb06f" }
+        { "description": "`docsutil/v1`: Google Docs API client wrapper", "commit": "7e76238" },
+        { "description": "`docsutil/v1`: `ExtractContent()` for extracting headings, paragraphs, images, and tables", "commit": "7e76238" },
+        { "description": "`docsutil/v1`: `ExtractText()` for plain text extraction", "commit": "7e76238" },
+        { "description": "`docsutil/v1`: `ExtractParagraphs()` for paragraph-by-paragraph text", "commit": "7e76238" },
+        { "description": "`docsutil/v1`: URL parsing utilities for document ID extraction", "commit": "7e76238" }
       ]
     },
     {
@@ -85,11 +190,11 @@
         { "description": "Simplified email sending with SendSimple method" }
       ],
       "added": [
-        { "description": "`gmailutil/v1`: `SendSimple()` method for sending emails with minimal configuration", "commit": "253e3ad" },
-        { "description": "`gmailutil/v1`: `SendSimpleOpts{}` struct with To, Subject, BodyText, BodyHTML, and ReplyTo fields", "commit": "253e3ad" }
+        { "description": "`gmailutil/v1`: `SendSimple()` method for sending emails with minimal configuration", "commit": "80601b3" },
+        { "description": "`gmailutil/v1`: `SendSimpleOpts{}` struct with To, Subject, BodyText, BodyHTML, and ReplyTo fields", "commit": "80601b3" }
       ],
       "fixed": [
-        { "description": "`gmailutil/v1`: fix typo in `Send()` comment", "commit": "253e3ad" }
+        { "description": "`gmailutil/v1`: fix typo in `Send()` comment", "commit": "80601b3" }
       ]
     },
     {
@@ -99,12 +204,12 @@
         { "description": "Unified gogoogle CLI for Google API utilities" }
       ],
       "added": [
-        { "description": "`cmd/gogoogle`: unified Cobra CLI for Google APIs with slides and gmail subcommands", "commit": "1bfd784" },
-        { "description": "`cmd/gogoogle slides content`: extract text, images, and notes from Google Slides presentations", "commit": "1bfd784" },
-        { "description": "`cmd/gogoogle gmail merge`: send templated emails via mail merge with Google Sheets data", "commit": "1bfd784" },
-        { "description": "`cmd/gogoogle gmail send-markdown`: send emails with markdown body converted to HTML", "commit": "1bfd784" },
-        { "description": "`gmailutil/v1/examples/send_html`: example for sending HTML emails with `GmailService.Send()`", "commit": "1b6e417" },
-        { "description": "`gmailutil/v1/examples/mail_merge`: example with newsletter Mustache templates and inline logo", "commit": "47a6019" }
+        { "description": "`cmd/gogoogle`: unified Cobra CLI for Google APIs with slides and gmail subcommands", "commit": "39f3916" },
+        { "description": "`cmd/gogoogle slides content`: extract text, images, and notes from Google Slides presentations", "commit": "39f3916" },
+        { "description": "`cmd/gogoogle gmail merge`: send templated emails via mail merge with Google Sheets data", "commit": "39f3916" },
+        { "description": "`cmd/gogoogle gmail send-markdown`: send emails with markdown body converted to HTML", "commit": "39f3916" },
+        { "description": "`gmailutil/v1/examples/send_html`: example for sending HTML emails with `GmailService.Send()`", "commit": "aebeaef" },
+        { "description": "`gmailutil/v1/examples/mail_merge`: example with newsletter Mustache templates and inline logo", "commit": "7337788" }
       ]
     },
     {
@@ -114,11 +219,11 @@
         { "description": "Google Slides presentation reading utilities and CLI for extracting text and image content" }
       ],
       "added": [
-        { "description": "`slidesutil/v1`: `ExtractPresentationContent()` for extracting all slides' text and images in one call", "commit": "c47a3da" },
-        { "description": "`slidesutil/v1`: `ExtractSlideTitle()`, `ExtractTextContent()`, `ExtractNotesText()` for slide text extraction", "commit": "c47a3da" },
-        { "description": "`slidesutil/v1`: `ExtractImages()` with `ImageInfo` struct for image URL extraction", "commit": "c47a3da" },
-        { "description": "`slidesutil/v1`: `FindSlide()`, `GetElementType()`, `GetElementDescription()` helper functions", "commit": "c47a3da" },
-        { "description": "`slidesutil/v1/cmd/slides-content`: CLI tool for extracting presentation content as JSON", "commit": "c47a3da" }
+        { "description": "`slidesutil/v1`: `ExtractPresentationContent()` for extracting all slides' text and images in one call", "commit": "cd484de" },
+        { "description": "`slidesutil/v1`: `ExtractSlideTitle()`, `ExtractTextContent()`, `ExtractNotesText()` for slide text extraction", "commit": "cd484de" },
+        { "description": "`slidesutil/v1`: `ExtractImages()` with `ImageInfo` struct for image URL extraction", "commit": "cd484de" },
+        { "description": "`slidesutil/v1`: `FindSlide()`, `GetElementType()`, `GetElementDescription()` helper functions", "commit": "cd484de" },
+        { "description": "`slidesutil/v1/cmd/slides-content`: CLI tool for extracting presentation content as JSON", "commit": "cd484de" }
       ]
     },
     {
@@ -128,15 +233,15 @@
         { "description": "Gmail mail merge functionality with Mustache templates and Google Sheets data sources" }
       ],
       "added": [
-        { "description": "`gmailutil/v1/mailmerge`: `MailMerge{}` and `MailMergeOpts{}` for template-based email campaigns", "commit": "7205b78" },
-        { "description": "`gmailutil/v1/mailmerge`: `ExecMailMergeCLI()` for CLI usage", "commit": "f375e67" },
-        { "description": "`gmailutil/v1/cmd/gmailmerge`: CLI command for mail merge operations", "commit": "0f80d0c" }
+        { "description": "`gmailutil/v1/mailmerge`: `MailMerge{}` and `MailMergeOpts{}` for template-based email campaigns", "commit": "6bcd048" },
+        { "description": "`gmailutil/v1/mailmerge`: `ExecMailMergeCLI()` for CLI usage", "commit": "515d449" },
+        { "description": "`gmailutil/v1/cmd/gmailmerge`: CLI command for mail merge operations", "commit": "35fed58" }
       ],
       "changed": [
-        { "description": "`scopes.go`: rename scope constants for consistency", "commit": "87dc9c0" }
+        { "description": "`scopes.go`: rename scope constants for consistency", "commit": "94ee9f7" }
       ],
       "fixed": [
-        { "description": "`gmailutil/v1/mailmerge`: update conditional logic", "commit": "1601c91" }
+        { "description": "`gmailutil/v1/mailmerge`: update conditional logic", "commit": "325e39d" }
       ]
     },
     {
@@ -146,11 +251,11 @@
         { "description": "Linting improvements and documentation updates" }
       ],
       "documentation": [
-        { "description": "`README.md`: add lint status badge", "commit": "024abd2" },
-        { "description": "`README.md`: update project naming", "commit": "763f444" }
+        { "description": "`README.md`: add lint status badge", "commit": "fdc4602" },
+        { "description": "`README.md`: update project naming", "commit": "4d094ba" }
       ],
       "internal": [
-        { "description": "`sheetsutil`: fix linting issues", "commit": "c2040e5" }
+        { "description": "`sheetsutil`: fix linting issues", "commit": "3bb0f5a" }
       ]
     },
     {
@@ -160,12 +265,12 @@
         { "description": "Module renamed from `googleutil` to `gogoogle`" }
       ],
       "changed": [
-        { "description": "Module renamed from `github.com/grokify/googleutil` to `github.com/grokify/gogoogle`", "commit": "07c6840", "breaking": true },
-        { "description": "`sheetsutil/iwark`: update function names", "commit": "0787da8" },
-        { "description": "`sheetsutil/iwark`: fix misspelling", "commit": "cf94463" }
+        { "description": "Module renamed from `github.com/grokify/googleutil` to `github.com/grokify/gogoogle`", "commit": "27c62d5", "breaking": true },
+        { "description": "`sheetsutil/iwark`: update function names", "commit": "b6151ad" },
+        { "description": "`sheetsutil/iwark`: fix misspelling", "commit": "94c03fe" }
       ],
       "infrastructure": [
-        { "description": "CI: update Go test versions", "commit": "d824ad9" }
+        { "description": "CI: update Go test versions", "commit": "dff5775" }
       ]
     },
     {
@@ -175,10 +280,10 @@
         { "description": "Google Docs URL utilities and docsutil package" }
       ],
       "added": [
-        { "description": "`docsutil`: Google Docs and Sheets URL parsing utilities", "commit": "697376d" }
+        { "description": "`docsutil`: Google Docs and Sheets URL parsing utilities", "commit": "781de5a" }
       ],
       "changed": [
-        { "description": "`mapsutil`: update `errorsutil.Wrapf()` call signature", "commit": "697376d" }
+        { "description": "`mapsutil`: update `errorsutil.Wrapf()` call signature", "commit": "781de5a" }
       ]
     },
     {
@@ -188,10 +293,10 @@
         { "description": "Gmail API wrapper with message operations, batch delete, and label management" }
       ],
       "added": [
-        { "description": "`gmailutil/v1`: `MessagesAPI{}` for Gmail message operations", "commit": "b781e64" },
-        { "description": "`gmailutil/v1`: `GmailService.Send()` for sending emails", "commit": "bd15f94" },
-        { "description": "`gmailutil/v1`: batch delete and message query functions", "commit": "bd15f94" },
-        { "description": "`gmailutil/v1`: `MessagesListOpts{}` and `MessagesListQueryOpts{}` for filtering", "commit": "b781e64" }
+        { "description": "`gmailutil/v1`: `MessagesAPI{}` for Gmail message operations", "commit": "9258261" },
+        { "description": "`gmailutil/v1`: `GmailService.Send()` for sending emails", "commit": "d7858d6" },
+        { "description": "`gmailutil/v1`: batch delete and message query functions", "commit": "d7858d6" },
+        { "description": "`gmailutil/v1`: `MessagesListOpts{}` and `MessagesListQueryOpts{}` for filtering", "commit": "9258261" }
       ]
     },
     {
@@ -201,14 +306,14 @@
         { "description": "Initial stable release with Google Slides, Sheets, Maps, BigQuery, DLP, and Speech utilities" }
       ],
       "added": [
-        { "description": "`slidesutil/v1`: Google Slides API wrapper with presentation creation, text boxes, tables, lines, images, and Markdown support", "commit": "be5688b" },
-        { "description": "`sheetsutil`: Google Sheets utilities including `sheetsmap` for typed data mapping and `iwark` for low-level operations", "commit": "a2fd4e6" },
-        { "description": "`mapsutil/staticmap`: Google Static Maps generation with markers and preset regions", "commit": "be5688b" },
-        { "description": "`bigqueryutil`: BigQuery streaming upload utilities with automatic chunking", "commit": "26c2aed" },
-        { "description": "`dlp/v2`: Google DLP API helpers for sensitive data detection", "commit": "0952621" },
-        { "description": "`speechtotext`: Google Speech-to-Text API wrapper", "commit": "62b136d" },
-        { "description": "`texttospeech/v1beta1`: Google Text-to-Speech API wrapper", "commit": "cc2510c" },
-        { "description": "`auth`: OAuth2 authentication setup utilities", "commit": "4f5f5fe" }
+        { "description": "`slidesutil/v1`: Google Slides API wrapper with presentation creation, text boxes, tables, lines, images, and Markdown support", "commit": "e371bea" },
+        { "description": "`sheetsutil`: Google Sheets utilities including `sheetsmap` for typed data mapping and `iwark` for low-level operations", "commit": "fcd7132" },
+        { "description": "`mapsutil/staticmap`: Google Static Maps generation with markers and preset regions", "commit": "e371bea" },
+        { "description": "`bigqueryutil`: BigQuery streaming upload utilities with automatic chunking", "commit": "c1f993d" },
+        { "description": "`dlp/v2`: Google DLP API helpers for sensitive data detection", "commit": "e0dcbfa" },
+        { "description": "`speechtotext`: Google Speech-to-Text API wrapper", "commit": "555770e" },
+        { "description": "`texttospeech/v1beta1`: Google Text-to-Speech API wrapper", "commit": "2e99d58" },
+        { "description": "`auth`: OAuth2 authentication setup utilities", "commit": "aca7799" }
       ]
     }
   ]
