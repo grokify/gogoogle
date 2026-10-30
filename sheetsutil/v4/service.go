@@ -40,3 +40,31 @@ func (s *Service) GetSpreadsheet(ctx context.Context, spreadsheetID string) (*sh
 	}
 	return ss, nil
 }
+
+// GetValues reads one A1 range. renderOption is "FORMATTED_VALUE" (the
+// default when empty), "UNFORMATTED_VALUE", or "FORMULA".
+func (s *Service) GetValues(ctx context.Context, spreadsheetID, a1Range, renderOption string) (*sheets.ValueRange, error) {
+	call := s.SpreadsheetsService.Values.Get(spreadsheetID, a1Range).Context(ctx)
+	if renderOption != "" {
+		call = call.ValueRenderOption(renderOption)
+	}
+	vr, err := call.Do()
+	if err != nil {
+		return nil, fmt.Errorf("sheetsutil: get values %s %q: %w", spreadsheetID, a1Range, err)
+	}
+	return vr, nil
+}
+
+// BatchGetValues reads several A1 ranges in one request. renderOption is as
+// for GetValues.
+func (s *Service) BatchGetValues(ctx context.Context, spreadsheetID string, ranges []string, renderOption string) (*sheets.BatchGetValuesResponse, error) {
+	call := s.SpreadsheetsService.Values.BatchGet(spreadsheetID).Ranges(ranges...).Context(ctx)
+	if renderOption != "" {
+		call = call.ValueRenderOption(renderOption)
+	}
+	resp, err := call.Do()
+	if err != nil {
+		return nil, fmt.Errorf("sheetsutil: batch get values %s: %w", spreadsheetID, err)
+	}
+	return resp, nil
+}
