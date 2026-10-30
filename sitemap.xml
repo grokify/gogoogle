@@ -2,94 +2,118 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://grokify.github.io/gogoogle/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/design/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/design/adrs/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/design/architecture/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/guides/getting-started/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/guides/cli/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/guides/docs/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
+    </url>
+    <url>
+         <loc>https://grokify.github.io/gogoogle/guides/drive/</loc>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/guides/gmail/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/guides/gmail/mail-merge/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/guides/gmail/messages/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/guides/gmail/sending/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/guides/maps/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/guides/searchconsole/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/guides/sheets/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/guides/slides/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/guides/speech/stt/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/guides/speech/tts/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/releases/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/releases/changelog/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/releases/v0.10.0/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/releases/v0.11.0/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/releases/v0.12.0/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
+    </url>
+    <url>
+         <loc>https://grokify.github.io/gogoogle/releases/v0.13.0/</loc>
+         <lastmod>2026-10-30</lastmod>
     </url>
     <url>
          <loc>https://grokify.github.io/gogoogle/specs/</loc>
-         <lastmod>2026-10-21</lastmod>
+         <lastmod>2026-10-30</lastmod>
+    </url>
+    <url>
+         <loc>https://grokify.github.io/gogoogle/specs/initiatives/INIT-GOGOOGLE-001/PLAN/</loc>
+         <lastmod>2026-10-30</lastmod>
+    </url>
+    <url>
+         <loc>https://grokify.github.io/gogoogle/specs/initiatives/INIT-GOGOOGLE-001/PRD/</loc>
+         <lastmod>2026-10-30</lastmod>
+    </url>
+    <url>
+         <loc>https://grokify.github.io/gogoogle/specs/initiatives/INIT-GOGOOGLE-001/ROADMAP/</loc>
+         <lastmod>2026-10-30</lastmod>
+    </url>
+    <url>
+         <loc>https://grokify.github.io/gogoogle/specs/initiatives/INIT-GOGOOGLE-001/TRD/</loc>
+         <lastmod>2026-10-30</lastmod>
     </url>
 </urlset>
