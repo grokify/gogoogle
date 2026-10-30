@@ -12,8 +12,8 @@ cloud.google.com/go/compute/metadata v0.10.0 h1:pyKMUQSwchgkIBBJGdILqQbs/BNJXqwS
 cloud.google.com/go/compute/metadata v0.10.0/go.mod h1:rGFHRrIif570kSibjFTMbt6/4/tzgJWFGI/HVol4GIk=
 cloud.google.com/go/datacatalog v1.33.0 h1:8V80PpoAGdOOr2QhBrp4wZ66MDCbATdAB/fmVmo5rlU=
 cloud.google.com/go/datacatalog v1.33.0/go.mod h1:/EMN04S73fZcPdtNg86VYLDrhi2HheMehQtMCS86Klk=
-cloud.google.com/go/dlp v1.38.0 h1:/prU5AN590nNArmU6qERiSkRNsixwPaOKYnnmriBGGg=
-cloud.google.com/go/dlp v1.38.0/go.mod h1:gmqoT21fkrLI/mHz3/RBmLuIrKcxrKDPq86NWF8At9Y=
+cloud.google.com/go/dlp v1.39.0 h1:Gpa5i2JEbIwqt8k70VaTwywJU2FSlbxi5+WMoJQ0Ls4=
+cloud.google.com/go/dlp v1.39.0/go.mod h1:f8AoNCLIf24RUDjFt07fKX58ZNqy3QOgDqDMtUq5wwE=
 cloud.google.com/go/iam v1.14.0 h1:YRIB1/4xxwJ+NfI6RQr1WaOoHHeV0MizJEj940nBXJA=
 cloud.google.com/go/iam v1.14.0/go.mod h1:JTPZfbHdGXJrOYREtkRoFzCDGaBdbA7ILLKO/DDuav0=
 cloud.google.com/go/longrunning v1.3.0 h1:lZ6c8SJJBmILp/Wnr3vGnBLa0q+cYfSHRCcUfVI2hpI=
