@@ -4,8 +4,12 @@ package rootcmd
 import (
 	"github.com/spf13/cobra"
 
+	"github.com/grokify/gogoogle/cmd/gogoogle/internal/cmdutil"
 	"github.com/grokify/gogoogle/cmd/gogoogle/internal/config"
+	"github.com/grokify/gogoogle/cmd/gogoogle/internal/docs"
+	"github.com/grokify/gogoogle/cmd/gogoogle/internal/drive"
 	"github.com/grokify/gogoogle/cmd/gogoogle/internal/gmail"
+	"github.com/grokify/gogoogle/cmd/gogoogle/internal/sheets"
 	"github.com/grokify/gogoogle/cmd/gogoogle/internal/slides"
 )
 
@@ -55,9 +59,26 @@ func init() {
 	// Add subcommands.
 	rootCmd.AddCommand(slides.Cmd)
 	rootCmd.AddCommand(gmail.Cmd)
+	rootCmd.AddCommand(drive.Cmd)
+	rootCmd.AddCommand(docs.Cmd)
+	rootCmd.AddCommand(sheets.Cmd)
+	rootCmd.SetFlagErrorFunc(cmdutil.FlagError)
 }
 
 // Execute runs the root command.
 func Execute() error {
 	return rootCmd.Execute()
+}
+
+// ExitCode maps an error from Execute to a process exit status: 0 for none,
+// 2 for a usage error, and 1 for anything else.
+func ExitCode(err error) int {
+	switch {
+	case err == nil:
+		return 0
+	case cmdutil.IsUsage(err):
+		return 2
+	default:
+		return 1
+	}
 }
