@@ -12,10 +12,12 @@ The `sheetsutil` package provides utilities for reading and writing Google Sheet
 
 ## Records
 
+Create a service with `sheetsutil.NewService(ctx, httpClient)`; its `SheetsService` field is the underlying `*sheets.Service`. `ReadRecords` takes that service:
+
 Read a sheet as records keyed by its header row:
 
 ```go
-records, err := sheetsutil.ReadRecords(ctx, sheetsService, spreadsheetID, "Round 1")
+records, err := sheetsutil.ReadRecords(ctx, svc.SheetsService, spreadsheetID, "Round 1")
 // [{"id": "el-1", "response": "agree"}, ...]
 ```
 
