@@ -8,7 +8,5 @@ import (
 )
 
 func main() {
-	if err := rootcmd.Execute(); err != nil {
-		os.Exit(1)
-	}
+	os.Exit(rootcmd.ExitCode(rootcmd.Execute()))
 }

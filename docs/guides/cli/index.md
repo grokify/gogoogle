@@ -219,6 +219,21 @@ for id in $(cat presentation_ids.txt); do
 done
 ```
 
+## Drive, Docs, and Sheets
+
+Commands for a document review round trip. All print JSON; exit status is 0 on
+success, 1 for an API or input error, and 2 for a usage error.
+
+| Command | Output |
+|---------|--------|
+| `gogoogle drive upload <path> [--name] [--folder ID] [--convert doc\|sheet\|slides]` | the created file |
+| `gogoogle drive update <fileID> <path> [--convert doc\|sheet\|slides]` | the updated file |
+| `gogoogle drive comments <fileID> [--include-deleted]` | comments with quoted text, resolved state, and replies |
+| `gogoogle docs suggestions <documentID\|URL>` | paragraphs and cells split into original, inserted, and deleted text |
+| `gogoogle sheets records <spreadsheetID\|URL> [--sheet NAME]` | one object per row, keyed by the header |
+
+See the [Drive guide](../drive/index.md).
+
 ## Next Steps
 
 - [Gmail Guide](../gmail/index.md) - Detailed Gmail documentation
