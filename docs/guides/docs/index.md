@@ -100,6 +100,34 @@ for _, p := range paragraphs {
 }
 ```
 
+## Suggestions
+
+Reviewers' suggested edits do not appear in a normal fetch. Fetch the document
+with suggestions shown inline, then split the text into what was there, what
+would be added, and what would be removed:
+
+```go
+doc, err := svc.GetDocumentWithSuggestions(ctx, docID, "SUGGESTIONS_INLINE")
+if err != nil {
+    return err
+}
+sc := docsutil.ExtractSuggestionContent(doc)
+for _, b := range sc.Blocks {
+    fmt.Printf("%s\n  was: %q\n  if accepted: %q\n", b.Location, b.Original, b.Accepted)
+}
+```
+
+- Every paragraph and table cell is a block, with a `Location` such as
+  `body/p/12` or `body/table/2/r/3/c/1`.
+- Each block has segments of kind `original`, `insertion`, or `deletion`, in
+  document order, with the suggestion IDs that affect them.
+- `Original` is the original and deletion text; `Accepted` is the original and
+  insertion text.
+- The Docs API does not report who made a suggestion, so blocks carry no
+  author. Comments do; see the [Drive guide](../drive/index.md).
+
+From the command line: `gogoogle docs suggestions <documentID|URL>`.
+
 ## URL Parsing
 
 Parse document IDs from various Google Docs URL formats:

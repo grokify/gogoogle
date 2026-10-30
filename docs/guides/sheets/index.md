@@ -6,9 +6,29 @@ The `sheetsutil` package provides utilities for reading and writing Google Sheet
 
 | Package | Description |
 |---------|-------------|
-| `sheetsutil/v4` | Cell value parsing and URL utilities |
+| `sheetsutil/v4` | Cell value parsing, URL utilities, header-keyed records, and CSV-to-Sheet upload |
 | `sheetsutil/v4/sheetsmap` | Map sheet data to Go types with validation |
 | `sheetsutil/iwark` | Low-level operations using Iwark library |
+
+## Records
+
+Read a sheet as records keyed by its header row:
+
+```go
+records, err := sheetsutil.ReadRecords(ctx, sheetsService, spreadsheetID, "Round 1")
+// [{"id": "el-1", "response": "agree"}, ...]
+```
+
+- An empty sheet name reads the first sheet.
+- Values are the formatted text shown in the sheet.
+- Columns with a blank header are ignored, short rows are padded with empty
+  strings, and rows with no values are skipped.
+- A repeated header returns an error wrapping `ErrDuplicateHeader`.
+
+Publish a CSV as a new Sheet with `sheetsutil.CreateFromCSV`, which uploads
+through the [Drive package](../drive/index.md).
+
+From the command line: `gogoogle sheets records <spreadsheetID|URL> [--sheet NAME]`.
 
 ## Cell Value Parsing
 

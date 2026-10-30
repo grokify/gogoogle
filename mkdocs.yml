@@ -35,6 +35,8 @@ nav:
       - Getting Started: guides/getting-started.md
       - Docs:
           - Overview: guides/docs/index.md
+      - Drive:
+          - Overview: guides/drive/index.md
       - Gmail:
           - Overview: guides/gmail/index.md
           - Sending Emails: guides/gmail/sending.md
