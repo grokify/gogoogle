@@ -61,6 +61,50 @@ f, err := svc.Update(ctx, fileID, "review-v2.docx", driveutil.ConvertDoc)
 The file ID, link, sharing, and comments are kept, so reviewers keep working in
 the same document.
 
+## Upload or update from a reader
+
+`Upload` and `Update` open the path they are given. When the caller has already
+opened and checked the file, send that handle instead, so the path is not opened
+a second time:
+
+```go
+f, err := svc.Upload(ctx, driveutil.UploadRequest{
+    Path:      "review.docx", // only a name: it need not exist
+    Content:   body,          // any io.Reader
+    ConvertTo: driveutil.ConvertDoc,
+})
+f, err = svc.UpdateContent(ctx, fileID, "review-v2.docx", body, driveutil.ConvertDoc)
+```
+
+When `Content` is set, `Path` is not opened. Its extension still chooses the
+media type and the conversion check, and its base name is the default Drive name.
+`UpdateContent` takes the same name. The reader is read once, to its end, and is
+not closed. An error from the reader comes back wrapped, so `errors.Is` finds it.
+`Update(ctx, id, path, to)` is `UpdateContent` over the opened file, so the two
+forms behave the same.
+
+A common use is a server that takes file names from callers. Open the file once
+inside a root, check the handle and cap the read, with
+[oscompat](https://github.com/grokify/oscompat), then hand the capped reader to
+gogoogle. gogoogle itself does not depend on oscompat:
+
+```go
+file, err := fs.OpenRegularInRoot(root, req.Path, maxBytes) // a confined, checked handle
+if err != nil {
+    return err
+}
+defer file.Close()
+
+f, err := svc.Upload(ctx, driveutil.UploadRequest{
+    Path:      req.Path,
+    Content:   fs.CapReader(file, maxBytes), // fs.ErrTooLarge if the file grows
+    ConvertTo: driveutil.ConvertDoc,
+})
+```
+
+Content above the Google client's chunk size, 16 MiB, uses the resumable upload
+protocol, as a file at a path does. The scope is unchanged.
+
 ## Comments
 
 ```go
