@@ -8,6 +8,33 @@
   "bots": ["dependabot[bot]"],
   "releases": [
     {
+      "version": "v0.14.0",
+      "date": "2026-10-31",
+      "highlights": [
+        {
+          "description": "Drive upload and update can send the content of a reader the caller has already opened and checked, so the path is not opened a second time"
+        }
+      ],
+      "added": [
+        {
+          "description": "`driveutil/v3`: `UploadRequest.Content` and `Service.UpdateContent` send an `io.Reader`; the path then only names the file, and `Update` delegates to `UpdateContent`",
+          "commit": "a314977"
+        }
+      ],
+      "tests": [
+        {
+          "description": "`driveutil/v3`: cover content sent in place of a path, a reader error returned wrapped, update from a reader, and the refusals",
+          "commit": "aa9e114"
+        }
+      ],
+      "documentation": [
+        {
+          "description": "The Drive guide explains uploading and updating from a reader, with a confined, size-capped handle; release notes for v0.14.0",
+          "commit": "5b7f3d7"
+        }
+      ]
+    },
+    {
       "version": "v0.13.0",
       "date": "2026-10-30",
       "highlights": [

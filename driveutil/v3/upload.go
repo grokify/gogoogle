@@ -2,7 +2,9 @@ package driveutil
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"io"
 	"mime"
 	"os"
 	"path/filepath"
@@ -59,6 +61,13 @@ type UploadRequest struct {
 	Name      string    `json:"name"`      // defaults to base name without extension when converting
 	FolderID  string    `json:"folder_id"` // optional parent
 	ConvertTo ConvertTo `json:"convert_to"`
+
+	// Content, when set, is sent instead of opening Path. Path is then only a
+	// name: its extension chooses the media type and the conversion check, and
+	// its base name is the default Drive name. Use it to send a file the caller
+	// has already opened and checked, so the path is not opened a second time.
+	// Content is read once, to its end, and not closed.
+	Content io.Reader `json:"-"`
 }
 
 // mediaPlan resolves the Drive metadata MIME type (empty when not
@@ -101,13 +110,17 @@ func (s *Service) Upload(ctx context.Context, r UploadRequest) (*File, error) {
 	if r.FolderID != "" {
 		meta.Parents = []string{r.FolderID}
 	}
-	f, err := os.Open(r.Path)
-	if err != nil {
-		return nil, fmt.Errorf("driveutil: upload %s: %w", r.Path, err)
+	content := r.Content
+	if content == nil {
+		f, err := os.Open(r.Path)
+		if err != nil {
+			return nil, fmt.Errorf("driveutil: upload %s: %w", r.Path, err)
+		}
+		defer f.Close()
+		content = f
 	}
-	defer f.Close()
 	out, err := s.DriveService.Files.Create(meta).
-		Media(f, googleapi.ContentType(mediaType)).
+		Media(content, googleapi.ContentType(mediaType)).
 		SupportsAllDrives(true).
 		Fields(fileFields).
 		Context(ctx).Do()
@@ -120,8 +133,7 @@ func (s *Service) Upload(ctx context.Context, r UploadRequest) (*File, error) {
 // Update replaces the content of an existing Drive file with a local file,
 // keeping the file ID. A non-empty convertTo sets the Google MIME type.
 func (s *Service) Update(ctx context.Context, fileID, path string, convertTo ConvertTo) (*File, error) {
-	metaMime, mediaType, err := mediaPlan(path, convertTo)
-	if err != nil {
+	if _, _, err := mediaPlan(path, convertTo); err != nil {
 		return nil, fmt.Errorf("driveutil: update %s: %w", fileID, err)
 	}
 	f, err := os.Open(path)
@@ -129,8 +141,24 @@ func (s *Service) Update(ctx context.Context, fileID, path string, convertTo Con
 		return nil, fmt.Errorf("driveutil: update %s: %w", fileID, err)
 	}
 	defer f.Close()
+	return s.UpdateContent(ctx, fileID, path, f, convertTo)
+}
+
+// UpdateContent replaces the content of an existing Drive file with what
+// content yields, keeping the file ID. name is only a name: its extension
+// chooses the media type and the conversion check. content is read once, to its
+// end, and not closed. Use it to send a file the caller has already opened and
+// checked, as UploadRequest.Content does for Upload.
+func (s *Service) UpdateContent(ctx context.Context, fileID, name string, content io.Reader, convertTo ConvertTo) (*File, error) {
+	if content == nil {
+		return nil, fmt.Errorf("driveutil: update %s: %w", fileID, errors.New("content is nil"))
+	}
+	metaMime, mediaType, err := mediaPlan(name, convertTo)
+	if err != nil {
+		return nil, fmt.Errorf("driveutil: update %s: %w", fileID, err)
+	}
 	out, err := s.DriveService.Files.Update(fileID, &drive.File{MimeType: metaMime}).
-		Media(f, googleapi.ContentType(mediaType)).
+		Media(content, googleapi.ContentType(mediaType)).
 		SupportsAllDrives(true).
 		Fields(fileFields).
 		Context(ctx).Do()

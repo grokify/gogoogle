@@ -9,3 +9,6 @@ coverage.txt
 *.key
 *-credentials.json
 *-service-account.json
+
+# MkDocs build output
+/site/

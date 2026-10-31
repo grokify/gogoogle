@@ -2,7 +2,7 @@
 
 **Initiative:** `INIT-GOGOOGLE-001`
 **Repository:** `github.com/grokify/gogoogle`
-**Status:** Planned — 0 of 3 phases completed
+**Status:** Planned — 0 of 4 phases completed
 
 > RMI IDs are stable and permanent. Commits implementing an item carry the trailer `Refs: RMI-GOGOOGLE-<NNN>`. Phase status is derived from member RMIs. RMI `NNN` corresponds to PLAN step `P-NN`.
 
@@ -56,3 +56,13 @@
   - Depends on: `RMI-GOGOOGLE-006`
   - Satisfies: PRD-FR-8, TRD-008
   - Acceptance: no breaking API changes; CI green before tag
+
+## Phase 4 — Confined Uploads
+
+**Theme:** Send content from a reader the caller already opened and checked, so a path is not reopened after it is verified
+**Status:** Planned — 0 of 1 items completed
+
+- [ ] `RMI-GOGOOGLE-008` Upload and update from an io.Reader
+  - Type: capability · Status: planned
+  - Depends on: `RMI-GOGOOGLE-002`
+  - Acceptance: upload and update send a reader's content without opening a path; a reader error is returned wrapped; existing path-based calls behave as before

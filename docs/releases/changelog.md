@@ -6,6 +6,7 @@ See [CHANGELOG.md](https://github.com/grokify/gogoogle/blob/main/CHANGELOG.md) f
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| v0.14.0 | 2026-10-31 | Drive upload and update from an `io.Reader` |
 | v0.13.0 | 2026-10-30 | Drive upload and conversion, comments, suggested edits, Sheets records |
 | v0.12.0 | 2026-10-21 | Google Search Console client with service account sign-in |
 | v0.11.0 | 2026-05-30 | Sheets v4 cell parsing, URL utilities, Forms scopes, YouTube URLs |
