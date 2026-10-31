@@ -3,11 +3,13 @@ package driveutil
 import (
 	"context"
 	"errors"
+	"io"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+	"testing/iotest"
 )
 
 func writeTemp(t *testing.T, name, content string) string {
@@ -177,5 +179,102 @@ func TestUpdateNoConversionAndError(t *testing.T) {
 	}
 	if strings.Contains(f.requests()[0].Body, `"mimeType"`) {
 		t.Fatalf("metadata should not set mimeType:\n%s", f.requests()[0].Body)
+	}
+}
+
+// Content is sent in place of the file at Path, which is only a name: it need
+// not exist, and its extension still picks the media type and the conversion.
+func TestUploadFromContent(t *testing.T) {
+	f := newFake(t, func(w http.ResponseWriter, _ *http.Request, _ int) { writeBody(t, w, createdJSON) })
+	got, err := f.service(t).Upload(context.Background(), UploadRequest{
+		Path:      filepath.Join(t.TempDir(), "gone", "report.docx"), // never opened
+		Content:   strings.NewReader("FROM READER"),
+		ConvertTo: ConvertDoc,
+		FolderID:  "folder9",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got.ID != "new1" {
+		t.Fatalf("id = %q", got.ID)
+	}
+	r := f.requests()[0]
+	for _, want := range []string{`"mimeType":"` + MimeGoogleDoc + `"`, `"name":"report"`, `"parents":["folder9"]`, "wordprocessingml.document", "FROM READER"} {
+		if !strings.Contains(r.Body, want) {
+			t.Errorf("body missing %q:\n%s", want, r.Body)
+		}
+	}
+}
+
+func TestUploadContentWinsOverTheFileAtPath(t *testing.T) {
+	f := newFake(t, func(w http.ResponseWriter, _ *http.Request, _ int) { writeBody(t, w, createdJSON) })
+	p := writeTemp(t, "a.txt", "ON DISK")
+	if _, err := f.service(t).Upload(context.Background(), UploadRequest{Path: p, Content: strings.NewReader("FROM READER")}); err != nil {
+		t.Fatal(err)
+	}
+	body := f.requests()[0].Body
+	if !strings.Contains(body, "FROM READER") || strings.Contains(body, "ON DISK") {
+		t.Fatalf("the file at Path was read instead of Content:\n%s", body)
+	}
+}
+
+// An error from the reader comes back wrapped, so a caller can tell why the
+// upload stopped, for instance that its size cap was exceeded.
+func TestUploadContentReaderError(t *testing.T) {
+	boom := errors.New("reader failed")
+	f := newFake(t, func(w http.ResponseWriter, _ *http.Request, _ int) { writeBody(t, w, createdJSON) })
+	content := io.MultiReader(strings.NewReader("abc"), iotest.ErrReader(boom))
+	got, err := f.service(t).Upload(context.Background(), UploadRequest{Path: "a.txt", Content: content})
+	if !errors.Is(err, boom) || got != nil {
+		t.Fatalf("got %v, %v; want the reader's error and no file", got, err)
+	}
+}
+
+func TestUpdateContent(t *testing.T) {
+	f := newFake(t, func(w http.ResponseWriter, _ *http.Request, _ int) {
+		writeBody(t, w, `{"id":"existing7","name":"n","modifiedTime":"2026-01-02T03:04:05Z"}`)
+	})
+	got, err := f.service(t).UpdateContent(context.Background(), "existing7", "deck.pptx", strings.NewReader("SLIDES"), ConvertSlides)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got.ID != "existing7" {
+		t.Fatalf("id = %q", got.ID)
+	}
+	r := f.requests()[0]
+	if r.Method != "PATCH" || r.Path != "/upload/drive/v3/files/existing7" {
+		t.Fatalf("unexpected request %s %s", r.Method, r.Path)
+	}
+	if !strings.Contains(r.Body, MimeGoogleSlides) || !strings.Contains(r.Body, "SLIDES") {
+		t.Fatalf("unexpected body:\n%s", r.Body)
+	}
+}
+
+func TestUpdateContentRefusals(t *testing.T) {
+	f := newFake(t, func(w http.ResponseWriter, _ *http.Request, _ int) { writeBody(t, w, createdJSON) })
+	svc := f.service(t)
+	if _, err := svc.UpdateContent(context.Background(), "id1", "a.txt", nil, ConvertNone); err == nil {
+		t.Error("nil content was accepted")
+	}
+	// The name's extension must match the conversion, as it must for a path.
+	if _, err := svc.UpdateContent(context.Background(), "id1", "a.txt", strings.NewReader("x"), ConvertSlides); err == nil {
+		t.Error("a mismatched name was accepted")
+	}
+	boom := errors.New("reader failed")
+	if _, err := svc.UpdateContent(context.Background(), "id1", "a.txt", io.MultiReader(strings.NewReader("a"), iotest.ErrReader(boom)), ConvertNone); !errors.Is(err, boom) {
+		t.Errorf("reader error: got %v", err)
+	}
+}
+
+// Update with a path is UpdateContent over the opened file.
+func TestUpdateStillReadsThePath(t *testing.T) {
+	f := newFake(t, func(w http.ResponseWriter, _ *http.Request, _ int) {
+		writeBody(t, w, `{"id":"e1","name":"n","modifiedTime":"2026-01-02T03:04:05Z"}`)
+	})
+	if _, err := f.service(t).Update(context.Background(), "e1", writeTemp(t, "a.txt", "ON DISK"), ConvertNone); err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(f.requests()[0].Body, "ON DISK") {
+		t.Fatalf("the file was not sent:\n%s", f.requests()[0].Body)
 	}
 }
