@@ -1729,6 +1729,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#phase-4-confined-uploads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4 — Confined Uploads
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1822,6 +1833,34 @@
     
   
     Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../releases/v0.14.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    v0.14.0
   
 
     
@@ -2041,6 +2080,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#phase-4-confined-uploads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4 — Confined Uploads
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2064,7 +2114,7 @@
 <h1 id="roadmap-document-review-round-trip-drive-upload-and-conversion-comments-and-suggestion-aware-docs-content">ROADMAP — Document review round trip — Drive upload and conversion, comments, and suggestion-aware Docs content<a class="headerlink" href="#roadmap-document-review-round-trip-drive-upload-and-conversion-comments-and-suggestion-aware-docs-content" title="Permanent link">&para;</a></h1>
 <p><strong>Initiative:</strong> <code>INIT-GOGOOGLE-001</code>
 <strong>Repository:</strong> <code>github.com/grokify/gogoogle</code>
-<strong>Status:</strong> Planned — 0 of 3 phases completed</p>
+<strong>Status:</strong> Planned — 0 of 4 phases completed</p>
 <blockquote>
 <p>RMI IDs are stable and permanent. Commits implementing an item carry the trailer <code>Refs: RMI-GOGOOGLE-&lt;NNN&gt;</code>. Phase status is derived from member RMIs. RMI <code>NNN</code> corresponds to PLAN step <code>P-NN</code>.</p>
 </blockquote>
@@ -2115,6 +2165,15 @@
 <li>Depends on: <code>RMI-GOGOOGLE-006</code></li>
 <li>Satisfies: PRD-FR-8, TRD-008</li>
 <li>Acceptance: no breaking API changes; CI green before tag</li>
+</ul>
+<h2 id="phase-4-confined-uploads">Phase 4 — Confined Uploads<a class="headerlink" href="#phase-4-confined-uploads" title="Permanent link">&para;</a></h2>
+<p><strong>Theme:</strong> Send content from a reader the caller already opened and checked, so a path is not reopened after it is verified
+<strong>Status:</strong> Planned — 0 of 1 items completed</p>
+<ul>
+<li>[ ] <code>RMI-GOGOOGLE-008</code> Upload and update from an io.Reader</li>
+<li>Type: capability · Status: planned</li>
+<li>Depends on: <code>RMI-GOGOOGLE-002</code></li>
+<li>Acceptance: upload and update send a reader's content without opening a path; a reader error is returned wrapped; existing path-based calls behave as before</li>
 </ul>
 
 

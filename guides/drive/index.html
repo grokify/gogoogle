@@ -615,6 +615,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#upload-or-update-from-a-reader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upload or update from a reader
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#comments" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1919,6 +1930,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../releases/v0.14.0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    v0.14.0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../releases/v0.13.0/" class="md-nav__link">
         
   
@@ -2130,6 +2169,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#upload-or-update-from-a-reader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upload or update from a reader
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#comments" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2284,11 +2334,46 @@ for a CSV-to-Sheet upload.</p>
 </code></pre></div>
 <p>The file ID, link, sharing, and comments are kept, so reviewers keep working in
 the same document.</p>
+<h2 id="upload-or-update-from-a-reader">Upload or update from a reader<a class="headerlink" href="#upload-or-update-from-a-reader" title="Permanent link">&para;</a></h2>
+<p><code>Upload</code> and <code>Update</code> open the path they are given. When the caller has already
+opened and checked the file, send that handle instead, so the path is not opened
+a second time:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nx">f</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">svc</span><span class="p">.</span><span class="nx">Upload</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">driveutil</span><span class="p">.</span><span class="nx">UploadRequest</span><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="nx">Path</span><span class="p">:</span><span class="w">      </span><span class="s">&quot;review.docx&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// only a name: it need not exist</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nx">Content</span><span class="p">:</span><span class="w">   </span><span class="nx">body</span><span class="p">,</span><span class="w">          </span><span class="c1">// any io.Reader</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nx">ConvertTo</span><span class="p">:</span><span class="w"> </span><span class="nx">driveutil</span><span class="p">.</span><span class="nx">ConvertDoc</span><span class="p">,</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="p">})</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nx">f</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">svc</span><span class="p">.</span><span class="nx">UpdateContent</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">fileID</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;review-v2.docx&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">body</span><span class="p">,</span><span class="w"> </span><span class="nx">driveutil</span><span class="p">.</span><span class="nx">ConvertDoc</span><span class="p">)</span>
+</code></pre></div>
+<p>When <code>Content</code> is set, <code>Path</code> is not opened. Its extension still chooses the
+media type and the conversion check, and its base name is the default Drive name.
+<code>UpdateContent</code> takes the same name. The reader is read once, to its end, and is
+not closed. An error from the reader comes back wrapped, so <code>errors.Is</code> finds it.
+<code>Update(ctx, id, path, to)</code> is <code>UpdateContent</code> over the opened file, so the two
+forms behave the same.</p>
+<p>A common use is a server that takes file names from callers. Open the file once
+inside a root, check the handle and cap the read, with
+<a href="https://github.com/grokify/oscompat">oscompat</a>, then hand the capped reader to
+gogoogle. gogoogle itself does not depend on oscompat:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nx">file</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">fs</span><span class="p">.</span><span class="nx">OpenRegularInRoot</span><span class="p">(</span><span class="nx">root</span><span class="p">,</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span><span class="w"> </span><span class="nx">maxBytes</span><span class="p">)</span><span class="w"> </span><span class="c1">// a confined, checked handle</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">err</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="p">}</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="k">defer</span><span class="w"> </span><span class="nx">file</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="nx">f</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">svc</span><span class="p">.</span><span class="nx">Upload</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">driveutil</span><span class="p">.</span><span class="nx">UploadRequest</span><span class="p">{</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="nx">Path</span><span class="p">:</span><span class="w">      </span><span class="nx">req</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="nx">Content</span><span class="p">:</span><span class="w">   </span><span class="nx">fs</span><span class="p">.</span><span class="nx">CapReader</span><span class="p">(</span><span class="nx">file</span><span class="p">,</span><span class="w"> </span><span class="nx">maxBytes</span><span class="p">),</span><span class="w"> </span><span class="c1">// fs.ErrTooLarge if the file grows</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="nx">ConvertTo</span><span class="p">:</span><span class="w"> </span><span class="nx">driveutil</span><span class="p">.</span><span class="nx">ConvertDoc</span><span class="p">,</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="p">})</span>
+</code></pre></div>
+<p>Content above the Google client's chunk size, 16 MiB, uses the resumable upload
+protocol, as a file at a path does. The scope is unchanged.</p>
 <h2 id="comments">Comments<a class="headerlink" href="#comments" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nx">comments</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">svc</span><span class="p">.</span><span class="nx">ListComments</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">fileID</span><span class="p">,</span><span class="w"> </span><span class="nx">driveutil</span><span class="p">.</span><span class="nx">ListCommentsOptions</span><span class="p">{})</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">comments</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">QuotedText</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Content</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Resolved</span><span class="p">,</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">Replies</span><span class="p">))</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nx">comments</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">svc</span><span class="p">.</span><span class="nx">ListComments</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">fileID</span><span class="p">,</span><span class="w"> </span><span class="nx">driveutil</span><span class="p">.</span><span class="nx">ListCommentsOptions</span><span class="p">{})</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">comments</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">QuotedText</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Content</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">.</span><span class="nx">Resolved</span><span class="p">,</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">Replies</span><span class="p">))</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="p">}</span>
 </code></pre></div>
 <p>Each comment has the text it is anchored to (<code>QuotedText</code>), its author, its
 resolved state, and its replies. Paging is followed to the end: you get every
@@ -2297,25 +2382,25 @@ when the API returns them; treat them as personal data.</p>
 <h2 id="suggested-edits">Suggested edits<a class="headerlink" href="#suggested-edits" title="Permanent link">&para;</a></h2>
 <p>Comments do not include suggested edits. Fetch the document with its
 suggestions shown inline and split the text:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nx">doc</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">docsSvc</span><span class="p">.</span><span class="nx">GetDocumentWithSuggestions</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">docID</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SUGGESTIONS_INLINE&quot;</span><span class="p">)</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nx">sc</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">docsutil</span><span class="p">.</span><span class="nx">ExtractSuggestionContent</span><span class="p">(</span><span class="nx">doc</span><span class="p">)</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">sc</span><span class="p">.</span><span class="nx">Blocks</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">Location</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">.</span><span class="nx">Original</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;-&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">.</span><span class="nx">Accepted</span><span class="p">)</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nx">doc</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">docsSvc</span><span class="p">.</span><span class="nx">GetDocumentWithSuggestions</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">docID</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SUGGESTIONS_INLINE&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nx">sc</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">docsutil</span><span class="p">.</span><span class="nx">ExtractSuggestionContent</span><span class="p">(</span><span class="nx">doc</span><span class="p">)</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">sc</span><span class="p">.</span><span class="nx">Blocks</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">Location</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">.</span><span class="nx">Original</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;-&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="p">.</span><span class="nx">Accepted</span><span class="p">)</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="p">}</span>
 </code></pre></div>
 <p>See the <a href="../docs/#suggestions">Docs guide</a>.</p>
 <h2 id="structured-responses-in-a-sheet">Structured responses in a Sheet<a class="headerlink" href="#structured-responses-in-a-sheet" title="Permanent link">&para;</a></h2>
 <p>For answers that need a fixed shape, publish a CSV as a Sheet and read it back:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nx">records</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">sheetsutil</span><span class="p">.</span><span class="nx">ReadRecords</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">sheetsSvc</span><span class="p">,</span><span class="w"> </span><span class="nx">sheetID</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1">// first sheet</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1">// []map[string]string keyed by the header row</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nx">records</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">sheetsutil</span><span class="p">.</span><span class="nx">ReadRecords</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">sheetsSvc</span><span class="p">,</span><span class="w"> </span><span class="nx">sheetID</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1">// first sheet</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1">// []map[string]string keyed by the header row</span>
 </code></pre></div>
 <p>See the <a href="../sheets/#records">Sheets guide</a>.</p>
 <h2 id="command-line">Command line<a class="headerlink" href="#command-line" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>gogoogle<span class="w"> </span>drive<span class="w"> </span>upload<span class="w"> </span>review.docx<span class="w"> </span>--convert<span class="w"> </span>doc<span class="w"> </span>--folder<span class="w"> </span>1AbC
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>gogoogle<span class="w"> </span>drive<span class="w"> </span>update<span class="w"> </span>1FileId<span class="w"> </span>review-v2.docx<span class="w"> </span>--convert<span class="w"> </span>doc
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>gogoogle<span class="w"> </span>drive<span class="w"> </span>comments<span class="w"> </span>1FileId<span class="w"> </span>--include-deleted
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>gogoogle<span class="w"> </span>docs<span class="w"> </span>suggestions<span class="w"> </span>1DocId
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>gogoogle<span class="w"> </span>sheets<span class="w"> </span>records<span class="w"> </span>1SheetId<span class="w"> </span>--sheet<span class="w"> </span><span class="s2">&quot;Round 1&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>gogoogle<span class="w"> </span>drive<span class="w"> </span>upload<span class="w"> </span>review.docx<span class="w"> </span>--convert<span class="w"> </span>doc<span class="w"> </span>--folder<span class="w"> </span>1AbC
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>gogoogle<span class="w"> </span>drive<span class="w"> </span>update<span class="w"> </span>1FileId<span class="w"> </span>review-v2.docx<span class="w"> </span>--convert<span class="w"> </span>doc
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>gogoogle<span class="w"> </span>drive<span class="w"> </span>comments<span class="w"> </span>1FileId<span class="w"> </span>--include-deleted
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>gogoogle<span class="w"> </span>docs<span class="w"> </span>suggestions<span class="w"> </span>1DocId
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>gogoogle<span class="w"> </span>sheets<span class="w"> </span>records<span class="w"> </span>1SheetId<span class="w"> </span>--sheet<span class="w"> </span><span class="s2">&quot;Round 1&quot;</span>
 </code></pre></div>
 <p>All commands print JSON. Exit status is 0 on success, 1 for an API or input
 error, and 2 for a usage error.</p>
