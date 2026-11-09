@@ -3,7 +3,7 @@ module github.com/grokify/gogoogle
 go 1.26.1
 
 require (
-	cloud.google.com/go/bigquery v1.86.1
+	cloud.google.com/go/bigquery v1.86.2
 	cloud.google.com/go/dlp v1.39.1
 	cloud.google.com/go/speech v1.38.1
 	github.com/Iwark/spreadsheet v0.0.0-20230915040305-7677e8164883
@@ -27,7 +27,7 @@ require (
 	cloud.google.com/go/auth/oauth2adapt v0.3.1 // indirect
 	cloud.google.com/go/compute/metadata v0.10.0 // indirect
 	cloud.google.com/go/iam v1.15.1 // indirect
-	cloud.google.com/go/longrunning v1.4.1 // indirect
+	cloud.google.com/go/longrunning v1.5.0 // indirect
 	github.com/apache/arrow/go/v15 v15.0.2 // indirect
 	github.com/caarlos0/env/v11 v11.4.1 // indirect
 	github.com/cbroglie/mustache v1.4.2 // indirect
